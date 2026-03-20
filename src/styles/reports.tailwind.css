@@ -1,0 +1,59 @@
+@tailwind components;
+
+@layer components {
+  .reports-grid {
+    @apply flex flex-col gap-6;
+  }
+
+  .reports-highlight-grid {
+    @apply grid gap-4 md:grid-cols-2 xl:grid-cols-4;
+  }
+
+  .report-highlight-card {
+    @apply rounded-[1.35rem] border border-line/80 bg-shell/95 p-5 shadow-chrome;
+  }
+
+  .report-highlight-label {
+    @apply font-mono text-[11px] uppercase tracking-[0.3em] text-muted;
+  }
+
+  .report-highlight-value {
+    @apply mt-4 text-4xl font-semibold text-text;
+  }
+
+  .report-highlight-copy {
+    @apply mt-3 text-sm leading-6 text-muted;
+  }
+
+  .reports-chart-grid {
+    @apply grid gap-6 xl:grid-cols-2;
+  }
+
+  .reports-table-grid {
+    @apply grid gap-6 xl:grid-cols-[minmax(0,1.2fr)_minmax(0,0.8fr)];
+  }
+
+  .report-panel {
+    @apply rounded-[1.35rem] border border-line/80 bg-shell/95 shadow-chrome;
+  }
+
+  .report-chip {
+    @apply rounded-full border border-info/30 bg-info/10 px-3 py-1 font-mono text-xs text-info;
+  }
+
+  .report-list {
+    @apply flex flex-col gap-3 p-5;
+  }
+
+  .report-list-card {
+    @apply flex items-center justify-between gap-4 rounded-[1.15rem] border border-line bg-panel/80 p-4;
+  }
+
+  .report-list-title {
+    @apply font-semibold text-text;
+  }
+
+  .report-list-copy {
+    @apply mt-2 text-sm text-muted;
+  }
+}

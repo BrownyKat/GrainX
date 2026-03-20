@@ -1,0 +1,125 @@
+@tailwind components;
+
+@layer components {
+  .oracle-grid {
+    @apply flex flex-col gap-6;
+  }
+
+  .oracle-top-grid {
+    @apply grid gap-6 xl:grid-cols-[minmax(0,1.15fr)_minmax(0,0.85fr)];
+  }
+
+  .oracle-bottom-grid {
+    @apply grid gap-6 xl:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)];
+  }
+
+  .oracle-panel {
+    @apply rounded-[1.35rem] border border-line bg-shell/95 shadow-chrome;
+  }
+
+  .oracle-builder-shell {
+    @apply flex flex-col gap-5 p-5;
+  }
+
+  .oracle-copy {
+    @apply text-sm leading-7 text-text;
+  }
+
+  .oracle-form-grid {
+    @apply grid gap-4 md:grid-cols-2;
+  }
+
+  .oracle-field {
+    @apply flex flex-col gap-3;
+  }
+
+  .oracle-field-label {
+    @apply font-mono text-[11px] uppercase tracking-[0.28em] text-muted;
+  }
+
+  .oracle-select,
+  .oracle-input {
+    @apply rounded-2xl border border-line bg-panel/80 px-4 py-3 text-sm text-text outline-none transition focus:border-info;
+  }
+
+  .oracle-ticket-grid {
+    @apply grid gap-3 md:grid-cols-2;
+  }
+
+  .oracle-ticket-card,
+  .oracle-summary-card {
+    @apply rounded-[1.15rem] border border-line bg-panel/80 p-4;
+  }
+
+  .oracle-ticket-label {
+    @apply font-mono text-[11px] uppercase tracking-[0.28em] text-muted;
+  }
+
+  .oracle-ticket-value {
+    @apply mt-3 text-xl font-semibold text-text;
+  }
+
+  .oracle-banner-actions {
+    @apply flex flex-wrap items-center gap-2;
+  }
+
+  .oracle-summary-stack {
+    @apply grid gap-3 p-5;
+  }
+
+  .oracle-summary-copy {
+    @apply mt-2 break-all text-sm leading-6 text-muted;
+  }
+
+  .oracle-preview-shell {
+    @apply px-5 pb-5;
+  }
+
+  .oracle-preview {
+    @apply min-h-[16rem] overflow-x-auto rounded-[1.15rem] border border-line bg-panel/80 p-4 font-mono text-xs text-muted;
+  }
+
+  .oracle-signature-status {
+    @apply px-5 pb-5 text-sm leading-6 text-text;
+  }
+
+  .oracle-status-pill {
+    @apply rounded-full border border-neon/20 bg-neon/10 px-3 py-1 font-mono text-xs text-neon;
+  }
+
+  .chain-log {
+    @apply grid gap-3 p-5 md:grid-cols-2 xl:grid-cols-4;
+  }
+
+  .chain-log-item {
+    @apply rounded-[1.15rem] border border-line bg-panel/80 p-4;
+  }
+
+  .chain-log-head {
+    @apply flex items-center justify-between gap-4;
+  }
+
+  .chain-log-type {
+    @apply rounded-full border px-3 py-1 font-mono text-xs uppercase;
+  }
+
+  .chain-log-type.is-alert {
+    @apply border-danger/20 bg-danger/10 text-danger;
+  }
+
+  .chain-log-type.is-update {
+    @apply border-info/20 bg-info/10 text-info;
+  }
+
+  .chain-log-type.is-oracle {
+    @apply border-violet/20 bg-violet/10 text-violet;
+  }
+
+  .chain-log-copy {
+    @apply mt-3 text-sm leading-6 text-text;
+  }
+
+  .chain-log-meta {
+    @apply mt-3 flex items-center justify-between gap-4 text-xs;
+  }
+}

@@ -1,0 +1,18 @@
+<section class="ticker-strip" aria-label="Market Ticker">
+  <div class="ticker-track">
+    <% site.commodities.forEach((commodity) => { %>
+      <article class="ticker-card">
+        <div>
+          <p class="ticker-symbol"><%= commodity.symbol %></p>
+          <p class="ticker-name"><%= commodity.name %></p>
+        </div>
+        <div class="ticker-value-group">
+          <p class="ticker-value"><%= commodity.value.toFixed(1) %></p>
+          <p class="ticker-change <%= commodity.weeklyChange > 0 ? 'is-up' : commodity.weeklyChange < 0 ? 'is-down' : 'is-flat' %>">
+            <%= commodity.weeklyChange > 0 ? '+' : '' %><%= commodity.weeklyChange %>% wk
+          </p>
+        </div>
+      </article>
+    <% }) %>
+  </div>
+</section>

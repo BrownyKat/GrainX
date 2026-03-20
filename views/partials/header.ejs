@@ -1,0 +1,51 @@
+<header class="topbar">
+  <div class="brand-cluster">
+    <a href="/markets" class="brand-mark">GW</a>
+    <div>
+      <p class="brand-eyebrow">
+        <%- include("icon", { name: "market", className: "icon-sm" }) %>
+        <span><%= site.meta.brand %></span>
+      </p>
+      <h1 class="brand-title"><%= site.meta.tagline %></h1>
+      <p class="brand-summary"><%= site.meta.summary %></p>
+    </div>
+  </div>
+
+  <div class="topbar-actions">
+    <div class="live-ribbon">
+      <span class="live-ribbon-label">
+        <%- include("icon", { name: "clock", className: "icon-sm" }) %>
+        <span>PH Grain Desk</span>
+      </span>
+      <span class="live-pill">
+        <span class="live-dot"></span>
+        <span>LIVE</span>
+        <span id="headerClock">--:--:--</span>
+        <span>PHT</span>
+        <span id="headerBlock">Audit #<%= site.oracle.latestBlock %></span>
+      </span>
+    </div>
+    <div class="wallet-cluster">
+      <div class="wallet-summary">
+        <p class="wallet-summary-label">
+          <%- include("icon", { name: "wallet", className: "icon-sm" }) %>
+          <span>Base Wallet</span>
+        </p>
+        <div class="wallet-summary-copy">
+          <span id="walletNetworkLabel">Not connected</span>
+          <span id="walletAccountLabel">Open in Base App or connect a compatible wallet</span>
+        </div>
+      </div>
+      <div class="wallet-button-row">
+        <button id="walletSwitchBtn" class="btn-ghost" type="button">
+          <%- include("icon", { name: "chain", className: "icon-sm" }) %>
+          <span>Switch Base</span>
+        </button>
+        <button id="walletConnectBtn" class="btn-primary" type="button">
+          <%- include("icon", { name: "wallet", className: "icon-sm" }) %>
+          <span>Connect Wallet</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</header>

@@ -1,0 +1,220 @@
+<section class="markets-grid">
+  <div class="markets-lead-grid">
+    <section class="market-panel">
+      <div class="panel-head">
+        <div>
+          <p class="panel-eyebrow">
+            <%- include("../partials/icon", { name: "market", className: "icon-sm" }) %>
+            <span>Philippine Grains Prices</span>
+          </p>
+          <h3 class="panel-title">Market Board</h3>
+        </div>
+      </div>
+      <div class="table-wrap">
+        <table class="table-base">
+          <thead>
+            <tr>
+              <th>Commodity</th>
+              <th>Market Basis</th>
+              <th>Last Price</th>
+              <th>Daily Move</th>
+              <th>Weekly</th>
+              <th>Daily Range</th>
+              <th>Lead Market</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% site.marketRows.forEach((row) => { %>
+              <tr>
+                <td>
+                  <p class="strong"><%= row.commodity %></p>
+                  <p class="muted mono"><%= row.symbol %></p>
+                </td>
+                <td class="muted"><%= row.exchange %></td>
+                <td class="mono"><%= row.spot.toFixed(1) %></td>
+                <td class="mono <%= row.dailyChange.startsWith('+') ? 'tone-neon' : 'tone-danger' %>"><%= row.dailyChange %></td>
+                <td class="mono <%= row.weekly.startsWith('+') ? 'tone-neon' : row.weekly.startsWith('-') ? 'tone-danger' : 'tone-amber' %>"><%= row.weekly %></td>
+                <td class="mono muted"><%= row.low.toFixed(1) %> - <%= row.high.toFixed(1) %></td>
+                <td class="muted"><%= row.leadLocation %></td>
+              </tr>
+            <% }) %>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <div class="markets-side-stack">
+      <section class="market-panel">
+        <div class="panel-head">
+          <div>
+            <p class="panel-eyebrow">
+              <%- include("../partials/icon", { name: "spark", className: "icon-sm" }) %>
+              <span>Recommended Function</span>
+            </p>
+            <h3 class="panel-title"><%= site.recommendedFunction.title %></h3>
+          </div>
+          <span class="panel-badge">Added</span>
+        </div>
+        <div class="market-feature-shell">
+          <p class="market-feature-copy"><%= site.recommendedFunction.description %></p>
+          <p class="market-feature-note"><%= site.recommendedFunction.benefit %></p>
+        </div>
+      </section>
+
+      <section class="market-panel">
+        <div class="panel-head">
+          <div>
+            <p class="panel-eyebrow">
+              <%- include("../partials/icon", { name: "chain", className: "icon-sm" }) %>
+              <span>Base Feature</span>
+            </p>
+            <h3 class="panel-title"><%= site.baseDesk.title %></h3>
+          </div>
+          <span class="panel-badge"><%= site.baseDesk.mode %></span>
+        </div>
+        <div class="market-feature-shell">
+          <p class="market-feature-copy"><%= site.baseDesk.description %></p>
+          <p class="market-feature-note"><%= site.baseDesk.uniqueValue %></p>
+          <button id="openBaseDeskFromMarketsBtn" class="btn-primary" type="button">
+            <%- include("../partials/icon", { name: "wallet", className: "icon-sm" }) %>
+            <span>Open Base Desk</span>
+          </button>
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <div class="markets-lead-grid">
+    <section class="market-panel">
+      <div class="panel-head">
+        <div>
+          <p class="panel-eyebrow">
+            <%- include("../partials/icon", { name: "location", className: "icon-sm" }) %>
+            <span>City Grain Prices</span>
+          </p>
+          <h3 class="panel-title">Location Explorer</h3>
+        </div>
+        <button id="locationRefreshBtn" class="btn-secondary" type="button">
+          <%- include("../partials/icon", { name: "clock", className: "icon-sm" }) %>
+          <span>Refresh Location</span>
+        </button>
+      </div>
+      <div class="location-shell">
+        <div class="location-toolbar">
+          <label class="location-field">
+            <span class="settings-field-label">Location</span>
+            <select id="locationSelect" class="location-select"></select>
+          </label>
+          <label class="location-field">
+            <span class="settings-field-label">Status</span>
+            <div id="locationStatus" class="location-status-card">Urdaneta City loads first. Switch to another pilot city any time.</div>
+          </label>
+        </div>
+
+        <article class="location-summary-card">
+          <div>
+            <p id="locationName" class="location-summary-title"><%= site.locationDefaults.selectedLocation %></p>
+            <p id="locationMeta" class="location-summary-copy">Pilot city pricing with official-source mapping.</p>
+          </div>
+          <span id="locationSource" class="heatmap-pill is-cool">Pilot</span>
+        </article>
+
+        <div id="locationCardGrid" class="location-card-grid"></div>
+      </div>
+    </section>
+
+    <section class="market-panel">
+      <div class="panel-head">
+        <div>
+          <p class="panel-eyebrow">
+            <%- include("../partials/icon", { name: "shield", className: "icon-sm" }) %>
+            <span>Operator Tool</span>
+          </p>
+          <h3 class="panel-title">Procurement Planner</h3>
+        </div>
+        <span class="panel-badge">Planner</span>
+      </div>
+      <div class="planner-shell">
+        <div class="planner-form-grid">
+          <label class="location-field">
+            <span class="settings-field-label">Location</span>
+            <select id="plannerLocationSelect" class="location-select"></select>
+          </label>
+          <label class="location-field">
+            <span class="settings-field-label">Grain</span>
+            <select id="plannerGrainSelect" class="location-select"></select>
+          </label>
+          <label class="location-field">
+            <span class="settings-field-label">Quantity (kg)</span>
+            <input id="plannerQuantityInput" class="settings-input" type="number" min="1" value="1000" />
+          </label>
+        </div>
+        <div id="plannerResult" class="planner-result"></div>
+      </div>
+    </section>
+  </div>
+
+  <div class="markets-chart-grid">
+    <section class="market-panel">
+      <div class="panel-head">
+        <div>
+          <p class="panel-eyebrow">
+            <%- include("../partials/icon", { name: "trend", className: "icon-sm" }) %>
+            <span>History</span>
+          </p>
+          <h3 class="panel-title">Tracked Grain Trend</h3>
+        </div>
+      </div>
+      <div class="chart-frame">
+        <canvas id="allCommoditiesChart"></canvas>
+      </div>
+    </section>
+
+    <section class="market-panel">
+      <div class="panel-head">
+        <div>
+          <p class="panel-eyebrow">
+            <%- include("../partials/icon", { name: "location", className: "icon-sm" }) %>
+            <span>Selected City</span>
+          </p>
+          <h3 class="panel-title">City Price Board</h3>
+        </div>
+      </div>
+      <div class="chart-frame">
+        <canvas id="locationPricesChart"></canvas>
+      </div>
+    </section>
+  </div>
+
+  <div class="markets-chart-grid">
+    <section class="market-panel">
+      <div class="panel-head">
+        <div>
+          <p class="panel-eyebrow">
+            <%- include("../partials/icon", { name: "alert", className: "icon-sm" }) %>
+            <span>Regional Pressure</span>
+          </p>
+          <h3 class="panel-title">Supply Chain Heat</h3>
+        </div>
+      </div>
+      <div class="chart-frame chart-frame-tall">
+        <canvas id="regionalPressureChart"></canvas>
+      </div>
+    </section>
+
+    <section class="market-panel">
+      <div class="panel-head">
+        <div>
+          <p class="panel-eyebrow">
+            <%- include("../partials/icon", { name: "trend", className: "icon-sm" }) %>
+            <span>Spread</span>
+          </p>
+          <h3 class="panel-title">Location vs National Benchmark</h3>
+        </div>
+      </div>
+      <div class="chart-frame chart-frame-tall">
+        <canvas id="locationSpreadChart"></canvas>
+      </div>
+    </section>
+  </div>
+</section>

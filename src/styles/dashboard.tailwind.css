@@ -1,0 +1,143 @@
+@tailwind components;
+
+@layer components {
+  .dashboard-grid {
+    @apply flex flex-col gap-6;
+  }
+
+  .dashboard-signal-grid {
+    @apply grid gap-4 md:grid-cols-3;
+  }
+
+  .dashboard-signal-card {
+    @apply rounded-[1.35rem] border border-line bg-shell/95 p-5 shadow-chrome;
+  }
+
+  .dashboard-signal-label {
+    @apply font-mono text-[11px] uppercase tracking-[0.3em] text-muted;
+  }
+
+  .dashboard-signal-value {
+    @apply mt-3 text-2xl font-semibold text-text;
+  }
+
+  .dashboard-signal-copy {
+    @apply mt-3 text-sm leading-6 text-muted;
+  }
+
+  .dashboard-main-grid {
+    @apply grid gap-6 xl:grid-cols-[minmax(0,1.35fr)_minmax(0,0.8fr)];
+  }
+
+  .dashboard-chart-grid {
+    @apply grid gap-6 xl:grid-cols-2;
+  }
+
+  .dashboard-lower-grid {
+    @apply grid gap-6 xl:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)];
+  }
+
+  .dashboard-panel {
+    @apply rounded-[1.35rem] border border-line bg-shell/95 shadow-chrome;
+  }
+
+  .dashboard-quote-row {
+    @apply cursor-pointer;
+  }
+
+  .dashboard-quote-row.is-selected {
+    @apply bg-info/10;
+  }
+
+  .dashboard-detail-pill {
+    @apply rounded-full border border-neon/20 bg-neon/10 px-3 py-1 font-mono text-xs text-neon;
+  }
+
+  .dashboard-detail-shell {
+    @apply flex flex-col gap-4 p-5;
+  }
+
+  .dashboard-price-row {
+    @apply flex items-end justify-between gap-4 rounded-[1.15rem] border border-line bg-panel/80 p-4;
+  }
+
+  .dashboard-price-value {
+    @apply mt-2 text-4xl font-semibold text-text;
+  }
+
+  .dashboard-detail-side {
+    @apply text-right;
+  }
+
+  .dashboard-detail-grid {
+    @apply grid gap-3 sm:grid-cols-2;
+  }
+
+  .dashboard-detail-card {
+    @apply rounded-[1.15rem] border border-line bg-panel/80 p-4;
+  }
+
+  .dashboard-detail-label {
+    @apply font-mono text-[11px] uppercase tracking-[0.28em] text-muted;
+  }
+
+  .dashboard-detail-strong {
+    @apply mt-2 text-sm font-semibold leading-6 text-text;
+  }
+
+  .dashboard-location-highlight {
+    @apply flex items-center justify-between gap-4 rounded-[1.15rem] border border-line bg-panel/80 p-4;
+  }
+
+  .dashboard-detail-spread {
+    @apply mt-2 font-semibold;
+  }
+
+  .dashboard-commentary-stack {
+    @apply flex flex-col gap-3 p-5;
+  }
+
+  .dashboard-commentary-card {
+    @apply rounded-[1.15rem] border border-line bg-panel/80 p-4;
+  }
+
+  .dashboard-commentary-title {
+    @apply font-semibold text-text;
+  }
+
+  .dashboard-commentary-copy {
+    @apply mt-2 text-sm leading-6 text-muted;
+  }
+
+  .dashboard-watchlist {
+    @apply flex flex-col gap-3 p-5;
+  }
+
+  .dashboard-watch-card {
+    @apply flex flex-col gap-3 rounded-[1.15rem] border border-line bg-panel/80 p-4 sm:flex-row sm:items-start sm:justify-between;
+  }
+
+  .dashboard-watch-title {
+    @apply font-semibold text-text;
+  }
+
+  .dashboard-watch-copy {
+    @apply mt-2 text-sm leading-6 text-muted;
+  }
+
+  .dashboard-watch-pill {
+    @apply rounded-full border px-3 py-1 font-mono text-xs uppercase;
+  }
+
+  .dashboard-watch-pill.is-critical {
+    @apply border-danger/20 bg-danger/10 text-danger;
+  }
+
+  .dashboard-watch-pill.is-warning {
+    @apply border-amber/20 bg-amber/10 text-amber;
+  }
+
+  .dashboard-watch-pill.is-info {
+    @apply border-info/20 bg-info/10 text-info;
+  }
+}

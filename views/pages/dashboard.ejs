@@ -1,0 +1,202 @@
+<section class="dashboard-grid">
+  <div class="dashboard-signal-grid">
+    <% const signalIcons = ["trend", "location", "chain"]; %>
+    <% site.marketSignals.forEach((signal, index) => { %>
+      <article class="dashboard-signal-card">
+        <p class="dashboard-signal-label">
+          <%- include("../partials/icon", { name: signalIcons[index] || "spark", className: "icon-sm" }) %>
+          <span><%= signal.label %></span>
+        </p>
+        <h3 class="dashboard-signal-value"><%= signal.value %></h3>
+        <p class="dashboard-signal-copy"><%= signal.detail %></p>
+      </article>
+    <% }) %>
+  </div>
+
+  <div class="dashboard-main-grid">
+    <section class="dashboard-panel">
+      <div class="panel-head">
+        <div>
+          <p class="panel-eyebrow">
+            <%- include("../partials/icon", { name: "market", className: "icon-sm" }) %>
+            <span>PH Grains Quotes</span>
+          </p>
+          <h3 class="panel-title">Quoted Grain Contracts</h3>
+        </div>
+        <button id="dashboardRefreshBtn" class="btn-secondary" type="button">
+          <%- include("../partials/icon", { name: "clock", className: "icon-sm" }) %>
+          <span>Refresh Quotes</span>
+        </button>
+      </div>
+      <div class="table-wrap">
+        <table class="table-base">
+          <thead>
+            <tr>
+              <th>Symbol</th>
+              <th>Commodity</th>
+              <th>Last Price</th>
+              <th>Daily Move</th>
+              <th>Weekly</th>
+              <th>Daily Range</th>
+              <th>Lead Market</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% site.marketRows.forEach((row, index) => { %>
+              <tr class="dashboard-quote-row <%= index === 0 ? 'is-selected' : '' %>" data-key="<%= row.key %>">
+                <td class="mono strong"><%= row.symbol %></td>
+                <td>
+                  <p class="strong"><%= row.commodity %></p>
+                  <p class="muted"><%= row.exchange %></p>
+                </td>
+                <td class="mono"><%= row.spot.toFixed(1) %></td>
+                <td class="mono <%= row.dailyChange.startsWith('+') ? 'tone-neon' : 'tone-danger' %>"><%= row.dailyChange %></td>
+                <td class="mono <%= row.weekly.startsWith('+') ? 'tone-neon' : row.weekly.startsWith('-') ? 'tone-danger' : 'tone-amber' %>"><%= row.weekly %></td>
+                <td class="mono muted"><%= row.low.toFixed(1) %> - <%= row.high.toFixed(1) %></td>
+                <td class="muted"><%= row.leadLocation %></td>
+              </tr>
+            <% }) %>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <aside class="dashboard-panel">
+      <div class="panel-head">
+        <div>
+          <p class="panel-eyebrow">
+            <%- include("../partials/icon", { name: "spark", className: "icon-sm" }) %>
+            <span>Selected Grain</span>
+          </p>
+          <h3 id="selectedCommodityName" class="panel-title"><%= site.commodities[0].name %></h3>
+        </div>
+        <span id="selectedCommoditySignal" class="dashboard-detail-pill"><%= site.commodities[0].signal %></span>
+      </div>
+      <div class="dashboard-detail-shell">
+        <div class="dashboard-price-row">
+          <div>
+            <p class="dashboard-detail-label">Spot Price</p>
+            <p id="selectedCommodityPrice" class="dashboard-price-value"><%= site.commodities[0].value.toFixed(1) %></p>
+          </div>
+          <div class="dashboard-detail-side">
+            <p class="dashboard-detail-label">Symbol</p>
+            <p id="selectedCommoditySymbol" class="dashboard-detail-strong"><%= site.commodities[0].symbol %></p>
+          </div>
+        </div>
+
+        <div class="dashboard-detail-grid">
+          <article class="dashboard-detail-card">
+            <p class="dashboard-detail-label">Benchmark</p>
+            <p id="selectedCommodityBenchmark" class="dashboard-detail-strong"><%= site.commodities[0].benchmark %></p>
+          </article>
+          <article class="dashboard-detail-card">
+            <p class="dashboard-detail-label">Threshold</p>
+            <p id="selectedCommodityThreshold" class="dashboard-detail-strong"><%= site.commodities[0].threshold.toFixed(1) %></p>
+          </article>
+          <article class="dashboard-detail-card">
+            <p class="dashboard-detail-label">Monthly</p>
+            <p id="selectedCommodityMonthly" class="dashboard-detail-strong"><%= site.commodities[0].monthlyChange %>%</p>
+          </article>
+          <article class="dashboard-detail-card">
+            <p class="dashboard-detail-label">Confidence</p>
+            <p id="selectedCommodityConfidence" class="dashboard-detail-strong"><%= site.commodities[0].confidence %>%</p>
+          </article>
+        </div>
+
+        <div class="dashboard-location-highlight">
+          <div>
+            <p class="dashboard-detail-label">City Lead</p>
+            <p id="selectedCommodityLeadCity" class="dashboard-detail-strong"><%= site.marketRows[0].leadLocation %></p>
+          </div>
+          <div>
+            <p class="dashboard-detail-label">Location Spread</p>
+            <p id="selectedCommodityLeadSpread" class="dashboard-detail-spread">Loading...</p>
+          </div>
+        </div>
+
+        <button id="openBaseDeskBtn" class="btn-primary" type="button">
+          <%- include("../partials/icon", { name: "chain", className: "icon-sm" }) %>
+          <span>Create Base Ticket</span>
+        </button>
+      </div>
+    </aside>
+  </div>
+
+  <div class="dashboard-chart-grid">
+    <section class="dashboard-panel">
+      <div class="panel-head">
+        <div>
+          <p class="panel-eyebrow">
+            <%- include("../partials/icon", { name: "trend", className: "icon-sm" }) %>
+            <span>Price History</span>
+          </p>
+          <h3 class="panel-title">Selected Grain Trend</h3>
+        </div>
+      </div>
+      <div class="chart-frame">
+        <canvas id="selectedCommodityChart"></canvas>
+      </div>
+    </section>
+
+    <section class="dashboard-panel">
+      <div class="panel-head">
+        <div>
+          <p class="panel-eyebrow">
+            <%- include("../partials/icon", { name: "location", className: "icon-sm" }) %>
+            <span>City Comparison</span>
+          </p>
+          <h3 class="panel-title">City Price Comparison</h3>
+        </div>
+      </div>
+      <div class="chart-frame">
+        <canvas id="selectedLocationChart"></canvas>
+      </div>
+    </section>
+  </div>
+
+  <div class="dashboard-lower-grid">
+    <section class="dashboard-panel">
+      <div class="panel-head">
+        <div>
+          <p class="panel-eyebrow">
+            <%- include("../partials/icon", { name: "report", className: "icon-sm" }) %>
+            <span>Desk Commentary</span>
+          </p>
+          <h3 class="panel-title">Market Notes</h3>
+        </div>
+      </div>
+      <div class="dashboard-commentary-stack">
+        <% site.deskCommentary.forEach((entry) => { %>
+          <article class="dashboard-commentary-card">
+            <p class="dashboard-commentary-title"><%= entry.title %></p>
+            <p class="dashboard-commentary-copy"><%= entry.summary %></p>
+          </article>
+        <% }) %>
+      </div>
+    </section>
+
+    <section class="dashboard-panel">
+      <div class="panel-head">
+        <div>
+          <p class="panel-eyebrow">
+            <%- include("../partials/icon", { name: "alert", className: "icon-sm" }) %>
+            <span>Active Alerts</span>
+          </p>
+          <h3 class="panel-title">Watchlist</h3>
+        </div>
+        <a href="/alerts" class="panel-link">Open Alerts</a>
+      </div>
+      <div class="dashboard-watchlist">
+        <% site.alerts.forEach((alert) => { %>
+          <article class="dashboard-watch-card">
+            <div>
+              <p class="dashboard-watch-title"><%= alert.title %></p>
+              <p class="dashboard-watch-copy"><%= alert.description %></p>
+            </div>
+            <span class="dashboard-watch-pill <%= alert.type === 'critical' ? 'is-critical' : alert.type === 'warning' ? 'is-warning' : 'is-info' %>"><%= alert.type %></span>
+          </article>
+        <% }) %>
+      </div>
+    </section>
+  </div>
+</section>

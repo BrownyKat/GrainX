@@ -1,0 +1,26 @@
+<section class="page-intro">
+  <div>
+    <% const introIconByPage = { markets: "market", dashboard: "overview", reports: "report", oracle: "chain", alerts: "alert", settings: "settings" }; %>
+    <p class="page-eyebrow">
+      <%- include("icon", { name: introIconByPage[page.slug], className: "icon-sm" }) %>
+      <span><%= page.eyebrow %></span>
+    </p>
+    <h2 class="page-title"><%= page.heading %></h2>
+    <p class="page-description"><%= page.description %></p>
+  </div>
+
+  <div class="page-action-row">
+    <a href="/settings#integration-api" class="btn-ghost">
+      <%- include("icon", { name: "api", className: "icon-sm" }) %>
+      <span>API Routes</span>
+    </a>
+    <a href="/oracle" class="btn-secondary">
+      <%- include("icon", { name: "chain", className: "icon-sm" }) %>
+      <span>Base Desk</span>
+    </a>
+    <a href="/markets" class="btn-primary">
+      <%- include("icon", { name: "market", className: "icon-sm" }) %>
+      <span>Grains Board</span>
+    </a>
+  </div>
+</section>

@@ -1,0 +1,153 @@
+<section class="settings-grid">
+  <div class="settings-top-grid">
+    <section class="settings-panel">
+      <div class="panel-head">
+        <div>
+          <p class="panel-eyebrow">
+            <%- include("../partials/icon", { name: "alert", className: "icon-sm" }) %>
+            <span>Thresholds</span>
+          </p>
+          <h3 class="panel-title">Philippine Grain Thresholds</h3>
+        </div>
+        <button id="settingsSaveBtn" class="btn-primary">
+          <%- include("../partials/icon", { name: "settings", className: "icon-sm" }) %>
+          <span>Save Changes</span>
+        </button>
+      </div>
+      <div class="settings-form-grid">
+        <% Object.entries(site.settings.thresholds).forEach(([key, value]) => { %>
+          <label class="settings-field">
+            <span class="settings-field-label"><%= key.replace(/([A-Z])/g, " $1").replace(/^./, (char) => char.toUpperCase()) %> threshold</span>
+            <input class="settings-input" type="number" value="<%= value %>" data-threshold="<%= key %>" />
+          </label>
+        <% }) %>
+      </div>
+    </section>
+
+    <section class="settings-panel">
+      <div class="panel-head">
+        <div>
+          <p class="panel-eyebrow">
+            <%- include("../partials/icon", { name: "alert", className: "icon-sm" }) %>
+            <span>Notifications</span>
+          </p>
+          <h3 class="panel-title">Operator Preferences</h3>
+        </div>
+      </div>
+      <div class="settings-stack">
+        <% site.settings.notifications.forEach((notification, index) => { %>
+          <article class="settings-card">
+            <div>
+              <p class="settings-card-title"><%= notification.label %></p>
+              <p class="settings-card-copy"><%= notification.description %></p>
+            </div>
+            <button class="settings-toggle <%= notification.enabled ? 'is-on' : '' %>" data-toggle-index="<%= index %>" type="button">
+              <span></span>
+            </button>
+          </article>
+        <% }) %>
+      </div>
+    </section>
+  </div>
+
+  <div class="settings-bottom-grid">
+    <section class="settings-panel">
+      <div class="panel-head">
+        <div>
+          <p class="panel-eyebrow">
+            <%- include("../partials/icon", { name: "market", className: "icon-sm" }) %>
+            <span>Sources</span>
+          </p>
+          <h3 class="panel-title">Data Source Status</h3>
+        </div>
+      </div>
+      <div class="table-wrap">
+        <table class="table-base">
+          <thead>
+            <tr>
+              <th>Source</th>
+              <th>Type</th>
+              <th>Latency</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% site.settings.dataSources.forEach((source) => { %>
+              <tr>
+                <td class="strong"><%= source.source %></td>
+                <td class="muted"><%= source.type %></td>
+                <td class="mono muted"><%= source.latency %></td>
+                <td><span class="settings-status-pill"><%= source.status %></span></td>
+              </tr>
+            <% }) %>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="settings-panel">
+      <div class="panel-head">
+        <div>
+          <p class="panel-eyebrow">
+            <%- include("../partials/icon", { name: "settings", className: "icon-sm" }) %>
+            <span>Engine</span>
+          </p>
+          <h3 class="panel-title">Prediction and Sync Controls</h3>
+        </div>
+      </div>
+      <div class="settings-stack">
+        <article class="settings-summary-card">
+          <p class="settings-summary-label">Data mode</p>
+          <p class="settings-summary-value"><%= site.settings.engine.mode %></p>
+        </article>
+        <article class="settings-summary-card">
+          <p class="settings-summary-label">Refresh interval</p>
+          <p class="settings-summary-value"><%= site.settings.engine.refreshInterval %></p>
+        </article>
+        <article class="settings-summary-card">
+          <p class="settings-summary-label">Prediction sensitivity</p>
+          <p class="settings-summary-value"><%= site.settings.engine.sensitivity %>%</p>
+        </article>
+        <article class="settings-summary-card">
+          <p class="settings-summary-label">Confidence scores</p>
+          <p class="settings-summary-value"><%= site.settings.engine.confidenceScores ? 'Enabled' : 'Disabled' %></p>
+        </article>
+      </div>
+    </section>
+  </div>
+
+  <section class="settings-panel" id="integration-api">
+    <div class="panel-head">
+      <div>
+        <p class="panel-eyebrow">
+          <%- include("../partials/icon", { name: "api", className: "icon-sm" }) %>
+          <span>Integration API</span>
+        </p>
+        <h3 class="panel-title">Production Routes</h3>
+      </div>
+      <span class="panel-badge">API v1</span>
+    </div>
+    <div class="table-wrap">
+      <table class="table-base">
+        <thead>
+          <tr>
+            <th>Method</th>
+            <th>Path</th>
+            <th>Purpose</th>
+            <th>Source</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% site.settings.apiRoutes.forEach((route) => { %>
+            <tr>
+              <td class="mono strong"><%= route.method %></td>
+              <td class="mono tone-info"><%= route.path %></td>
+              <td class="muted"><%= route.purpose %></td>
+              <td class="muted"><%= route.source %></td>
+            </tr>
+          <% }) %>
+        </tbody>
+      </table>
+    </div>
+  </section>
+</section>

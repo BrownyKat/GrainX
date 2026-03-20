@@ -1,0 +1,77 @@
+<%
+  const iconClass = typeof className === "string" ? className : "icon-inline";
+%>
+<% if (name === "market") { %>
+  <svg class="<%= iconClass %>" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+    <path d="M4 19h16" />
+    <path d="M6 16V9" />
+    <path d="M12 16V5" />
+    <path d="M18 16v-4" />
+  </svg>
+<% } else if (name === "wallet") { %>
+  <svg class="<%= iconClass %>" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+    <path d="M3 8a2 2 0 0 1 2-2h12.5a2 2 0 0 1 1.4.6l1.5 1.4a2 2 0 0 1 .6 1.4V17a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8Z" />
+    <path d="M16 13h5" />
+    <circle cx="16" cy="13" r="1" />
+  </svg>
+<% } else if (name === "chain") { %>
+  <svg class="<%= iconClass %>" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+    <path d="M10 13a5 5 0 0 1 0-7l1.5-1.5a5 5 0 1 1 7 7L17 13" />
+    <path d="M14 11a5 5 0 0 1 0 7l-1.5 1.5a5 5 0 0 1-7-7L7 11" />
+  </svg>
+<% } else if (name === "api") { %>
+  <svg class="<%= iconClass %>" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+    <path d="M7 8 3 12l4 4" />
+    <path d="m17 8 4 4-4 4" />
+    <path d="m14 4-4 16" />
+  </svg>
+<% } else if (name === "overview") { %>
+  <svg class="<%= iconClass %>" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+    <rect x="3" y="4" width="7" height="7" rx="1.5" />
+    <rect x="14" y="4" width="7" height="7" rx="1.5" />
+    <rect x="3" y="13" width="7" height="7" rx="1.5" />
+    <rect x="14" y="13" width="7" height="7" rx="1.5" />
+  </svg>
+<% } else if (name === "report") { %>
+  <svg class="<%= iconClass %>" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+    <path d="M7 3h7l5 5v13a1 1 0 0 1-1 1H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2Z" />
+    <path d="M14 3v5h5" />
+    <path d="M9 13h6" />
+    <path d="M9 17h4" />
+  </svg>
+<% } else if (name === "alert") { %>
+  <svg class="<%= iconClass %>" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+    <path d="M12 9v4" />
+    <path d="M12 17h.01" />
+    <path d="M10.3 3.8 2.8 17A2 2 0 0 0 4.5 20h15a2 2 0 0 0 1.7-3l-7.5-13.2a2 2 0 0 0-3.4 0Z" />
+  </svg>
+<% } else if (name === "settings") { %>
+  <svg class="<%= iconClass %>" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+    <path d="M12 15.5A3.5 3.5 0 1 0 12 8.5a3.5 3.5 0 0 0 0 7Z" />
+    <path d="M19.4 15a1.7 1.7 0 0 0 .3 1.9l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.9-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.2a1.7 1.7 0 0 0-1-1.5 1.7 1.7 0 0 0-1.9.3l-.1.1A2 2 0 0 1 4.2 17l.1-.1a1.7 1.7 0 0 0 .3-1.9 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.2a1.7 1.7 0 0 0 1.5-1 1.7 1.7 0 0 0-.3-1.9l-.1-.1A2 2 0 1 1 7 4.2l.1.1a1.7 1.7 0 0 0 1.9.3h.1a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.2a1.7 1.7 0 0 0 1 1.5h.1a1.7 1.7 0 0 0 1.9-.3l.1-.1A2 2 0 1 1 19.8 7l-.1.1a1.7 1.7 0 0 0-.3 1.9v.1a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.2a1.7 1.7 0 0 0-1.5 1V15Z" />
+  </svg>
+<% } else if (name === "location") { %>
+  <svg class="<%= iconClass %>" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+    <path d="M12 21s6-4.8 6-10a6 6 0 1 0-12 0c0 5.2 6 10 6 10Z" />
+    <circle cx="12" cy="11" r="2.5" />
+  </svg>
+<% } else if (name === "trend") { %>
+  <svg class="<%= iconClass %>" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+    <path d="M4 16l5-5 4 3 7-7" />
+    <path d="M15 7h5v5" />
+  </svg>
+<% } else if (name === "clock") { %>
+  <svg class="<%= iconClass %>" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+    <circle cx="12" cy="12" r="9" />
+    <path d="M12 7v5l3 2" />
+  </svg>
+<% } else if (name === "shield") { %>
+  <svg class="<%= iconClass %>" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+    <path d="M12 3 5 6v5c0 5 3.4 8.3 7 10 3.6-1.7 7-5 7-10V6l-7-3Z" />
+    <path d="m9.5 12 1.7 1.7 3.3-3.4" />
+  </svg>
+<% } else if (name === "spark") { %>
+  <svg class="<%= iconClass %>" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+    <path d="m12 3 1.8 4.6L18 9.4l-4.2 1.8L12 16l-1.8-4.8L6 9.4l4.2-1.8L12 3Z" />
+  </svg>
+<% } %>

@@ -1,0 +1,152 @@
+@tailwind components;
+
+@layer components {
+  .markets-grid {
+    @apply flex flex-col gap-6;
+  }
+
+  .markets-lead-grid {
+    @apply grid gap-6 xl:grid-cols-[minmax(0,1.35fr)_minmax(0,0.85fr)];
+  }
+
+  .markets-side-stack {
+    @apply flex flex-col gap-6;
+  }
+
+  .markets-chart-grid {
+    @apply grid gap-6 xl:grid-cols-2;
+  }
+
+  .market-panel {
+    @apply rounded-[1.35rem] border border-line bg-shell/95 shadow-chrome;
+  }
+
+  .market-feature-shell {
+    @apply flex flex-col gap-4 p-5;
+  }
+
+  .market-feature-copy {
+    @apply text-sm leading-7 text-text;
+  }
+
+  .market-feature-note {
+    @apply rounded-[1.15rem] border border-line bg-panel/80 p-4 text-sm leading-6 text-muted;
+  }
+
+  .location-shell {
+    @apply flex flex-col gap-4 p-5;
+  }
+
+  .location-toolbar {
+    @apply grid gap-4 md:grid-cols-2;
+  }
+
+  .location-field {
+    @apply flex flex-col gap-3;
+  }
+
+  .location-select,
+  .settings-input {
+    @apply rounded-2xl border border-line bg-panel/80 px-4 py-3 text-sm text-text outline-none transition focus:border-info;
+  }
+
+  .location-status-card {
+    @apply rounded-2xl border border-line bg-panel/80 px-4 py-3 text-sm text-muted;
+  }
+
+  .location-summary-card {
+    @apply flex flex-col gap-3 rounded-[1.15rem] border border-line bg-panel/80 p-4 md:flex-row md:items-start md:justify-between;
+  }
+
+  .location-summary-title {
+    @apply text-lg font-semibold text-text;
+  }
+
+  .location-summary-copy {
+    @apply mt-2 text-sm leading-6 text-muted;
+  }
+
+  .location-card-grid {
+    @apply grid gap-3 md:grid-cols-2;
+  }
+
+  .location-card {
+    @apply rounded-[1.15rem] border border-line bg-shell2/94 p-4;
+  }
+
+  .location-card-title {
+    @apply font-mono text-[11px] uppercase tracking-[0.28em] text-muted;
+  }
+
+  .location-card-price {
+    @apply mt-3 text-2xl font-semibold text-text;
+  }
+
+  .location-card-meta {
+    @apply mt-2 flex items-center justify-between gap-3 text-xs text-muted;
+  }
+
+  .location-chip {
+    @apply rounded-full border px-3 py-1 font-mono text-xs;
+  }
+
+  .location-chip.is-watch {
+    @apply border-danger/20 bg-danger/10 text-danger;
+  }
+
+  .location-chip.is-stable {
+    @apply border-neon/20 bg-neon/10 text-neon;
+  }
+
+  .planner-shell {
+    @apply flex flex-col gap-4 p-5;
+  }
+
+  .planner-form-grid {
+    @apply grid gap-4;
+  }
+
+  .planner-result {
+    @apply rounded-[1.15rem] border border-line bg-panel/80 p-4;
+  }
+
+  .planner-result-grid {
+    @apply grid gap-3;
+  }
+
+  .planner-result-card {
+    @apply rounded-[1.15rem] border border-line bg-shell2/94 p-4;
+  }
+
+  .planner-result-label {
+    @apply font-mono text-[11px] uppercase tracking-[0.28em] text-muted;
+  }
+
+  .planner-result-value {
+    @apply mt-3 text-xl font-semibold text-text;
+  }
+
+  .planner-result-copy {
+    @apply mt-2 text-sm leading-6 text-muted;
+  }
+
+  .heatmap-pill {
+    @apply rounded-full border px-3 py-1 font-mono text-xs;
+  }
+
+  .heatmap-pill.is-hot {
+    @apply border-danger/20 bg-danger/10 text-danger;
+  }
+
+  .heatmap-pill.is-warm {
+    @apply border-amber/20 bg-amber/10 text-amber;
+  }
+
+  .heatmap-pill.is-cool {
+    @apply border-neon/20 bg-neon/10 text-neon;
+  }
+
+  .heatmap-pill.is-cold {
+    @apply border-info/20 bg-info/10 text-info;
+  }
+}

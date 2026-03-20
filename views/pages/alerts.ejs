@@ -1,0 +1,87 @@
+<section class="alerts-grid">
+  <div class="alerts-top-grid">
+    <% site.alerts.forEach((alert) => { %>
+      <article class="alert-card alert-<%= alert.type %>">
+        <div class="alert-card-head">
+          <p class="alert-card-title"><%= alert.title %></p>
+          <span class="alert-card-badge"><%= alert.type %></span>
+        </div>
+        <p class="alert-card-copy"><%= alert.description %></p>
+        <p class="alert-card-meta"><%= alert.meta %></p>
+      </article>
+    <% }) %>
+  </div>
+
+  <div class="alerts-bottom-grid">
+    <section class="alerts-panel">
+      <div class="panel-head">
+        <div>
+          <p class="panel-eyebrow">
+            <%- include("../partials/icon", { name: "clock", className: "icon-sm" }) %>
+            <span>History</span>
+          </p>
+          <h3 class="panel-title">Alert History and Closure Notes</h3>
+        </div>
+      </div>
+      <div class="table-wrap">
+        <table class="table-base">
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Commodity</th>
+              <th>Trigger</th>
+              <th>Value</th>
+              <th>Owner</th>
+              <th>State</th>
+              <th>Resolution</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% site.alertHistory.forEach((item) => { %>
+              <tr>
+                <td class="mono muted"><%= item.date %></td>
+                <td class="strong"><%= item.commodity %></td>
+                <td class="muted"><%= item.trigger %></td>
+                <td class="mono"><%= item.value %></td>
+                <td class="muted"><%= item.owner %></td>
+                <td><span class="alert-state-pill <%= item.state === 'Active' ? 'is-active' : 'is-resolved' %>"><%= item.state %></span></td>
+                <td class="muted"><%= item.resolution %></td>
+              </tr>
+            <% }) %>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="alerts-panel">
+      <div class="panel-head">
+        <div>
+          <p class="panel-eyebrow">
+            <%- include("../partials/icon", { name: "shield", className: "icon-sm" }) %>
+            <span>Workflow</span>
+          </p>
+          <h3 class="panel-title">How an Alert Gets Resolved</h3>
+        </div>
+      </div>
+      <div class="alerts-guide">
+        <% site.alertProcess.forEach((step) => { %>
+          <article class="guide-card">
+            <p class="guide-title">Step <%= step.step %></p>
+            <p class="strong"><%= step.title %></p>
+            <p class="guide-copy"><%= step.description %></p>
+            <p class="alert-card-meta"><%= step.outcome %></p>
+          </article>
+        <% }) %>
+        <article class="guide-card">
+          <p class="guide-title">Resolved Means</p>
+        <% site.resolutionRules.forEach((rule) => { %>
+            <p class="guide-copy label-with-icon">
+              <%- include("../partials/icon", { name: "shield", className: "icon-sm" }) %>
+              <span><%= rule %></span>
+            </p>
+          <% }) %>
+        </article>
+      </div>
+    </section>
+  </div>
+</section>

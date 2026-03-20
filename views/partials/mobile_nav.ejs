@@ -1,0 +1,11 @@
+<nav class="section-nav" aria-label="Section Navigation">
+  <div class="section-nav-track">
+    <% Object.keys(pages).forEach((pageKey) => { %>
+      <a href="/<%= pageKey %>" class="section-nav-link <%= currentPage === pageKey ? 'is-active' : '' %>" <%= currentPage === pageKey ? 'aria-current="page"' : '' %>>
+        <% const iconByPage = { markets: "market", dashboard: "overview", reports: "report", oracle: "chain", alerts: "alert", settings: "settings" }; %>
+        <%- include("icon", { name: iconByPage[pageKey], className: "icon-sm" }) %>
+        <span><%= pages[pageKey].title %></span>
+      </a>
+    <% }) %>
+  </div>
+</nav>

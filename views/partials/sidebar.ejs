@@ -1,0 +1,17 @@
+<aside class="sidebar">
+  <% const activeAlerts = site.alertHistory.filter((item) => item.state === "Active").length; %>
+  <div class="sidebar-section-label">Navigation</div>
+  <nav class="sidebar-nav">
+    <% Object.keys(pages).forEach((pageKey) => { %>
+      <a href="/<%= pageKey %>" class="sidebar-link <%= currentPage === pageKey ? 'is-active' : '' %>" <%= currentPage === pageKey ? 'aria-current="page"' : '' %>>
+        <span><%= pages[pageKey].title %></span>
+      </a>
+    <% }) %>
+  </nav>
+
+  <div class="sidebar-card">
+    <p class="sidebar-card-label">Workspace</p>
+    <p class="sidebar-card-copy"><%= activeAlerts %> active alert<%= activeAlerts === 1 ? '' : 's' %>, official-source mode, Base-compatible wallet flow.</p>
+    <p class="sidebar-card-meta"><%= site.meta.refreshLabel %></p>
+  </div>
+</aside>

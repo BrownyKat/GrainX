@@ -1,0 +1,83 @@
+@tailwind components;
+
+@layer components {
+  .alerts-grid {
+    @apply flex flex-col gap-6;
+  }
+
+  .alerts-top-grid {
+    @apply grid gap-4 xl:grid-cols-3;
+  }
+
+  .alert-card {
+    @apply rounded-[1.35rem] border p-5 shadow-chrome;
+  }
+
+  .alert-critical {
+    @apply border-danger/40 bg-danger/10;
+  }
+
+  .alert-warning {
+    @apply border-amber/40 bg-amber/10;
+  }
+
+  .alert-info {
+    @apply border-info/40 bg-info/10;
+  }
+
+  .alert-card-head {
+    @apply flex items-center justify-between gap-4;
+  }
+
+  .alert-card-title {
+    @apply text-lg font-semibold text-text;
+  }
+
+  .alert-card-badge {
+    @apply rounded-full border border-line px-3 py-1 font-mono text-xs uppercase text-text;
+  }
+
+  .alert-card-copy {
+    @apply mt-3 text-sm leading-7 text-muted;
+  }
+
+  .alert-card-meta {
+    @apply mt-4 font-mono text-xs text-muted;
+  }
+
+  .alerts-bottom-grid {
+    @apply grid gap-6 xl:grid-cols-[minmax(0,1.15fr)_minmax(0,0.85fr)];
+  }
+
+  .alerts-panel {
+    @apply rounded-[1.35rem] border border-line/80 bg-shell/95 shadow-chrome;
+  }
+
+  .alert-state-pill {
+    @apply rounded-full border px-3 py-1 font-mono text-xs;
+  }
+
+  .alert-state-pill.is-active {
+    @apply border-danger/40 bg-danger/10 text-danger;
+  }
+
+  .alert-state-pill.is-resolved {
+    @apply border-neon/40 bg-neon/10 text-neon;
+  }
+
+  .alerts-guide {
+    @apply flex flex-col gap-3 p-5;
+  }
+
+  .guide-card {
+    @apply rounded-[1.15rem] border border-line bg-panel/80 p-4;
+  }
+
+  .guide-title {
+    @apply font-mono text-xs uppercase tracking-[0.28em] text-muted;
+  }
+
+  .guide-copy {
+    @apply mt-2 text-sm leading-6 text-text;
+  }
+}

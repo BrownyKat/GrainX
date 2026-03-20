@@ -1,0 +1,203 @@
+<section class="oracle-grid">
+  <div class="oracle-top-grid">
+    <section class="oracle-panel">
+      <div class="panel-head">
+        <div>
+          <p class="panel-eyebrow">
+            <%- include("../partials/icon", { name: "chain", className: "icon-sm" }) %>
+            <span>Unique Web3 Function</span>
+          </p>
+          <h3 class="panel-title"><%= site.baseDesk.title %></h3>
+        </div>
+        <span class="panel-badge"><%= site.baseDesk.mode %></span>
+      </div>
+      <div class="oracle-builder-shell">
+        <p class="oracle-copy"><%= site.baseDesk.description %></p>
+        <div class="oracle-form-grid">
+          <label class="oracle-field">
+            <span class="oracle-field-label">Commodity</span>
+            <select id="oracleCommoditySelect" class="oracle-select">
+              <% site.commodities.forEach((commodity) => { %>
+                <option value="<%= commodity.key %>"><%= commodity.name %></option>
+              <% }) %>
+            </select>
+          </label>
+          <label class="oracle-field">
+            <span class="oracle-field-label">Location</span>
+            <select id="oracleLocationSelect" class="oracle-select">
+              <% site.locationMarkets.forEach((location) => { %>
+                <option value="<%= location.location %>"><%= location.location %></option>
+              <% }) %>
+            </select>
+          </label>
+          <label class="oracle-field">
+            <span class="oracle-field-label">Action</span>
+            <select id="oracleActionSelect" class="oracle-select">
+              <% site.baseDesk.supportedActions.forEach((action) => { %>
+                <option value="<%= action %>"><%= action %></option>
+              <% }) %>
+            </select>
+          </label>
+          <label class="oracle-field">
+            <span class="oracle-field-label">Quantity (kg)</span>
+            <input id="oracleQuantityInput" class="oracle-input" type="number" min="1" value="1000" />
+          </label>
+        </div>
+
+        <div class="oracle-ticket-grid">
+          <article class="oracle-ticket-card">
+            <p class="oracle-ticket-label">Reference Price</p>
+            <p id="oracleTicketPrice" class="oracle-ticket-value">-</p>
+          </article>
+          <article class="oracle-ticket-card">
+            <p class="oracle-ticket-label">Notional</p>
+            <p id="oracleTicketNotional" class="oracle-ticket-value">-</p>
+          </article>
+          <article class="oracle-ticket-card">
+            <p class="oracle-ticket-label">Expiry</p>
+            <p id="oracleTicketExpiry" class="oracle-ticket-value">-</p>
+          </article>
+          <article class="oracle-ticket-card">
+            <p class="oracle-ticket-label">Preferred Chain</p>
+            <p id="oracleTicketMode" class="oracle-ticket-value"><%= site.baseDesk.preferredChain %></p>
+          </article>
+        </div>
+
+        <div class="oracle-banner-actions">
+          <button id="oracleConnectBtn" class="btn-secondary" type="button">
+            <%- include("../partials/icon", { name: "wallet", className: "icon-sm" }) %>
+            <span>Connect Wallet</span>
+          </button>
+          <button id="oracleSwitchBtn" class="btn-ghost" type="button">
+            <%- include("../partials/icon", { name: "chain", className: "icon-sm" }) %>
+            <span>Switch Base</span>
+          </button>
+          <button id="oracleSignBtn" class="btn-primary" type="button">
+            <%- include("../partials/icon", { name: "shield", className: "icon-sm" }) %>
+            <span>Sign Ticket</span>
+          </button>
+          <button id="oraclePublishBtn" class="btn-secondary" type="button">
+            <%- include("../partials/icon", { name: "spark", className: "icon-sm" }) %>
+            <span>Publish Intent</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <section class="oracle-panel">
+      <div class="panel-head">
+        <div>
+          <p class="panel-eyebrow">
+            <%- include("../partials/icon", { name: "wallet", className: "icon-sm" }) %>
+            <span>Wallet and Preview</span>
+          </p>
+          <h3 class="panel-title">Wallet Ticket Preview</h3>
+        </div>
+        <button id="oracleExportBtn" class="btn-secondary" type="button">
+          <%- include("../partials/icon", { name: "report", className: "icon-sm" }) %>
+          <span>Export JSON</span>
+        </button>
+      </div>
+      <div class="oracle-summary-stack">
+        <article class="oracle-summary-card">
+          <p class="oracle-ticket-label">Wallet</p>
+          <p id="oracleWalletNetwork" class="oracle-ticket-value"><%= site.baseDesk.preferredChain %></p>
+          <p id="oracleWalletAccount" class="oracle-summary-copy">Not connected</p>
+          <p id="oracleWalletBalance" class="oracle-summary-copy">0.0000 ETH</p>
+        </article>
+        <article class="oracle-summary-card">
+          <p class="oracle-ticket-label">Contract Mode</p>
+          <p class="oracle-ticket-value"><%= site.baseDesk.mode %></p>
+          <p id="oracleContractAddress" class="oracle-summary-copy"><%= site.baseDesk.contractAddress || 'No contract address configured yet.' %></p>
+          <a href="<%= site.baseDesk.explorerUrl %>" target="_blank" rel="noreferrer" class="panel-link">Base Explorer</a>
+        </article>
+      </div>
+      <div class="oracle-preview-shell">
+        <pre id="oracleReceiptPreview" class="oracle-preview"></pre>
+      </div>
+      <p id="oracleSignatureStatus" class="oracle-signature-status">
+        Build a ticket from the selected grain and city, then sign it with a Base-compatible wallet on <%= site.baseDesk.preferredChain %>.
+      </p>
+    </section>
+  </div>
+
+  <div class="oracle-bottom-grid">
+    <section class="oracle-panel">
+      <div class="panel-head">
+        <div>
+          <p class="panel-eyebrow">
+            <%- include("../partials/icon", { name: "trend", className: "icon-sm" }) %>
+            <span>Reference History</span>
+          </p>
+          <h3 class="panel-title">Selected Grain Trend</h3>
+        </div>
+      </div>
+      <div class="chart-frame">
+        <canvas id="oracleHistoryChart"></canvas>
+      </div>
+    </section>
+
+    <section class="oracle-panel">
+      <div class="panel-head">
+        <div>
+          <p class="panel-eyebrow">
+            <%- include("../partials/icon", { name: "spark", className: "icon-sm" }) %>
+            <span>Oracle Rounds</span>
+          </p>
+          <h3 class="panel-title">Latest Feed Confirmations</h3>
+        </div>
+      </div>
+      <div class="table-wrap">
+        <table class="table-base">
+          <thead>
+            <tr>
+              <th>Round</th>
+              <th>Feed</th>
+              <th>Answer</th>
+              <th>Age</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% site.oracle.rounds.slice(0, 4).forEach((round) => { %>
+              <tr>
+                <td class="mono tone-violet">#<%= round.roundId %></td>
+                <td class="strong"><%= round.feed %></td>
+                <td class="mono"><%= round.price.toFixed(1) %></td>
+                <td class="mono muted"><%= round.age %></td>
+                <td><span class="oracle-status-pill"><%= round.status %></span></td>
+              </tr>
+            <% }) %>
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </div>
+
+  <section class="oracle-panel">
+    <div class="panel-head">
+      <div>
+        <p class="panel-eyebrow">
+          <%- include("../partials/icon", { name: "clock", className: "icon-sm" }) %>
+          <span>Recent Base and Oracle Activity</span>
+        </p>
+        <h3 class="panel-title">Audit Trail</h3>
+      </div>
+    </div>
+    <div class="chain-log">
+      <% site.oracle.chainLog.slice(0, 4).forEach((entry) => { %>
+        <article class="chain-log-item">
+          <div class="chain-log-head">
+            <span class="chain-log-type <%= entry.type === 'alert' ? 'is-alert' : entry.type === 'update' ? 'is-update' : 'is-oracle' %>"><%= entry.type %></span>
+            <span class="mono muted"><%= entry.age %></span>
+          </div>
+          <p class="chain-log-copy"><%= entry.description %></p>
+          <div class="chain-log-meta">
+            <span class="mono tone-info"><%= entry.hash %></span>
+            <span class="mono muted">Block #<%= entry.block %></span>
+          </div>
+        </article>
+      <% }) %>
+    </div>
+  </section>
+</section>

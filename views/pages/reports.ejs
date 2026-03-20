@@ -1,0 +1,125 @@
+<section class="reports-grid">
+  <% const primaryCommodity = site.commodities.find((commodity) => commodity.key === site.reportCharts.primaryKey); %>
+  <% const secondaryCommodity = site.commodities.find((commodity) => commodity.key === site.reportCharts.secondaryKey); %>
+  <div class="reports-highlight-grid">
+    <% site.reportHighlights.forEach((highlight) => { %>
+      <article class="report-highlight-card">
+        <p class="report-highlight-label"><%= highlight.title %></p>
+        <h3 class="report-highlight-value"><%= highlight.value %></h3>
+        <p class="report-highlight-copy"><%= highlight.detail %></p>
+      </article>
+    <% }) %>
+  </div>
+
+  <div class="reports-chart-grid">
+    <section class="report-panel">
+      <div class="panel-head">
+        <div>
+          <p class="panel-eyebrow">
+            <%- include("../partials/icon", { name: "trend", className: "icon-sm" }) %>
+            <span>Projection</span>
+          </p>
+          <h3 class="panel-title"><%= primaryCommodity ? primaryCommodity.name : "Primary Grain" %> 60-Day Projection</h3>
+        </div>
+        <span class="panel-badge">Forecast</span>
+      </div>
+      <div class="chart-frame">
+        <canvas id="riceForecastChart"></canvas>
+      </div>
+    </section>
+
+    <section class="report-panel">
+      <div class="panel-head">
+        <div>
+          <p class="panel-eyebrow">
+            <%- include("../partials/icon", { name: "trend", className: "icon-sm" }) %>
+            <span>Projection</span>
+          </p>
+          <h3 class="panel-title"><%= secondaryCommodity ? secondaryCommodity.name : "Secondary Grain" %> 60-Day Projection</h3>
+        </div>
+        <span class="panel-badge">Forecast</span>
+      </div>
+      <div class="chart-frame">
+        <canvas id="wheatForecastChart"></canvas>
+      </div>
+    </section>
+  </div>
+
+  <section class="report-panel">
+    <div class="panel-head">
+      <div>
+        <p class="panel-eyebrow">
+          <%- include("../partials/icon", { name: "market", className: "icon-sm" }) %>
+          <span>Volatility</span>
+        </p>
+        <h3 class="panel-title">Commodity Volatility Index</h3>
+      </div>
+      <button id="reportExportBtn" class="btn-primary">
+        <%- include("../partials/icon", { name: "report", className: "icon-sm" }) %>
+        <span>Export Report</span>
+      </button>
+    </div>
+    <div class="chart-frame chart-frame-tall">
+      <canvas id="volatilityChart"></canvas>
+    </div>
+  </section>
+
+  <div class="reports-table-grid">
+    <section class="report-panel">
+      <div class="panel-head">
+        <div>
+          <p class="panel-eyebrow">
+            <%- include("../partials/icon", { name: "report", className: "icon-sm" }) %>
+            <span>Summary</span>
+          </p>
+          <h3 class="panel-title">Operational Recommendations</h3>
+        </div>
+      </div>
+      <div class="table-wrap">
+        <table class="table-base">
+          <thead>
+            <tr>
+              <th>Report</th>
+              <th>Summary</th>
+              <th>Recommendation</th>
+              <th>Risk</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% site.reportTable.forEach((report) => { %>
+              <tr>
+                <td class="strong"><%= report.title %></td>
+                <td class="muted"><%= report.summary %></td>
+                <td><span class="report-chip"><%= report.recommendation %></span></td>
+                <td class="mono"><%= report.risk %></td>
+              </tr>
+            <% }) %>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="report-panel">
+      <div class="panel-head">
+        <div>
+          <p class="panel-eyebrow">
+            <%- include("../partials/icon", { name: "shield", className: "icon-sm" }) %>
+            <span>Model Output</span>
+          </p>
+          <h3 class="panel-title">Confidence by Grain</h3>
+        </div>
+      </div>
+      <div class="report-list">
+        <% site.predictions.forEach((prediction) => { %>
+          <article class="report-list-card">
+            <div>
+              <p class="report-list-title"><%= prediction.commodity %></p>
+              <p class="report-list-copy">Forecast: <span class="mono"><%= prediction.forecast.toFixed(1) %></span></p>
+            </div>
+            <span class="report-chip"><%= prediction.confidence %></span>
+          </article>
+        <% }) %>
+      </div>
+    </section>
+  </div>
+</section>
