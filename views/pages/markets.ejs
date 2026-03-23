@@ -1,12 +1,56 @@
 <section class="markets-grid">
-  <section class="market-panel">
-    <div class="panel-head">
-      <div>
-        <p class="panel-eyebrow">
-          <%- include("../partials/icon", { name: "market", className: "icon-sm" }) %>
-          <span>Philippine Grains Prices</span>
-        </p>
-        <h3 class="panel-title">Market Board</h3>
+  <div class="markets-hero-grid">
+    <article class="markets-hero-card">
+      <p class="markets-hero-label">Trading Board</p>
+      <h3 class="markets-hero-title">A clearer command surface for Philippine rice and corn decisions.</h3>
+      <p class="markets-hero-copy">The market board, location explorer, and planner now sit under a stronger visual hierarchy so operators can scan the national picture, jump to city detail, and move straight into procurement planning.</p>
+      <div class="markets-hero-metrics">
+        <article class="markets-hero-metric">
+          <p class="markets-hero-metric-label">Tracked grains</p>
+          <p class="markets-hero-metric-value"><%= site.marketRows.length %> contracts</p>
+        </article>
+        <article class="markets-hero-metric">
+          <p class="markets-hero-metric-label">Pilot locations</p>
+          <p class="markets-hero-metric-value"><%= site.locationMarkets.length %> cities</p>
+        </article>
+        <article class="markets-hero-metric">
+          <p class="markets-hero-metric-label">Hottest region</p>
+          <p class="markets-hero-metric-value"><%= site.regions[0].region %></p>
+        </article>
+      </div>
+    </article>
+
+    <article class="markets-hero-card is-secondary">
+      <p class="markets-hero-label">Operator Readiness</p>
+      <h3 class="markets-hero-title">Move from board monitoring into procurement and Base attestation.</h3>
+      <p class="markets-hero-copy">The planner highlights cost efficiency by city while the Base desk path stays prominent for teams that need a signed operating ticket tied to the selected grain and location.</p>
+      <div class="markets-hero-metrics">
+        <article class="markets-hero-metric">
+          <p class="markets-hero-metric-label">Base mode</p>
+          <p class="markets-hero-metric-value"><%= site.baseDesk.mode %></p>
+        </article>
+        <article class="markets-hero-metric">
+          <p class="markets-hero-metric-label">Recommended tool</p>
+          <p class="markets-hero-metric-value"><%= site.recommendedFunction.title %></p>
+        </article>
+        <article class="markets-hero-metric">
+          <p class="markets-hero-metric-label">National focus</p>
+          <p class="markets-hero-metric-value"><%= site.meta.focus %></p>
+        </article>
+      </div>
+    </article>
+  </div>
+
+  <div class="markets-lead-grid">
+    <section class="market-panel">
+      <div class="panel-head">
+        <div>
+          <p class="panel-eyebrow">
+            <%- include("../partials/icon", { name: "market", className: "icon-sm" }) %>
+            <span>Philippine Grains Prices</span>
+          </p>
+          <h3 class="panel-title">Market Board</h3>
+        </div>
       </div>
     </div>
     <div class="table-wrap">

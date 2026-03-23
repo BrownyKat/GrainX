@@ -1,26 +1,62 @@
 <section class="page-intro">
+  <% const introIconByPage = { markets: "market", dashboard: "overview", reports: "report", oracle: "chain", alerts: "alert", settings: "settings" }; %>
+  <% const introStatByPage = {
+    markets: [
+      { label: "Quoted boards", value: String(site.marketRows.length).padStart(2, "0") },
+      { label: "Pilot cities", value: String(site.locationMarkets.length).padStart(2, "0") },
+      { label: "Top pressure", value: site.regions[0].region }
+    ],
+    dashboard: [
+      { label: "Lead grain", value: site.commodities[0].name },
+      { label: "Confidence", value: `${site.commodities[0].confidence}%` },
+      { label: "Desk notes", value: String(site.deskCommentary.length).padStart(2, "0") }
+    ],
+    reports: [
+      { label: "Forecast lines", value: String(site.predictions.length).padStart(2, "0") },
+      { label: "Risk focus", value: "Rice-led" },
+      { label: "Route mode", value: "API v1" }
+    ],
+    oracle: [
+      { label: "Chain", value: site.baseDesk.preferredChain },
+      { label: "Receipts", value: String(site.oracle.metrics[3].value) },
+      { label: "Mode", value: site.baseDesk.mode }
+    ],
+    alerts: [
+      { label: "Active now", value: String(site.alerts.length).padStart(2, "0") },
+      { label: "Workflow", value: `${site.alertProcess.length} steps` },
+      { label: "Owner desks", value: "3 teams" }
+    ],
+    settings: [
+      { label: "Data sources", value: String(site.settings.dataSources.length).padStart(2, "0") },
+      { label: "API routes", value: String(site.settings.apiRoutes.length).padStart(2, "0") },
+      { label: "Refresh", value: site.meta.refreshLabel }
+    ]
+  }; %>
   <div class="page-intro-copy">
-    <% const introIconByPage = { markets: "market", dashboard: "overview", reports: "report", oracle: "chain", alerts: "alert", settings: "settings" }; %>
     <p class="page-eyebrow">
       <%- include("icon", { name: introIconByPage[page.slug], className: "icon-sm" }) %>
       <span><%= page.eyebrow %></span>
     </p>
     <h2 class="page-title"><%= page.heading %></h2>
     <p class="page-description"><%= page.description %></p>
+    <div class="page-stat-row">
+      <% introStatByPage[page.slug].forEach((item) => { %>
+        <article class="page-stat-card">
+          <p class="page-stat-label"><%= item.label %></p>
+          <p class="page-stat-value"><%= item.value %></p>
+        </article>
+      <% }) %>
+    </div>
   </div>
 
-  <div class="page-intro-stat-grid">
-    <article class="page-intro-stat">
-      <p class="page-intro-stat-label">Feed cadence</p>
-      <p class="page-intro-stat-value"><%= site.meta.refreshLabel %></p>
-    </article>
-    <article class="page-intro-stat">
-      <p class="page-intro-stat-label">Base mode</p>
-      <p class="page-intro-stat-value"><%= site.baseDesk.mode %></p>
-    </article>
-    <article class="page-intro-stat">
-      <p class="page-intro-stat-label">Market focus</p>
-      <p class="page-intro-stat-value"><%= site.meta.focus %></p>
-    </article>
+  <div class="page-action-row">
+    <a href="/oracle" class="btn-secondary">
+      <%- include("icon", { name: "chain", className: "icon-sm" }) %>
+      <span>Base Desk</span>
+    </a>
+    <a href="/markets" class="btn-primary">
+      <%- include("icon", { name: "market", className: "icon-sm" }) %>
+      <span>Grains Board</span>
+    </a>
   </div>
 </section>

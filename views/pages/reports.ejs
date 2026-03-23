@@ -1,6 +1,48 @@
 <section class="reports-grid">
   <% const primaryCommodity = site.commodities.find((commodity) => commodity.key === site.reportCharts.primaryKey); %>
   <% const secondaryCommodity = site.commodities.find((commodity) => commodity.key === site.reportCharts.secondaryKey); %>
+  <div class="reports-hero-grid">
+    <article class="reports-hero-card">
+      <p class="reports-hero-label">Forecast Desk</p>
+      <h3 class="reports-hero-title">Forward views now read like an operator brief, not just a chart dump.</h3>
+      <p class="reports-hero-copy">Projection, volatility, and recommendation blocks are grouped to make the market story easier to scan before a desk exports a report or turns the signal into an action note.</p>
+      <div class="reports-hero-metrics">
+        <article class="reports-hero-metric">
+          <p class="reports-hero-metric-label">Forecast lines</p>
+          <p class="reports-hero-metric-value"><%= site.predictions.length %> tracked</p>
+        </article>
+        <article class="reports-hero-metric">
+          <p class="reports-hero-metric-label">Primary grain</p>
+          <p class="reports-hero-metric-value"><%= primaryCommodity ? primaryCommodity.name : "Primary Grain" %></p>
+        </article>
+        <article class="reports-hero-metric">
+          <p class="reports-hero-metric-label">Route mode</p>
+          <p class="reports-hero-metric-value">API v1</p>
+        </article>
+      </div>
+    </article>
+
+    <article class="reports-hero-card is-secondary">
+      <p class="reports-hero-label">Risk Bias</p>
+      <h3 class="reports-hero-title">Rice pressure remains the dominant narrative across recommendations.</h3>
+      <p class="reports-hero-copy">The right rail and recommendation table are tuned to keep confidence, risk posture, and suggested next steps visible at the same time for faster analyst handoff.</p>
+      <div class="reports-hero-metrics">
+        <article class="reports-hero-metric">
+          <p class="reports-hero-metric-label">High-priority signal</p>
+          <p class="reports-hero-metric-value">Rice-led</p>
+        </article>
+        <article class="reports-hero-metric">
+          <p class="reports-hero-metric-label">Export ready</p>
+          <p class="reports-hero-metric-value">Desk brief</p>
+        </article>
+        <article class="reports-hero-metric">
+          <p class="reports-hero-metric-label">Confidence mode</p>
+          <p class="reports-hero-metric-value">Enabled</p>
+        </article>
+      </div>
+    </article>
+  </div>
+
   <div class="reports-highlight-grid">
     <% site.reportHighlights.forEach((highlight) => { %>
       <article class="report-highlight-card">
@@ -12,55 +54,111 @@
   </div>
 
   <div class="reports-chart-grid">
-    <section class="report-panel">
-      <div class="panel-head">
-        <div>
+    <section class="report-panel report-projection-panel is-primary">
+      <div class="report-projection-head">
+        <div class="report-projection-copy">
           <p class="panel-eyebrow">
             <%- include("../partials/icon", { name: "trend", className: "icon-sm" }) %>
             <span>Projection</span>
           </p>
-          <h3 class="panel-title"><%= primaryCommodity ? primaryCommodity.name : "Primary Grain" %> 60-Day Projection</h3>
+          <h3 class="report-projection-title"><%= primaryCommodity ? primaryCommodity.name : "Primary Grain" %> 60-Day Projection</h3>
+          <p class="report-projection-description">The primary rice line carries the strongest policy sensitivity, so the chart now leads with a stronger summary, threshold context, and forecast spread before the line work begins.</p>
         </div>
         <span class="panel-badge">Forecast</span>
       </div>
-      <div class="chart-frame">
+      <div class="report-projection-metrics">
+        <article class="report-projection-metric">
+          <p class="report-projection-metric-label">Current</p>
+          <p class="report-projection-metric-value"><%= primaryCommodity ? primaryCommodity.value.toFixed(1) : "-" %></p>
+        </article>
+        <article class="report-projection-metric">
+          <p class="report-projection-metric-label">Threshold</p>
+          <p class="report-projection-metric-value"><%= primaryCommodity ? primaryCommodity.threshold.toFixed(1) : "-" %></p>
+        </article>
+        <article class="report-projection-metric">
+          <p class="report-projection-metric-label">Confidence</p>
+          <p class="report-projection-metric-value"><%= primaryCommodity ? primaryCommodity.confidence : "-" %>%</p>
+        </article>
+      </div>
+      <div class="chart-frame report-projection-chart-frame">
         <canvas id="riceForecastChart"></canvas>
       </div>
     </section>
 
-    <section class="report-panel">
-      <div class="panel-head">
-        <div>
+    <section class="report-panel report-projection-panel is-secondary">
+      <div class="report-projection-head">
+        <div class="report-projection-copy">
           <p class="panel-eyebrow">
             <%- include("../partials/icon", { name: "trend", className: "icon-sm" }) %>
             <span>Projection</span>
           </p>
-          <h3 class="panel-title"><%= secondaryCommodity ? secondaryCommodity.name : "Secondary Grain" %> 60-Day Projection</h3>
+          <h3 class="report-projection-title"><%= secondaryCommodity ? secondaryCommodity.name : "Secondary Grain" %> 60-Day Projection</h3>
+          <p class="report-projection-description">The secondary feed view uses the same structure so analysts can compare the corn path quickly against the rice-led outlook without scanning two nearly identical generic cards.</p>
         </div>
         <span class="panel-badge">Forecast</span>
       </div>
-      <div class="chart-frame">
+      <div class="report-projection-metrics">
+        <article class="report-projection-metric">
+          <p class="report-projection-metric-label">Current</p>
+          <p class="report-projection-metric-value"><%= secondaryCommodity ? secondaryCommodity.value.toFixed(1) : "-" %></p>
+        </article>
+        <article class="report-projection-metric">
+          <p class="report-projection-metric-label">Threshold</p>
+          <p class="report-projection-metric-value"><%= secondaryCommodity ? secondaryCommodity.threshold.toFixed(1) : "-" %></p>
+        </article>
+        <article class="report-projection-metric">
+          <p class="report-projection-metric-label">Confidence</p>
+          <p class="report-projection-metric-value"><%= secondaryCommodity ? secondaryCommodity.confidence : "-" %>%</p>
+        </article>
+      </div>
+      <div class="chart-frame report-projection-chart-frame">
         <canvas id="wheatForecastChart"></canvas>
       </div>
     </section>
   </div>
 
-  <section class="report-panel">
-    <div class="panel-head">
-      <div>
+  <section class="report-panel report-volatility-panel">
+    <div class="report-volatility-head">
+      <div class="report-volatility-copy">
         <p class="panel-eyebrow">
           <%- include("../partials/icon", { name: "market", className: "icon-sm" }) %>
-          <span>Volatility</span>
+          <span>Volatility Radar</span>
         </p>
-        <h3 class="panel-title">Commodity Volatility Index</h3>
+        <h3 class="report-volatility-title">Commodity Volatility Index</h3>
+        <p class="report-volatility-description">A faster read on where price movement is clustering this cycle, with the most sensitive grains surfaced beside the chart instead of buried below it.</p>
       </div>
       <button id="reportExportBtn" class="btn-primary">
         <%- include("../partials/icon", { name: "report", className: "icon-sm" }) %>
         <span>Export Report</span>
       </button>
     </div>
-    <div class="chart-frame chart-frame-tall">
-      <canvas id="volatilityChart"></canvas>
+
+    <div class="report-volatility-grid">
+      <div class="report-volatility-stage">
+        <div class="report-volatility-legend">
+          <span class="report-volatility-legend-pill is-high">High movement</span>
+          <span class="report-volatility-legend-pill is-medium">Watch band</span>
+          <span class="report-volatility-legend-pill is-low">Calmer range</span>
+        </div>
+        <div class="chart-frame chart-frame-tall report-volatility-chart-frame">
+          <canvas id="volatilityChart"></canvas>
+        </div>
+      </div>
+
+      <aside class="report-volatility-rail">
+        <% site.commodities.forEach((commodity, index) => { %>
+          <% const movement = Math.abs(commodity.monthlyChange); %>
+          <% const levelClass = movement >= 3 ? 'is-high' : movement >= 2 ? 'is-medium' : 'is-low'; %>
+          <article class="report-volatility-card <%= levelClass %>">
+            <div class="report-volatility-card-head">
+              <p class="report-volatility-card-label">Rank 0<%= index + 1 %></p>
+              <span class="report-volatility-card-pill <%= levelClass %>"><%= movement.toFixed(1) %>%</span>
+            </div>
+            <h4 class="report-volatility-card-title"><%= commodity.name %></h4>
+            <p class="report-volatility-card-copy">Monthly swing is <span class="mono"><%= commodity.monthlyChange > 0 ? '+' : '' %><%= commodity.monthlyChange %>%</span> with <span class="mono"><%= commodity.confidence %>%</span> confidence and a current signal of <%= commodity.signal %>.</p>
+          </article>
+        <% }) %>
+      </aside>
     </div>
   </section>
 
