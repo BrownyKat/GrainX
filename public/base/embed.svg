@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" role="img" aria-labelledby="title desc">
+  <title id="title">GrainWatch PH social card</title>
+  <desc id="desc">A branded preview card for GrainWatch PH showing Philippine grain intelligence on Base.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#112236" />
+      <stop offset="48%" stop-color="#08111b" />
+      <stop offset="100%" stop-color="#03080f" />
+    </linearGradient>
+    <linearGradient id="accent" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#6da7ff" />
+      <stop offset="100%" stop-color="#30c48d" />
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" rx="40" fill="url(#bg)" />
+  <circle cx="998" cy="132" r="160" fill="#6da7ff" opacity=".12" />
+  <circle cx="166" cy="560" r="180" fill="#30c48d" opacity=".08" />
+  <g opacity=".18">
+    <path d="M0 164h1200M0 314h1200M0 464h1200" stroke="#9aa8bd" />
+    <path d="M220 0v630M450 0v630M680 0v630M910 0v630" stroke="#9aa8bd" />
+  </g>
+  <rect x="70" y="78" width="1060" height="474" rx="32" fill="#0e1926" stroke="rgba(255,255,255,0.08)" />
+  <rect x="118" y="124" width="90" height="90" rx="24" fill="url(#accent)" />
+  <text x="140" y="180" fill="#071019" font-family="IBM Plex Mono, monospace" font-size="34" letter-spacing="8">GW</text>
+  <text x="240" y="164" fill="#9aa8bd" font-family="IBM Plex Mono, monospace" font-size="18" letter-spacing="6">PHILIPPINE GRAIN INTELLIGENCE</text>
+  <text x="118" y="284" fill="#eef3fb" font-family="Manrope, sans-serif" font-size="66" font-weight="700">GrainWatch PH</text>
+  <text x="118" y="342" fill="#9aa8bd" font-family="Public Sans, sans-serif" font-size="28">Track rice and corn quotes, compare cities, and launch Base-ready grain tickets.</text>
+  <rect x="118" y="390" width="270" height="112" rx="24" fill="#132133" stroke="rgba(255,255,255,0.08)" />
+  <rect x="414" y="390" width="270" height="112" rx="24" fill="#132133" stroke="rgba(255,255,255,0.08)" />
+  <rect x="710" y="390" width="320" height="112" rx="24" fill="rgba(109,167,255,0.08)" stroke="rgba(109,167,255,0.2)" />
+  <text x="150" y="428" fill="#9aa8bd" font-family="IBM Plex Mono, monospace" font-size="15" letter-spacing="4">MARKETS</text>
+  <text x="150" y="474" fill="#eef3fb" font-family="Manrope, sans-serif" font-size="34" font-weight="700">Live PH grain board</text>
+  <text x="446" y="428" fill="#9aa8bd" font-family="IBM Plex Mono, monospace" font-size="15" letter-spacing="4">ORACLE</text>
+  <text x="446" y="474" fill="#eef3fb" font-family="Manrope, sans-serif" font-size="34" font-weight="700">Base attestation desk</text>
+  <text x="742" y="428" fill="#6da7ff" font-family="IBM Plex Mono, monospace" font-size="15" letter-spacing="4">DEPLOYED WEB APP</text>
+  <text x="742" y="474" fill="#eef3fb" font-family="Manrope, sans-serif" font-size="34" font-weight="700">Vercel + Base-ready metadata</text>
+</svg>

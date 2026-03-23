@@ -1,5 +1,25 @@
 const memoryCache = new Map();
 
+// Run cleanup every 5 minutes to prevent memory leaks in long-running processes
+const CLEANUP_INTERVAL_MS = 5 * 60 * 1000;
+let cleanupInterval = null;
+
+function pruneCache() {
+  const now = Date.now();
+  for (const [key, entry] of memoryCache.entries()) {
+    if (entry.expiresAt <= now) {
+      memoryCache.delete(key);
+    }
+  }
+}
+
+function ensureCleanup() {
+  if (!cleanupInterval) {
+    cleanupInterval = setInterval(pruneCache, CLEANUP_INTERVAL_MS);
+    if (cleanupInterval.unref) cleanupInterval.unref();
+  }
+}
+
 function getCacheEntry(key) {
   const cached = memoryCache.get(key);
   if (!cached) return null;
@@ -13,6 +33,7 @@ function getCacheEntry(key) {
 }
 
 async function withCache(key, ttlMs, loader) {
+  ensureCleanup();
   const existing = getCacheEntry(key);
   if (existing) return existing;
 

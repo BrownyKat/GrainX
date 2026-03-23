@@ -1,6 +1,7 @@
 const siteData = require("../data/site");
 const { withCache } = require("./cache");
 const pxWeb = require("./psaPxWeb");
+const { findPhilippineLocation } = require("./phLocations");
 
 const CACHE_TTL_MS = Number(process.env.GRAINWATCH_CACHE_TTL_MS || 15 * 60 * 1000);
 const PSA_BASE_URL = process.env.PSA_PXWEB_BASE || "https://openstat.psa.gov.ph/PXWeb/api/v1/en";
@@ -21,6 +22,20 @@ const SOURCE_TABLES = {
 };
 
 const GRAIN_SERIES = [
+  {
+    key: "specialRice",
+    label: "Special Rice",
+    unit: "PHP/kg",
+    table: "retail",
+    matchers: [/special.*rice/i, /rice.*special/i]
+  },
+  {
+    key: "premiumRice",
+    label: "Premium Rice",
+    unit: "PHP/kg",
+    table: "retail",
+    matchers: [/premium.*rice/i, /rice.*premium/i]
+  },
   {
     key: "regularRice",
     label: "Regular-Milled Rice",
@@ -226,12 +241,127 @@ function getLocationCatalog() {
   return siteData.locationMarkets.map((location) => ({
     slug: location.slug,
     location: location.location,
+    city: location.location,
     region: location.region,
+    province: location.province || location.officialGeolocation || location.region,
     officialGeolocation: location.officialGeolocation,
     source: location.source,
     updatedAt: location.updatedAt,
     logistics: location.logistics
   }));
+}
+
+function getOfficialGeolocationCandidates(location = {}) {
+  const candidates = [
+    location.officialGeolocation,
+    location.province,
+    location.region === "National Capital Region (NCR)" ? "National Capital Region" : null,
+    location.region,
+    "Philippines"
+  ];
+
+  return [...new Set(candidates.map((value) => String(value || "").trim()).filter(Boolean))];
+}
+
+function buildLocationGrainPayload(grain, nationalBenchmarks) {
+  const national = nationalBenchmarks.get(grain.key);
+  const price = grain.latest?.value ?? national?.value ?? null;
+
+  if (!Number.isFinite(price)) return null;
+
+  return {
+    key: grain.key,
+    name: grain.label,
+    price,
+    unit: grain.unit,
+    variance: Number((price - (national?.value ?? price)).toFixed(1)),
+    nationalBenchmark: national?.value ?? null,
+    threshold: siteData.settings.thresholds[grain.key] ?? null,
+    status:
+      typeof siteData.settings.thresholds[grain.key] === "number" && price >= siteData.settings.thresholds[grain.key]
+        ? "Watch"
+        : "Stable"
+  };
+}
+
+async function getOfficialLocationSummary(location, periods) {
+  let lastError = null;
+
+  for (const geolocation of getOfficialGeolocationCandidates(location)) {
+    try {
+      const official = await getLivePhilippineGrainSummary({
+        geolocation,
+        periods
+      });
+
+      return {
+        official,
+        geolocation
+      };
+    } catch (error) {
+      lastError = error;
+    }
+  }
+
+  throw lastError || new Error(`Could not resolve official grain data for ${location.location || location.city || location.province}`);
+}
+
+function buildOfficialOnlyLocationSnapshot(location, official, geolocation, nationalBenchmarks) {
+  const grains = official.grains.map((grain) => buildLocationGrainPayload(grain, nationalBenchmarks)).filter(Boolean);
+  const updatedAt =
+    official.sources
+      .map((source) => source.updated)
+      .filter(Boolean)
+      .sort()
+      .at(-1) || new Date().toISOString();
+
+  return {
+    ok: true,
+    mode: "official",
+    generatedAt: new Date().toISOString(),
+    location: location.location || location.city,
+    city: location.city || location.location,
+    region: location.region,
+    province: location.province,
+    officialGeolocation: geolocation,
+    source: location.source || "Philippine Standard Geographic Code (PSGC)",
+    updatedAt,
+    logistics: location.logistics || `${location.province} official reference`,
+    grains,
+    official
+  };
+}
+
+function buildNationalFallbackLocationSnapshot(location, nationalBenchmarks) {
+  const grains = siteData.commodities.map((commodity) => ({
+    key: commodity.key,
+    name: commodity.name,
+    price: commodity.value,
+    unit: commodity.unit,
+    variance: 0,
+    nationalBenchmark: commodity.value,
+    threshold: siteData.settings.thresholds[commodity.key] ?? null,
+    status:
+      typeof siteData.settings.thresholds[commodity.key] === "number" && commodity.value >= siteData.settings.thresholds[commodity.key]
+        ? "Watch"
+        : "Stable"
+  }));
+
+  return {
+    ok: true,
+    mode: "national-fallback",
+    generatedAt: new Date().toISOString(),
+    location: location.location || location.city,
+    city: location.city || location.location,
+    region: location.region,
+    province: location.province,
+    officialGeolocation: location.officialGeolocation || location.province || location.region,
+    source: "National benchmark fallback",
+    updatedAt: new Date().toISOString(),
+    logistics: `${location.province} fallback to national benchmark`,
+    grains,
+    official: null
+  };
 }
 
 function findLocationMarket(locationQuery) {
@@ -246,24 +376,43 @@ function findLocationMarket(locationQuery) {
 }
 
 async function getLocationPriceSnapshot(options = {}) {
+  const selectedLocation = options.location || siteData.locationDefaults.selectedLocation;
+  const officialLocation = await findPhilippineLocation(selectedLocation);
   const location =
-    findLocationMarket(options.location) ||
-    findLocationMarket(siteData.locationDefaults.selectedLocation);
+    findLocationMarket(selectedLocation) ||
+    (officialLocation ? findLocationMarket(officialLocation.location) : null);
 
-  if (!location) {
+  const nationalBenchmarks = new Map(siteData.commodities.map((commodity) => [commodity.key, commodity]));
+  const periods = Number(options.periods || 6);
+
+  if (!location && !officialLocation) {
     throw new Error(`Unknown location "${options.location}"`);
   }
 
-  const nationalBenchmarks = new Map(siteData.commodities.map((commodity) => [commodity.key, commodity]));
+  if (!location && officialLocation) {
+    try {
+      const { official, geolocation } = await getOfficialLocationSummary(officialLocation, periods);
+      return buildOfficialOnlyLocationSnapshot(officialLocation, official, geolocation, nationalBenchmarks);
+    } catch (_error) {
+      return buildNationalFallbackLocationSnapshot(officialLocation, nationalBenchmarks);
+    }
+  }
 
   let official = null;
+  let officialGeolocation = location.officialGeolocation;
 
   if (options.includeOfficial !== false && location.officialGeolocation) {
     try {
-      official = await getLivePhilippineGrainSummary({
-        geolocation: location.officialGeolocation,
-        periods: Number(options.periods || 6)
-      });
+      const result = await getOfficialLocationSummary(
+        {
+          ...location,
+          province: location.province || officialLocation?.province,
+          region: location.region || officialLocation?.region
+        },
+        periods
+      );
+      official = result.official;
+      officialGeolocation = result.geolocation;
     } catch (_error) {
       official = null;
     }
@@ -274,8 +423,10 @@ async function getLocationPriceSnapshot(options = {}) {
     mode: official ? "official+pilot" : "pilot",
     generatedAt: new Date().toISOString(),
     location: location.location,
+    city: location.location,
     region: location.region,
-    officialGeolocation: location.officialGeolocation,
+    province: location.province || location.officialGeolocation || location.region,
+    officialGeolocation,
     source: location.source,
     updatedAt: location.updatedAt,
     logistics: location.logistics,

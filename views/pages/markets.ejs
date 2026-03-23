@@ -52,79 +52,39 @@
           <h3 class="panel-title">Market Board</h3>
         </div>
       </div>
-      <div class="table-wrap">
-        <table class="table-base">
-          <thead>
-            <tr>
-              <th>Commodity</th>
-              <th>Market Basis</th>
-              <th>Last Price</th>
-              <th>Daily Move</th>
-              <th>Weekly</th>
-              <th>Daily Range</th>
-              <th>Lead Market</th>
-            </tr>
-          </thead>
-          <tbody>
-            <% site.marketRows.forEach((row) => { %>
-              <tr>
-                <td>
-                  <p class="strong"><%= row.commodity %></p>
-                  <p class="muted mono"><%= row.symbol %></p>
-                </td>
-                <td class="muted"><%= row.exchange %></td>
-                <td class="mono"><%= row.spot.toFixed(1) %></td>
-                <td class="mono <%= row.dailyChange.startsWith('+') ? 'tone-neon' : 'tone-danger' %>"><%= row.dailyChange %></td>
-                <td class="mono <%= row.weekly.startsWith('+') ? 'tone-neon' : row.weekly.startsWith('-') ? 'tone-danger' : 'tone-amber' %>"><%= row.weekly %></td>
-                <td class="mono muted"><%= row.low.toFixed(1) %> - <%= row.high.toFixed(1) %></td>
-                <td class="muted"><%= row.leadLocation %></td>
-              </tr>
-            <% }) %>
-          </tbody>
-        </table>
-      </div>
-    </section>
-
-    <div class="markets-side-stack">
-      <section class="market-panel">
-        <div class="panel-head">
-          <div>
-            <p class="panel-eyebrow">
-              <%- include("../partials/icon", { name: "spark", className: "icon-sm" }) %>
-              <span>Recommended Function</span>
-            </p>
-            <h3 class="panel-title"><%= site.recommendedFunction.title %></h3>
-          </div>
-          <span class="panel-badge">Added</span>
-        </div>
-        <div class="market-feature-shell">
-          <p class="market-feature-copy"><%= site.recommendedFunction.description %></p>
-          <p class="market-feature-note"><%= site.recommendedFunction.benefit %></p>
-        </div>
-      </section>
-
-      <section class="market-panel">
-        <div class="panel-head">
-          <div>
-            <p class="panel-eyebrow">
-              <%- include("../partials/icon", { name: "chain", className: "icon-sm" }) %>
-              <span>Base Feature</span>
-            </p>
-            <h3 class="panel-title"><%= site.baseDesk.title %></h3>
-          </div>
-          <span class="panel-badge"><%= site.baseDesk.mode %></span>
-        </div>
-        <div class="market-feature-shell">
-          <p class="market-feature-copy"><%= site.baseDesk.description %></p>
-          <p class="market-feature-note"><%= site.baseDesk.uniqueValue %></p>
-          <button id="openBaseDeskFromMarketsBtn" class="btn-primary" type="button">
-            <%- include("../partials/icon", { name: "wallet", className: "icon-sm" }) %>
-            <span>Open Base Desk</span>
-          </button>
-        </div>
-      </section>
     </div>
-  </div>
+    <div class="table-wrap">
+      <table class="table-base">
+        <thead>
+          <tr>
+            <th>Commodity</th>
+            <th>Market Basis</th>
+            <th>Last Price</th>
+            <th>Daily Move</th>
+            <th>Weekly</th>
+            <th>Daily Range</th>
+            <th>Lead Market</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% site.marketRows.forEach((row) => { %>
+            <tr>
+              <td>
+                <p class="strong"><%= row.commodity %></p>
+                <p class="muted mono"><%= row.symbol %></p>
+              </td>
+              <td class="muted"><%= row.exchange %></td>
+              <td class="mono"><%= row.spot.toFixed(1) %></td>
+              <td class="mono <%= row.dailyChange.startsWith('+') ? 'tone-neon' : 'tone-danger' %>"><%= row.dailyChange %></td>
+              <td class="mono <%= row.weekly.startsWith('+') ? 'tone-neon' : row.weekly.startsWith('-') ? 'tone-danger' : 'tone-amber' %>"><%= row.weekly %></td>
+              <td class="mono muted"><%= row.low.toFixed(1) %> - <%= row.high.toFixed(1) %></td>
+              <td class="muted"><%= row.leadLocation %></td>
+            </tr>
+          <% }) %>
+        </tbody>
+      </table>
+    </div>
+  </section>
 
   <div class="markets-lead-grid">
     <section class="market-panel">
@@ -132,36 +92,58 @@
         <div>
           <p class="panel-eyebrow">
             <%- include("../partials/icon", { name: "location", className: "icon-sm" }) %>
-            <span>City Grain Prices</span>
+            <span>Location Grain Prices</span>
           </p>
           <h3 class="panel-title">Location Explorer</h3>
         </div>
-        <button id="locationRefreshBtn" class="btn-secondary" type="button">
-          <%- include("../partials/icon", { name: "clock", className: "icon-sm" }) %>
-          <span>Refresh Location</span>
-        </button>
       </div>
       <div class="location-shell">
         <div class="location-toolbar">
           <label class="location-field">
-            <span class="settings-field-label">Location</span>
-            <select id="locationSelect" class="location-select"></select>
+            <span class="settings-field-label">Region</span>
+            <select id="locationRegionSelect" class="location-select"></select>
           </label>
           <label class="location-field">
-            <span class="settings-field-label">Status</span>
-            <div id="locationStatus" class="location-status-card">Urdaneta City loads first. Switch to another pilot city any time.</div>
+            <span class="settings-field-label">Province</span>
+            <select id="locationProvinceSelect" class="location-select"></select>
+          </label>
+          <label class="location-field">
+            <span class="settings-field-label">City / Municipality</span>
+            <select id="locationSelect" class="location-select"></select>
           </label>
         </div>
+        <p id="locationStatus" class="location-status-card">The market updates automatically when you change the region, province, or city.</p>
 
         <article class="location-summary-card">
-          <div>
-            <p id="locationName" class="location-summary-title"><%= site.locationDefaults.selectedLocation %></p>
-            <p id="locationMeta" class="location-summary-copy">Pilot city pricing with official-source mapping.</p>
+          <div class="location-summary-hero">
+            <div class="location-summary-topline">
+              <p class="location-summary-kicker">Selected Market Profile</p>
+              <div class="location-summary-pill-row">
+                <span id="locationSource" class="heatmap-pill is-cool">Pilot Snapshot</span>
+              </div>
+            </div>
+            <div class="location-summary-head">
+              <p id="locationName" class="location-summary-title"><%= site.locationDefaults.selectedLocation %></p>
+              <p id="locationMeta" class="location-summary-copy">Region, province, and city pricing with official-source mapping.</p>
+            </div>
           </div>
-          <span id="locationSource" class="heatmap-pill is-cool">Pilot</span>
-        </article>
+          <div class="location-summary-stats">
+            <article class="location-stat-card">
+              <p class="location-stat-label">Region</p>
+              <p id="locationRegionValue" class="location-stat-value">Region I (Ilocos Region)</p>
+            </article>
+            <article class="location-stat-card">
+              <p class="location-stat-label">Province</p>
+              <p id="locationProvinceValue" class="location-stat-value">Pangasinan</p>
+            </article>
+            <article class="location-stat-card">
+              <p class="location-stat-label">Basket Delta</p>
+              <p id="locationBasketValue" class="location-stat-value">Benchmark aligned</p>
+            </article>
+        </div>
+      </article>
 
-        <div id="locationCardGrid" class="location-card-grid"></div>
+      <div id="locationCardGrid" class="location-card-grid"></div>
       </div>
     </section>
 
@@ -172,26 +154,50 @@
             <%- include("../partials/icon", { name: "shield", className: "icon-sm" }) %>
             <span>Operator Tool</span>
           </p>
-          <h3 class="panel-title">Procurement Planner</h3>
+          <h3 class="panel-title">Procurement and Wallet Exchange</h3>
         </div>
-        <span class="panel-badge">Planner</span>
       </div>
       <div class="planner-shell">
-        <div class="planner-form-grid">
-          <label class="location-field">
-            <span class="settings-field-label">Location</span>
-            <select id="plannerLocationSelect" class="location-select"></select>
-          </label>
-          <label class="location-field">
+        <div class="planner-context">
+          <p class="planner-context-label">Using Selected Location</p>
+          <p id="plannerLocationName" class="planner-context-value"><%= site.locationDefaults.selectedLocation %></p>
+          <p id="plannerLocationMeta" class="planner-context-copy">Change the location in the explorer to update procurement planning automatically.</p>
+        </div>
+        <div class="planner-form-grid planner-form-grid-compact">
+          <label class="planner-field">
             <span class="settings-field-label">Grain</span>
             <select id="plannerGrainSelect" class="location-select"></select>
           </label>
-          <label class="location-field">
+          <label class="planner-field">
             <span class="settings-field-label">Quantity (kg)</span>
             <input id="plannerQuantityInput" class="settings-input" type="number" min="1" value="1000" />
           </label>
         </div>
         <div id="plannerResult" class="planner-result"></div>
+        <div class="planner-divider"></div>
+        <section class="exchange-shell">
+          <div class="exchange-head">
+            <div>
+              <p class="planner-result-label">Wallet Exchange Desk</p>
+              <p class="planner-result-copy">Paper trading using the selected quote and the current ETH/PHP reference.</p>
+            </div>
+            <span id="exchangeModePill" class="heatmap-pill is-cool">Loading</span>
+          </div>
+          <div id="exchangeOverview" class="exchange-card-grid"></div>
+          <div class="exchange-action-row">
+            <button id="walletBuyBtn" class="btn-primary" type="button">
+              <%- include("../partials/icon", { name: "spark", className: "icon-sm" }) %>
+              <span>Buy Grain</span>
+            </button>
+            <button id="walletSellBtn" class="btn-ghost" type="button">
+              <%- include("../partials/icon", { name: "report", className: "icon-sm" }) %>
+              <span>Sell Grain</span>
+            </button>
+          </div>
+          <p id="exchangeStatus" class="exchange-status">Connect a wallet to seed paper cash and simulate trades against the selected market.</p>
+          <div id="exchangeHoldings" class="planner-result"></div>
+          <div id="exchangeTrades" class="planner-result"></div>
+        </section>
       </div>
     </section>
   </div>
@@ -222,8 +228,10 @@
           <h3 class="panel-title">City Price Board</h3>
         </div>
       </div>
-      <div class="chart-frame">
-        <canvas id="locationPricesChart"></canvas>
+      <div class="chart-frame location-chart-frame">
+        <div class="location-chart-canvas">
+          <canvas id="locationPricesChart"></canvas>
+        </div>
       </div>
     </section>
   </div>
@@ -254,8 +262,10 @@
           <h3 class="panel-title">Location vs National Benchmark</h3>
         </div>
       </div>
-      <div class="chart-frame chart-frame-tall">
-        <canvas id="locationSpreadChart"></canvas>
+      <div class="chart-frame chart-frame-tall location-chart-frame">
+        <div class="location-chart-canvas location-chart-canvas-tall">
+          <canvas id="locationSpreadChart"></canvas>
+        </div>
       </div>
     </section>
   </div>

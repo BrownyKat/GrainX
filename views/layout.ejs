@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-  <%- include("partials/head", { page, pageCss }) %>
+  <%- include("partials/head", { page, pageCss, pageMeta, site }) %>
   <body class="app-body-shell">
     <div class="grain-background">
       <div class="grain-background-orb grain-background-orb-a"></div>
@@ -10,7 +10,6 @@
     <div class="app-shell">
       <%- include("partials/header", { site, page }) %>
       <%- include("partials/mobile_nav", { pages, currentPage }) %>
-      <%- include("partials/ticker_strip", { site }) %>
 
       <div class="shell-grid">
         <main class="page-shell">

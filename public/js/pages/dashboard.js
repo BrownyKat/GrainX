@@ -115,13 +115,6 @@ quoteRows.forEach((row) => {
   row.addEventListener("click", () => selectCommodity(row.dataset.key));
 });
 
-document.getElementById("dashboardRefreshBtn")?.addEventListener("click", () => {
-  renderCharts(selectedKey);
-  dashboardApp.updateFooterStatus(
-    `Last update: grain board refreshed at ${new Date().toLocaleTimeString("en-PH", { hour12: false })}`
-  );
-});
-
 document.getElementById("openBaseDeskBtn")?.addEventListener("click", () => {
   const draft = {
     commodityKey: selectedKey,

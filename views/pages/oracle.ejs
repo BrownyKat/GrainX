@@ -106,14 +106,6 @@
         </div>
 
         <div class="oracle-banner-actions">
-          <button id="oracleConnectBtn" class="btn-secondary" type="button">
-            <%- include("../partials/icon", { name: "wallet", className: "icon-sm" }) %>
-            <span>Connect Wallet</span>
-          </button>
-          <button id="oracleSwitchBtn" class="btn-ghost" type="button">
-            <%- include("../partials/icon", { name: "chain", className: "icon-sm" }) %>
-            <span>Switch Base</span>
-          </button>
           <button id="oracleSignBtn" class="btn-primary" type="button">
             <%- include("../partials/icon", { name: "shield", className: "icon-sm" }) %>
             <span>Sign Ticket</span>
@@ -155,7 +147,7 @@
         </article>
       </div>
       <p id="oracleSignatureStatus" class="oracle-signature-status">
-        Build a ticket from the selected grain and city, then sign it with a Base-compatible wallet on <%= site.baseDesk.preferredChain %>.
+        Build a ticket from the selected grain and city, then sign it with Coinbase Wallet on <%= site.baseDesk.preferredChain %>.
       </p>
     </section>
   </div>

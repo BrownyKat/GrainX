@@ -38,3 +38,4 @@ keystore/
 Thumbs.db
 .vscode/
 .idea/
+.vercel/
