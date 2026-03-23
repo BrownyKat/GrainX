@@ -68,7 +68,7 @@ function renderDraftPreview() {
 
   if (publishButton) {
     publishButton.disabled = !oracleData.baseDesk.contractAddress;
-    publishButton.textContent = oracleData.baseDesk.contractAddress ? "Publish Intent" : "Contract Not Configured";
+    oracleApp.setControlLabel(publishButton, oracleData.baseDesk.contractAddress ? "Publish Intent" : "Contract Not Configured");
   }
 
   renderChartForCommodity(ticket.commodity.key);
@@ -79,16 +79,6 @@ function applyDraft(draft) {
   if (locationSelect && draft?.location) locationSelect.value = draft.location;
   if (actionSelect && draft?.side) actionSelect.value = draft.side;
   if (quantityInput && draft?.quantityKg) quantityInput.value = String(draft.quantityKg);
-}
-
-async function connectBaseWallet() {
-  await oracleApp.connectWallet();
-  renderDraftPreview();
-}
-
-async function switchBaseNetwork() {
-  await oracleApp.switchToBase(oracleApp.preferredBaseChainId);
-  renderDraftPreview();
 }
 
 async function signTicket() {
@@ -156,8 +146,6 @@ quantityInput?.addEventListener("input", () => {
 });
 
 window.addEventListener("grainwatch:wallet-updated", renderDraftPreview);
-document.getElementById("oracleConnectBtn")?.addEventListener("click", connectBaseWallet);
-document.getElementById("oracleSwitchBtn")?.addEventListener("click", switchBaseNetwork);
 document.getElementById("oracleSignBtn")?.addEventListener("click", signTicket);
 document.getElementById("oraclePublishBtn")?.addEventListener("click", publishTicket);
 document.getElementById("oracleExportBtn")?.addEventListener("click", exportTicket);

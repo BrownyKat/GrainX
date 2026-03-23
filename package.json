@@ -4,6 +4,7 @@
   "description": "Modular GrainWatch PH app for Philippine grain monitoring with official-source API integration.",
   "main": "server.js",
   "scripts": {
+    "build": "npm run build:css",
     "build:css:shared": "tailwindcss -c tailwind.config.js -i ./src/styles/shared.tailwind.css -o ./public/css/shared.css --minify",
     "build:css:dashboard": "tailwindcss -c tailwind.config.js -i ./src/styles/dashboard.tailwind.css -o ./public/css/dashboard.css --minify",
     "build:css:reports": "tailwindcss -c tailwind.config.js -i ./src/styles/reports.tailwind.css -o ./public/css/reports.css --minify",
@@ -12,9 +13,9 @@
     "build:css:alerts": "tailwindcss -c tailwind.config.js -i ./src/styles/alerts.tailwind.css -o ./public/css/alerts.css --minify",
     "build:css:settings": "tailwindcss -c tailwind.config.js -i ./src/styles/settings.tailwind.css -o ./public/css/settings.css --minify",
     "build:css": "npm run build:css:shared && npm run build:css:dashboard && npm run build:css:reports && npm run build:css:markets && npm run build:css:oracle && npm run build:css:alerts && npm run build:css:settings",
-    "start": "npm run build:css && node server.js",
+    "start": "npm run build && node server.js",
     "dev": "npm run build:css && node --watch server.js",
-    "check": "node --check server.js && node --check services/cache.js && node --check services/psaPxWeb.js && node --check services/philippineGrains.js && node --check public/js/shared.js && node --check public/js/pages/dashboard.js && node --check public/js/pages/reports.js && node --check public/js/pages/markets.js && node --check public/js/pages/oracle.js && node --check public/js/pages/alerts.js && node --check public/js/pages/settings.js"
+    "check": "node --check server.js && node --check services/cache.js && node --check services/coinbaseRates.js && node --check services/psaPxWeb.js && node --check services/philippineGrains.js && node --check public/js/shared.js && node --check public/js/pages/dashboard.js && node --check public/js/pages/reports.js && node --check public/js/pages/markets.js && node --check public/js/pages/oracle.js && node --check public/js/pages/alerts.js && node --check public/js/pages/settings.js"
   },
   "keywords": [
     "grainwatch",

@@ -26,11 +26,11 @@
   }
 
   .app-shell {
-    @apply relative mx-auto flex min-h-screen max-w-[1400px] flex-col;
+    @apply relative mx-auto flex min-h-screen max-w-[1460px] flex-col;
   }
 
   .topbar {
-    @apply flex flex-col gap-4 border-b border-line/80 bg-shell/90 px-5 py-4 backdrop-blur lg:flex-row lg:items-start lg:justify-between lg:px-8;
+    @apply relative flex flex-col gap-4 overflow-hidden border-b border-line/70 bg-shell/80 px-5 py-5 backdrop-blur lg:flex-row lg:items-center lg:justify-between lg:px-8;
   }
 
   .brand-cluster {
@@ -38,7 +38,7 @@
   }
 
   .brand-mark {
-    @apply flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl border border-info/20 bg-info/10 font-mono text-sm font-semibold tracking-[0.32em] text-info no-underline;
+    @apply flex h-12 w-12 shrink-0 items-center justify-center rounded-[1.35rem] border border-info/25 bg-info/10 font-mono text-sm font-semibold tracking-[0.32em] text-info no-underline shadow-chrome;
   }
 
   .brand-eyebrow {
@@ -46,15 +46,23 @@
   }
 
   .brand-title {
-    @apply mt-1 text-[1.35rem] font-bold text-text;
+    @apply mt-1 text-[1.45rem] font-bold text-text;
   }
 
   .brand-summary {
-    @apply mt-2 max-w-[46rem] text-[0.93rem] leading-6 text-muted;
+    @apply mt-2 max-w-[46rem] text-[0.94rem] leading-7 text-muted;
+  }
+
+  .brand-chip-row {
+    @apply mt-3 flex flex-wrap gap-2;
+  }
+
+  .brand-chip {
+    @apply inline-flex items-center rounded-full border border-line bg-shell2/90 px-3 py-1.5 font-mono text-[11px] uppercase tracking-[0.2em] text-muted;
   }
 
   .topbar-actions {
-    @apply flex w-full flex-col gap-3 lg:max-w-[26rem] lg:items-stretch;
+    @apply flex w-full flex-col gap-3 lg:max-w-[24rem] lg:items-stretch;
   }
 
   .live-ribbon {
@@ -74,7 +82,7 @@
   }
 
   .wallet-cluster {
-    @apply flex flex-col gap-3 rounded-[1.35rem] border border-line bg-shell2/90 p-4 shadow-chrome;
+    @apply relative flex flex-col gap-3 overflow-hidden rounded-[1.35rem] border border-line bg-shell2/90 p-4 shadow-chrome;
   }
 
   .wallet-summary {
@@ -85,12 +93,24 @@
     @apply inline-flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.32em] text-muted;
   }
 
+  .wallet-mode-row {
+    @apply mt-2 flex flex-wrap gap-2;
+  }
+
+  .wallet-mode-pill {
+    @apply inline-flex items-center rounded-full border border-line bg-shell px-3 py-1 font-mono text-[11px] uppercase tracking-[0.18em] text-muted;
+  }
+
+  .wallet-mode-pill.is-accent {
+    @apply border-info/25 bg-info/10 text-info;
+  }
+
   .wallet-summary-copy {
-    @apply flex flex-col gap-1 break-all text-sm text-text;
+    @apply flex flex-col gap-1 text-sm text-text;
   }
 
   .wallet-button-row {
-    @apply flex flex-wrap gap-2;
+    @apply flex;
   }
 
   .section-nav {
@@ -107,26 +127,6 @@
 
   .section-nav-link.is-active {
     @apply border-info/30 bg-info/10 text-info;
-  }
-
-  .ticker-strip {
-    @apply border-b border-line/80 bg-shell/80 px-5 py-2.5 lg:px-8;
-  }
-
-  .ticker-track {
-    @apply flex gap-3 overflow-x-auto;
-  }
-
-  .ticker-card {
-    @apply inline-flex min-w-[13.5rem] items-center justify-between gap-4 rounded-2xl border border-line bg-shell2 px-4 py-2.5;
-  }
-
-  .ticker-card-head {
-    @apply flex items-start gap-3;
-  }
-
-  .ticker-card-icon {
-    @apply mt-1 inline-flex h-7 w-7 items-center justify-center rounded-xl bg-info/10 text-info/90;
   }
 
   .ticker-symbol {
@@ -162,7 +162,7 @@
   }
 
   .shell-grid {
-    @apply flex-1 px-5 py-5 lg:px-8;
+    @apply flex-1 px-5 py-4 lg:px-8;
   }
 
   .page-shell {
@@ -170,7 +170,11 @@
   }
 
   .page-intro {
-    @apply flex flex-col gap-4 rounded-[1.35rem] border border-line bg-shell/95 p-5 shadow-chrome lg:flex-row lg:items-end lg:justify-between;
+    @apply relative flex flex-col gap-5 overflow-hidden rounded-[1.6rem] border border-line bg-shell/90 p-5 shadow-chrome lg:flex-row lg:items-end lg:justify-between lg:gap-6 lg:p-6;
+  }
+
+  .page-intro-copy {
+    @apply max-w-3xl;
   }
 
   .page-eyebrow {
@@ -178,27 +182,39 @@
   }
 
   .page-title {
-    @apply mt-1 text-[2.05rem] font-bold text-text;
+    @apply mt-1 text-[2.05rem] font-bold text-text lg:text-[2.3rem];
   }
 
   .page-description {
-    @apply mt-2 max-w-3xl text-[0.97rem] leading-7 text-muted;
+    @apply mt-2 max-w-3xl text-[0.98rem] leading-7 text-muted;
   }
 
-  .page-action-row {
-    @apply flex flex-wrap items-center gap-2;
+  .page-intro-stat-grid {
+    @apply grid gap-3 sm:grid-cols-3 lg:min-w-[24rem];
+  }
+
+  .page-intro-stat {
+    @apply rounded-[1.2rem] border border-line bg-shell2/90 p-4;
+  }
+
+  .page-intro-stat-label {
+    @apply font-mono text-[11px] uppercase tracking-[0.28em] text-muted;
+  }
+
+  .page-intro-stat-value {
+    @apply mt-2 text-sm font-semibold leading-6 text-text;
   }
 
   .btn-primary {
-    @apply inline-flex items-center justify-center gap-2 rounded-full border border-info bg-info px-4 py-2 text-sm font-medium text-white transition hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-50;
+    @apply inline-flex items-center justify-center gap-2 rounded-full border border-info bg-info px-4 py-2 text-sm font-medium text-white transition duration-200 hover:opacity-95 disabled:cursor-not-allowed disabled:opacity-50;
   }
 
   .btn-secondary {
-    @apply inline-flex items-center justify-center gap-2 rounded-full border border-line bg-shell2 px-4 py-2 text-sm font-medium text-text transition hover:border-info hover:text-info disabled:cursor-not-allowed disabled:opacity-50;
+    @apply inline-flex items-center justify-center gap-2 rounded-full border border-line bg-shell2 px-4 py-2 text-sm font-medium text-text transition duration-200 hover:border-info hover:text-info disabled:cursor-not-allowed disabled:opacity-50;
   }
 
   .btn-ghost {
-    @apply inline-flex items-center justify-center gap-2 rounded-full border border-line bg-transparent px-4 py-2 text-sm font-medium text-muted transition hover:border-info/30 hover:text-text disabled:cursor-not-allowed disabled:opacity-50;
+    @apply inline-flex items-center justify-center gap-2 rounded-full border border-line bg-transparent px-4 py-2 text-sm font-medium text-muted transition duration-200 hover:border-info/30 hover:text-text disabled:cursor-not-allowed disabled:opacity-50;
   }
 
   .btn-danger {
@@ -206,7 +222,7 @@
   }
 
   .panel-head {
-    @apply flex flex-col items-start justify-between gap-3 border-b border-line/80 px-5 py-4 sm:flex-row sm:items-center;
+    @apply flex flex-col items-start justify-between gap-3 border-b border-line/80 bg-panel/20 px-5 py-4 sm:flex-row sm:items-center;
   }
 
   .panel-eyebrow {
@@ -218,7 +234,7 @@
   }
 
   .panel-badge {
-    @apply rounded-full border border-info/20 bg-info/10 px-3 py-1 font-mono text-xs text-info;
+    @apply rounded-full border border-info/20 bg-info/10 px-3 py-1 font-mono text-xs uppercase tracking-[0.18em] text-info;
   }
 
   .panel-link {
@@ -294,7 +310,7 @@
   }
 
   .footer-bar {
-    @apply mt-6 flex flex-col gap-3 border-t border-line/80 bg-shell/90 px-5 py-4 text-xs text-muted backdrop-blur lg:flex-row lg:items-center lg:justify-between lg:px-8;
+    @apply mt-6 flex flex-col gap-3 border-t border-line/80 bg-shell/90 px-5 py-4 text-xs text-muted backdrop-blur lg:flex-row lg:items-center lg:px-8;
   }
 
   .footer-row {
@@ -307,10 +323,6 @@
 
   .footer-dot {
     @apply inline-flex h-2 w-2 rounded-full bg-neon;
-  }
-
-  .footer-copy {
-    @apply max-w-3xl text-xs text-muted;
   }
 
   .sidebar {
@@ -332,4 +344,42 @@
   .label-with-icon {
     @apply inline-flex items-center gap-2;
   }
+}
+
+.grain-background::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(154, 168, 189, 0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(154, 168, 189, 0.06) 1px, transparent 1px);
+  background-size: 140px 140px;
+  mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.8), transparent 88%);
+}
+
+.topbar::before,
+.wallet-cluster::before,
+.page-intro::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.08), transparent 42%);
+  pointer-events: none;
+}
+
+.btn-primary,
+.btn-secondary,
+.btn-ghost {
+  position: relative;
+  transform: translateY(0);
+}
+
+.btn-primary {
+  box-shadow: 0 16px 34px rgba(60, 113, 211, 0.28);
+}
+
+.btn-primary:hover,
+.btn-secondary:hover,
+.btn-ghost:hover {
+  transform: translateY(-1px);
 }
