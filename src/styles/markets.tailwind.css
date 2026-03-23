@@ -182,6 +182,58 @@
     @apply min-h-[19rem];
   }
 
+  .comparison-shell {
+    @apply flex flex-col gap-4 rounded-[1.2rem] border border-line bg-panel/55 p-4;
+  }
+
+  .comparison-head {
+    @apply flex flex-col gap-4 border-b border-line/70 pb-4 xl:flex-row xl:items-end xl:justify-between;
+  }
+
+  .comparison-title {
+    @apply text-[1.15rem];
+  }
+
+  .comparison-places-grid {
+    @apply grid gap-3 md:grid-cols-2;
+  }
+
+  .comparison-focus-card {
+    @apply rounded-[1.05rem] border border-line bg-shell2/90 px-4 py-3;
+  }
+
+  .comparison-focus-label {
+    @apply font-mono text-[10px] uppercase tracking-[0.24em] text-muted;
+  }
+
+  .comparison-focus-value {
+    @apply mt-2 text-lg font-semibold text-text;
+  }
+
+  .comparison-focus-copy {
+    @apply mt-1 text-sm leading-6 text-muted;
+  }
+
+  .comparison-field {
+    @apply flex min-w-0 flex-col gap-3 xl:min-w-[18rem];
+  }
+
+  .comparison-summary-grid {
+    @apply grid gap-3 md:grid-cols-3;
+  }
+
+  .comparison-chart-shell {
+    @apply rounded-[1.05rem] border border-line bg-shell2/80 p-4;
+  }
+
+  .comparison-chart-canvas {
+    @apply relative min-h-[18rem];
+  }
+
+  .comparison-table-shell {
+    @apply rounded-[1.05rem] border border-line bg-shell2/80;
+  }
+
   .planner-shell {
     @apply flex flex-col gap-5 p-5;
   }

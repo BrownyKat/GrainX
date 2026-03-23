@@ -23,7 +23,8 @@ function getDraftFromForm() {
 function renderChartForCommodity(key) {
   const commodity = oracleData.commodities.find((item) => item.key === key) || oracleData.commodities[0];
   const history = oracleData.history[key] || [];
-  const minValue = Math.max(0, Math.floor(Math.min(...history) * 0.94));
+  const allValues = [...history, commodity.threshold || 0];
+  const minValue = Math.max(0, Math.floor(Math.min(...allValues) * 0.94));
 
   oracleHistoryChart?.destroy();
   oracleHistoryChart = new Chart(document.getElementById("oracleHistoryChart"), {
@@ -40,6 +41,15 @@ function renderChartForCommodity(key) {
           tension: 0.3,
           pointRadius: 0,
           borderWidth: 2
+        },
+        {
+          label: "Watch Threshold",
+          data: new Array(history.length).fill(commodity.threshold),
+          borderColor: "#ef4444",
+          borderWidth: 1.5,
+          borderDash: [5, 5],
+          pointRadius: 0,
+          fill: false
         }
       ]
     },
@@ -122,21 +132,25 @@ renderDraftPreview();
 
 commoditySelect?.addEventListener("change", () => {
   activeSignedTicket = null;
+  if (signatureStatus) signatureStatus.textContent = "Draft modified. Please resign.";
   oracleApp.saveBaseDraft(getDraftFromForm());
   renderDraftPreview();
 });
 locationSelect?.addEventListener("change", () => {
   activeSignedTicket = null;
+  if (signatureStatus) signatureStatus.textContent = "Draft modified. Please resign.";
   oracleApp.saveBaseDraft(getDraftFromForm());
   renderDraftPreview();
 });
 actionSelect?.addEventListener("change", () => {
   activeSignedTicket = null;
+  if (signatureStatus) signatureStatus.textContent = "Draft modified. Please resign.";
   oracleApp.saveBaseDraft(getDraftFromForm());
   renderDraftPreview();
 });
 quantityInput?.addEventListener("input", () => {
   activeSignedTicket = null;
+  if (signatureStatus) signatureStatus.textContent = "Draft modified. Please resign.";
   oracleApp.saveBaseDraft(getDraftFromForm());
   renderDraftPreview();
 });
