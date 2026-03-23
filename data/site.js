@@ -12,12 +12,11 @@ const baseNetwork = {
 const siteData = {
   meta: {
     brand: "GrainWatch PH",
-    tagline: "Philippine grains market terminal for rice and corn price intelligence.",
-    summary:
-      "A Philippines-only market terminal with quoted grain prices, city-level comparison, forward views, and a Base-ready attestation desk for rice and corn operations.",
+    tagline: "Philippine grains market terminal.",
+    summary: "Rice and corn price intelligence with a Base-ready attestation desk.",
     release: "v3.0 Market Terminal",
     refreshLabel: "Snapshot refreshes every 15 minutes",
-    footerNote: "Market-terminal MVP with modular EJS views, per-page Tailwind sources, official-source API routes, and a Base-ready wallet attestation workflow.",
+    footerNote: "Market terminal with official API routes and Base-ready wallet attestation.",
     focus: "Philippines",
     timezone: "Asia/Manila"
   },
@@ -975,8 +974,7 @@ const siteData = {
   },
   baseDesk: {
     title: "Base Grain Ticket",
-    description: "Create a Base Sepolia market attestation from a selected grain, city, action, and quantity, then sign it with Coinbase Wallet as an auditable operator ticket.",
-    uniqueValue: "This is the feature the reference market page does not have: a typed-data grain ticket tied to Base and a live wallet workflow.",
+    description: "Issue a verifiable grain attestation on Base Sepolia using Coinbase Wallet.",
     preferredChain: baseNetwork.chainName,
     networkKey: baseNetwork.key,
     chainId: baseNetwork.chainId,

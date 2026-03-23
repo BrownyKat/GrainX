@@ -17,6 +17,15 @@ const locationProvinceValue = document.getElementById("locationProvinceValue");
 const locationBasketValue = document.getElementById("locationBasketValue");
 const plannerLocationName = document.getElementById("plannerLocationName");
 const plannerLocationMeta = document.getElementById("plannerLocationMeta");
+const comparisonPrimaryName = document.getElementById("comparisonPrimaryName");
+const comparisonPrimaryMeta = document.getElementById("comparisonPrimaryMeta");
+const comparisonSecondaryName = document.getElementById("comparisonSecondaryName");
+const comparisonSecondaryMeta = document.getElementById("comparisonSecondaryMeta");
+const comparisonLocationInput = document.getElementById("comparisonLocationInput");
+const comparisonLocationOptions = document.getElementById("comparisonLocationOptions");
+const comparisonStatus = document.getElementById("comparisonStatus");
+const comparisonSummary = document.getElementById("comparisonSummary");
+const comparisonTableBody = document.getElementById("comparisonTableBody");
 const plannerResult = document.getElementById("plannerResult");
 const exchangeOverview = document.getElementById("exchangeOverview");
 const exchangeHoldings = document.getElementById("exchangeHoldings");
@@ -30,8 +39,10 @@ let locationCatalog = [];
 let locationTaxonomy = [];
 let currentLocationPayload = null;
 let locationPricesChart = null;
-let locationSpreadChart = null;
+let comparisonLocationChart = null;
+let comparisonPayload = null;
 let locationFetchController = null;
+let comparisonFetchController = null;
 const locationSelectorGroup = {
   regionSelect: locationRegionSelect,
   provinceSelect: locationProvinceSelect,
@@ -398,16 +409,20 @@ function renderLocationSummary(payload) {
   if (plannerLocationMeta) {
     plannerLocationMeta.textContent = `${modeMeta.plannerCopy} Updated ${formatDateTime(payload.updatedAt)}.`;
   }
+  if (comparisonPrimaryName) {
+    comparisonPrimaryName.textContent = payload.location;
+  }
+  if (comparisonPrimaryMeta) {
+    comparisonPrimaryMeta.textContent = `${payload.region || "National market"} | ${payload.province || payload.officialGeolocation || "Province pending"} | updated ${formatDateTime(payload.updatedAt)}`;
+  }
 }
 
 function renderLocationCharts(payload) {
   const labels = payload.grains.map((grain) => wrapChartLabel(grain.name));
   const prices = payload.grains.map((grain) => grain.price);
   const benchmarks = payload.grains.map((grain) => (Number.isFinite(Number(grain.nationalBenchmark)) ? Number(grain.nationalBenchmark) : grain.price));
-  const spreads = payload.grains.map((grain, index) => Number((grain.price - benchmarks[index]).toFixed(2)));
   const minPrice = Math.max(0, Math.floor(Math.min(...prices, ...benchmarks) * 0.9));
   const maxPrice = Math.ceil(Math.max(...prices, ...benchmarks) * 1.12);
-  const maxSpreadExtent = Math.max(1, Math.ceil(Math.max(...spreads.map((spread) => Math.abs(spread)), 0.5) * 1.5));
 
   locationPricesChart?.destroy();
   locationPricesChart = new Chart(document.getElementById("locationPricesChart"), {
@@ -447,42 +462,241 @@ function renderLocationCharts(payload) {
       showLegend: true
     })
   });
+}
 
-  locationSpreadChart?.destroy();
-  locationSpreadChart = new Chart(document.getElementById("locationSpreadChart"), {
+function getComparisonRows(primaryPayload, secondaryPayload) {
+  if (!primaryPayload || !secondaryPayload) return [];
+
+  return primaryPayload.grains.map((primaryGrain) => {
+    const secondaryGrain = secondaryPayload.grains.find((grain) => grain.key === primaryGrain.key) || primaryGrain;
+    const delta = Number((secondaryGrain.price - primaryGrain.price).toFixed(2));
+
+    return {
+      key: primaryGrain.key,
+      name: primaryGrain.name,
+      primaryPrice: primaryGrain.price,
+      secondaryPrice: secondaryGrain.price,
+      delta,
+      cheaperMarket:
+        Math.abs(delta) < 0.05
+          ? "Parity"
+          : delta > 0
+            ? primaryPayload.location
+            : secondaryPayload.location
+    };
+  });
+}
+
+function renderComparisonChart(primaryPayload, secondaryPayload, rows) {
+  const canvas = document.getElementById("locationComparisonChart");
+  if (!canvas || !primaryPayload || !secondaryPayload || !rows.length) return;
+
+  const labels = rows.map((row) => wrapChartLabel(row.name));
+  const minPrice = Math.max(0, Math.floor(Math.min(...rows.map((row) => row.primaryPrice), ...rows.map((row) => row.secondaryPrice)) * 0.9));
+  const maxPrice = Math.ceil(Math.max(...rows.map((row) => row.primaryPrice), ...rows.map((row) => row.secondaryPrice)) * 1.12);
+
+  comparisonLocationChart?.destroy();
+  comparisonLocationChart = new Chart(canvas, {
     type: "bar",
     data: {
       labels,
       datasets: [
         {
-          label: "Spread vs national",
-          data: spreads,
-          backgroundColor: spreads.map((spread) => {
-            if (spread > 0.05) return "rgba(239, 68, 68, 0.36)";
-            if (spread < -0.05) return "rgba(35, 213, 171, 0.32)";
-            return "rgba(109, 167, 255, 0.30)";
-          }),
-          borderColor: spreads.map((spread) => {
-            if (spread > 0.05) return "#ef4444";
-            if (spread < -0.05) return "#23d5ab";
-            return "#6da7ff";
-          }),
+          label: primaryPayload.location,
+          data: rows.map((row) => row.primaryPrice),
+          backgroundColor: "rgba(35, 213, 171, 0.28)",
+          borderColor: "#23d5ab",
           borderWidth: 1.5,
           borderRadius: 12,
           borderSkipped: false,
-          barThickness: 16,
-          maxBarThickness: 20
+          barThickness: 14,
+          maxBarThickness: 18
+        },
+        {
+          label: secondaryPayload.location,
+          data: rows.map((row) => row.secondaryPrice),
+          backgroundColor: "rgba(109, 167, 255, 0.22)",
+          borderColor: "#6da7ff",
+          borderWidth: 1.5,
+          borderRadius: 12,
+          borderSkipped: false,
+          barThickness: 14,
+          maxBarThickness: 18
         }
       ]
     },
     options: buildHorizontalBarOptions({
-      minValue: -maxSpreadExtent,
-      maxValue: maxSpreadExtent,
-      tickFormatter: (value) => (value === 0 ? "Parity" : formatSignedCurrency(value)),
-      tooltipFormatter: (value) => `${formatSignedCurrency(value)} per kg`,
-      showLegend: false
+      minValue: minPrice,
+      maxValue: maxPrice,
+      tickFormatter: currencyAxis,
+      tooltipFormatter: (value) => `${currency(value)} per kg`,
+      showLegend: true
     })
   });
+}
+
+function renderComparisonSummary(primaryPayload, secondaryPayload, rows) {
+  if (!comparisonSummary || !primaryPayload || !secondaryPayload || !rows.length) return;
+
+  const primaryAverage = rows.reduce((total, row) => total + row.primaryPrice, 0) / rows.length;
+  const secondaryAverage = rows.reduce((total, row) => total + row.secondaryPrice, 0) / rows.length;
+  const basketDelta = Number((secondaryAverage - primaryAverage).toFixed(2));
+  const widestGap = rows.reduce((best, row) => (Math.abs(row.delta) > Math.abs(best.delta) ? row : best), rows[0]);
+  const cheaperBasket =
+    Math.abs(basketDelta) < 0.05 ? "Parity" : basketDelta > 0 ? primaryPayload.location : secondaryPayload.location;
+
+  comparisonSummary.innerHTML = `
+    <article class="planner-result-card">
+      <p class="planner-result-label">Location A Average</p>
+      <p class="planner-result-value">${currency(primaryAverage)}</p>
+      <p class="planner-result-copy">${primaryPayload.location} average across the tracked grain basket.</p>
+    </article>
+    <article class="planner-result-card">
+      <p class="planner-result-label">Location B Average</p>
+      <p class="planner-result-value">${currency(secondaryAverage)}</p>
+      <p class="planner-result-copy">${secondaryPayload.location} average across the tracked grain basket.</p>
+    </article>
+    <article class="planner-result-card">
+      <p class="planner-result-label">Basket Delta</p>
+      <p class="planner-result-value ${basketDelta > 0 ? "tone-danger" : basketDelta < 0 ? "tone-neon" : "tone-info"}">${basketDelta === 0 ? "Parity" : formatSignedCurrency(basketDelta)}/kg</p>
+      <p class="planner-result-copy">${cheaperBasket === "Parity" ? "Both places are effectively aligned." : `${cheaperBasket} currently has the cheaper average basket. Largest grain gap: ${widestGap.name}.`}</p>
+    </article>
+  `;
+}
+
+function renderComparisonTable(primaryPayload, secondaryPayload, rows) {
+  if (!comparisonTableBody) return;
+
+  if (!primaryPayload || !secondaryPayload || !rows.length) {
+    comparisonTableBody.innerHTML = "";
+    return;
+  }
+
+  comparisonTableBody.innerHTML = rows
+    .map((row) => `
+      <tr>
+        <td class="strong">${row.name}</td>
+        <td class="mono">${row.primaryPrice.toFixed(1)}</td>
+        <td class="mono">${row.secondaryPrice.toFixed(1)}</td>
+        <td class="mono ${row.delta > 0 ? "tone-danger" : row.delta < 0 ? "tone-neon" : "tone-info"}">${row.delta === 0 ? "0.0" : formatSignedNumber(row.delta, 1)}</td>
+        <td class="muted">${row.cheaperMarket}</td>
+      </tr>
+    `)
+    .join("");
+}
+
+function renderComparisonPanel(primaryPayload, secondaryPayload, message) {
+  if (!comparisonStatus) return;
+
+  if (!primaryPayload || !secondaryPayload) {
+    comparisonStatus.textContent = message || "Pick another place to compare its grain prices with the selected market.";
+    if (comparisonSecondaryName) comparisonSecondaryName.textContent = "Choose a location";
+    if (comparisonSecondaryMeta) comparisonSecondaryMeta.textContent = "Select another location to compare the current prices side by side.";
+    if (comparisonSummary) comparisonSummary.innerHTML = "";
+    if (comparisonTableBody) comparisonTableBody.innerHTML = "";
+    comparisonLocationChart?.destroy();
+    comparisonLocationChart = null;
+    return;
+  }
+
+  const rows = getComparisonRows(primaryPayload, secondaryPayload);
+  if (comparisonSecondaryName) {
+    comparisonSecondaryName.textContent = secondaryPayload.location;
+  }
+  if (comparisonSecondaryMeta) {
+    comparisonSecondaryMeta.textContent = `${secondaryPayload.region || "National market"} | ${secondaryPayload.province || secondaryPayload.officialGeolocation || "Province pending"} | updated ${formatDateTime(secondaryPayload.updatedAt)}`;
+  }
+  renderComparisonSummary(primaryPayload, secondaryPayload, rows);
+  renderComparisonTable(primaryPayload, secondaryPayload, rows);
+  renderComparisonChart(primaryPayload, secondaryPayload, rows);
+  comparisonStatus.textContent =
+    message || `Comparing ${primaryPayload.location} with ${secondaryPayload.location} across the tracked grains.`;
+}
+
+async function fetchComparisonLocation(location) {
+  if (!location || !currentLocationPayload) {
+    renderComparisonPanel(currentLocationPayload, null);
+    return;
+  }
+
+  if (location === currentLocationPayload.location) {
+    renderComparisonPanel(
+      currentLocationPayload,
+      currentLocationPayload,
+      `Comparing ${location} against itself. Choose another place to see a meaningful spread.`
+    );
+    return;
+  }
+
+  if (comparisonFetchController) comparisonFetchController.abort();
+  comparisonFetchController = new AbortController();
+  const signal = comparisonFetchController.signal;
+
+  if (comparisonStatus) {
+    comparisonStatus.textContent = `Fetching comparison data for ${location}...`;
+  }
+
+  try {
+    const response = await fetch(`/api/v1/location-prices?location=${encodeURIComponent(location)}`, { signal });
+    if (!response.ok) throw new Error("Comparison fetch failed");
+    comparisonPayload = normalizeLocationPayload(await response.json());
+    renderComparisonPanel(currentLocationPayload, comparisonPayload);
+  } catch (error) {
+    if (error.name === "AbortError") return;
+    comparisonPayload = normalizeLocationPayload(getLocalFallbackLocation(location));
+    renderComparisonPanel(currentLocationPayload, comparisonPayload, `Loaded fallback comparison data for ${comparisonPayload.location}.`);
+  }
+}
+
+function getAvailableComparisonLocations() {
+  const primaryLocation = currentLocationPayload?.location || locationSelect?.value || marketsData.locationDefaults.selectedLocation;
+  const optionsSource = locationCatalog.length ? locationCatalog : marketsData.locationMarkets;
+  return optionsSource.filter((location) => location.location !== primaryLocation);
+}
+
+function resolveComparisonLocationValue(value, allowPrefix = false) {
+  const normalizedValue = String(value || "").trim().toLowerCase();
+  if (!normalizedValue) return "";
+
+  const availableLocations = getAvailableComparisonLocations();
+  const exactMatch = availableLocations.find((location) => location.location.toLowerCase() === normalizedValue);
+  if (exactMatch) return exactMatch.location;
+
+  if (!allowPrefix) return "";
+
+  const prefixMatches = availableLocations.filter((location) => location.location.toLowerCase().startsWith(normalizedValue));
+  if (prefixMatches.length === 1) return prefixMatches[0].location;
+
+  const containsMatches = availableLocations.filter((location) => location.location.toLowerCase().includes(normalizedValue));
+  if (containsMatches.length === 1) return containsMatches[0].location;
+
+  return "";
+}
+
+function syncComparisonInput(preferredValue) {
+  if (!comparisonLocationInput || !comparisonLocationOptions) return "";
+
+  const availableLocations = getAvailableComparisonLocations();
+  comparisonLocationOptions.innerHTML = "";
+
+  availableLocations.forEach((location) => {
+    const option = document.createElement("option");
+    option.value = location.location;
+    comparisonLocationOptions.append(option);
+  });
+
+  comparisonLocationInput.disabled = !availableLocations.length;
+
+  if (!availableLocations.length) {
+    comparisonLocationInput.value = "";
+    return "";
+  }
+
+  const nextValue =
+    resolveComparisonLocationValue(preferredValue || comparisonLocationInput.value) || availableLocations[0]?.location || "";
+
+  comparisonLocationInput.value = nextValue;
+  return nextValue;
 }
 
 function populatePlannerGrains(payload) {
@@ -1059,6 +1273,12 @@ async function fetchLocationPrices(location) {
     renderLocationCards(payload);
     renderLocationCharts(payload);
     populatePlannerGrains(payload);
+    const comparisonLocation = syncComparisonInput(comparisonPayload?.location);
+    if (comparisonLocation) {
+      fetchComparisonLocation(comparisonLocation);
+    } else {
+      renderComparisonPanel(payload, null);
+    }
     updatePlanner();
     if (locationStatus) {
       locationStatus.textContent =
@@ -1080,6 +1300,12 @@ async function fetchLocationPrices(location) {
     renderLocationCards(fallback);
     renderLocationCharts(fallback);
     populatePlannerGrains(fallback);
+    const comparisonLocation = syncComparisonInput(comparisonPayload?.location);
+    if (comparisonLocation) {
+      fetchComparisonLocation(comparisonLocation);
+    } else {
+      renderComparisonPanel(fallback, null);
+    }
     updatePlanner();
     if (locationStatus) locationStatus.textContent = `Loaded fallback pilot prices for ${fallback.location}.`;
     marketsApp.updateFooterStatus(`Last update: loaded fallback prices for ${fallback.location}`);
@@ -1122,6 +1348,30 @@ locationProvinceSelect?.addEventListener("change", (event) => {
 locationSelect?.addEventListener("change", (event) => {
   fetchLocationPrices(event.target.value);
 });
+
+function handleComparisonLocationInput(event) {
+  const resolvedLocation = resolveComparisonLocationValue(event.target.value, true);
+
+  if (!resolvedLocation) {
+    if (comparisonStatus) {
+      comparisonStatus.textContent = "Keep typing to choose a suggested comparison location.";
+    }
+    return;
+  }
+
+  comparisonLocationInput.value = resolvedLocation;
+  fetchComparisonLocation(resolvedLocation);
+}
+
+comparisonLocationInput?.addEventListener("input", (event) => {
+  const resolvedLocation = resolveComparisonLocationValue(event.target.value);
+  if (resolvedLocation) {
+    fetchComparisonLocation(resolvedLocation);
+  }
+});
+
+comparisonLocationInput?.addEventListener("change", handleComparisonLocationInput);
+comparisonLocationInput?.addEventListener("blur", handleComparisonLocationInput);
 
 plannerGrainSelect?.addEventListener("change", updatePlanner);
 plannerQuantityInput?.addEventListener("input", updatePlanner);

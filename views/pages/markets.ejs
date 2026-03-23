@@ -100,6 +100,63 @@
       </article>
 
       <div id="locationCardGrid" class="location-card-grid"></div>
+
+      <section class="comparison-shell">
+        <div class="comparison-head">
+          <div>
+            <p class="panel-eyebrow">
+              <%- include("../partials/icon", { name: "location", className: "icon-sm" }) %>
+              <span>Comparison</span>
+            </p>
+            <h3 class="panel-title comparison-title">Compare Two Locations</h3>
+          </div>
+          <label class="comparison-field">
+            <span class="settings-field-label">Compare Against</span>
+            <input
+              id="comparisonLocationInput"
+              class="location-select"
+              type="text"
+              list="comparisonLocationOptions"
+              placeholder="Type a city or municipality"
+              autocomplete="off"
+            />
+            <datalist id="comparisonLocationOptions"></datalist>
+          </label>
+        </div>
+        <div class="comparison-places-grid">
+          <article class="comparison-focus-card">
+            <p class="comparison-focus-label">Location A</p>
+            <p id="comparisonPrimaryName" class="comparison-focus-value"><%= site.locationDefaults.selectedLocation %></p>
+            <p id="comparisonPrimaryMeta" class="comparison-focus-copy">This follows the location selected in the explorer above.</p>
+          </article>
+          <article class="comparison-focus-card">
+            <p class="comparison-focus-label">Location B</p>
+            <p id="comparisonSecondaryName" class="comparison-focus-value">Choose a location</p>
+            <p id="comparisonSecondaryMeta" class="comparison-focus-copy">Select another location to compare the current prices side by side.</p>
+          </article>
+        </div>
+        <p id="comparisonStatus" class="location-status-card">Pick another place to compare its grain prices with the selected market.</p>
+        <div id="comparisonSummary" class="comparison-summary-grid"></div>
+        <div class="comparison-chart-shell">
+          <div class="comparison-chart-canvas">
+            <canvas id="locationComparisonChart"></canvas>
+          </div>
+        </div>
+        <div class="table-wrap comparison-table-shell">
+          <table class="table-base">
+            <thead>
+              <tr>
+                <th>Grain</th>
+                <th>Location A</th>
+                <th>Location B</th>
+                <th>Delta</th>
+                <th>Cheaper Market</th>
+              </tr>
+            </thead>
+            <tbody id="comparisonTableBody"></tbody>
+          </table>
+        </div>
+      </section>
       </div>
     </section>
 
@@ -192,37 +249,18 @@
     </section>
   </div>
 
-  <div class="markets-chart-grid">
-    <section class="market-panel">
-      <div class="panel-head">
-        <div>
-          <p class="panel-eyebrow">
-            <%- include("../partials/icon", { name: "alert", className: "icon-sm" }) %>
-            <span>Regional Pressure</span>
-          </p>
-          <h3 class="panel-title">Supply Chain Heat</h3>
-        </div>
+  <section class="market-panel">
+    <div class="panel-head">
+      <div>
+        <p class="panel-eyebrow">
+          <%- include("../partials/icon", { name: "alert", className: "icon-sm" }) %>
+          <span>Regional Pressure</span>
+        </p>
+        <h3 class="panel-title">Supply Chain Heat</h3>
       </div>
-      <div class="chart-frame chart-frame-tall">
-        <canvas id="regionalPressureChart"></canvas>
-      </div>
-    </section>
-
-    <section class="market-panel">
-      <div class="panel-head">
-        <div>
-          <p class="panel-eyebrow">
-            <%- include("../partials/icon", { name: "trend", className: "icon-sm" }) %>
-            <span>Spread</span>
-          </p>
-          <h3 class="panel-title">Location vs National Benchmark</h3>
-        </div>
-      </div>
-      <div class="chart-frame chart-frame-tall location-chart-frame">
-        <div class="location-chart-canvas location-chart-canvas-tall">
-          <canvas id="locationSpreadChart"></canvas>
-        </div>
-      </div>
-    </section>
-  </div>
+    </div>
+    <div class="chart-frame chart-frame-tall">
+      <canvas id="regionalPressureChart"></canvas>
+    </div>
+  </section>
 </section>
