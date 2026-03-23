@@ -1,4 +1,46 @@
 <section class="settings-grid">
+  <div class="settings-hero-grid">
+    <article class="settings-hero-card">
+      <p class="settings-hero-label">Control Surface</p>
+      <h3 class="settings-hero-title">Configuration should feel like a command center, not a form dump.</h3>
+      <p class="settings-hero-copy">Thresholds, notification preferences, data sources, and API routes are grouped so operators can understand policy, source health, and sync behavior without hunting across disconnected panels.</p>
+      <div class="settings-hero-metrics">
+        <article class="settings-hero-metric">
+          <p class="settings-hero-metric-label">Thresholds</p>
+          <p class="settings-hero-metric-value"><%= Object.keys(site.settings.thresholds).length %> values</p>
+        </article>
+        <article class="settings-hero-metric">
+          <p class="settings-hero-metric-label">Data sources</p>
+          <p class="settings-hero-metric-value"><%= site.settings.dataSources.length %> feeds</p>
+        </article>
+        <article class="settings-hero-metric">
+          <p class="settings-hero-metric-label">API routes</p>
+          <p class="settings-hero-metric-value"><%= site.settings.apiRoutes.length %> endpoints</p>
+        </article>
+      </div>
+    </article>
+
+    <article class="settings-hero-card is-secondary">
+      <p class="settings-hero-label">Engine State</p>
+      <h3 class="settings-hero-title">The sync and prediction layer is easier to read at a glance now.</h3>
+      <p class="settings-hero-copy">The settings surface keeps refresh policy, confidence scoring, and external integration status close together so operational changes are easier to reason about before teams ship them.</p>
+      <div class="settings-hero-metrics">
+        <article class="settings-hero-metric">
+          <p class="settings-hero-metric-label">Mode</p>
+          <p class="settings-hero-metric-value"><%= site.settings.engine.mode %></p>
+        </article>
+        <article class="settings-hero-metric">
+          <p class="settings-hero-metric-label">Refresh</p>
+          <p class="settings-hero-metric-value"><%= site.settings.engine.refreshInterval %></p>
+        </article>
+        <article class="settings-hero-metric">
+          <p class="settings-hero-metric-label">Confidence</p>
+          <p class="settings-hero-metric-value"><%= site.settings.engine.confidenceScores ? 'Enabled' : 'Disabled' %></p>
+        </article>
+      </div>
+    </article>
+  </div>
+
   <div class="settings-top-grid">
     <section class="settings-panel">
       <div class="panel-head">
@@ -115,39 +157,4 @@
       </div>
     </section>
   </div>
-
-  <section class="settings-panel" id="integration-api">
-    <div class="panel-head">
-      <div>
-        <p class="panel-eyebrow">
-          <%- include("../partials/icon", { name: "api", className: "icon-sm" }) %>
-          <span>Integration API</span>
-        </p>
-        <h3 class="panel-title">Production Routes</h3>
-      </div>
-      <span class="panel-badge">API v1</span>
-    </div>
-    <div class="table-wrap">
-      <table class="table-base">
-        <thead>
-          <tr>
-            <th>Method</th>
-            <th>Path</th>
-            <th>Purpose</th>
-            <th>Source</th>
-          </tr>
-        </thead>
-        <tbody>
-          <% site.settings.apiRoutes.forEach((route) => { %>
-            <tr>
-              <td class="mono strong"><%= route.method %></td>
-              <td class="mono tone-info"><%= route.path %></td>
-              <td class="muted"><%= route.purpose %></td>
-              <td class="muted"><%= route.source %></td>
-            </tr>
-          <% }) %>
-        </tbody>
-      </table>
-    </div>
-  </section>
 </section>

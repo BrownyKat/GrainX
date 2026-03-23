@@ -1,4 +1,46 @@
 <section class="alerts-grid">
+  <div class="alerts-hero-grid">
+    <article class="alerts-hero-card">
+      <p class="alerts-hero-label">Risk Watch</p>
+      <h3 class="alerts-hero-title">Critical alerts should feel operationally urgent the moment the page opens.</h3>
+      <p class="alerts-hero-copy">The active alert cards stay front-loaded, while the history and workflow panels below are structured to make ownership, closure logic, and recurrence tracking easier to review under pressure.</p>
+      <div class="alerts-hero-metrics">
+        <article class="alerts-hero-metric">
+          <p class="alerts-hero-metric-label">Active alerts</p>
+          <p class="alerts-hero-metric-value"><%= site.alerts.length %></p>
+        </article>
+        <article class="alerts-hero-metric">
+          <p class="alerts-hero-metric-label">Workflow steps</p>
+          <p class="alerts-hero-metric-value"><%= site.alertProcess.length %></p>
+        </article>
+        <article class="alerts-hero-metric">
+          <p class="alerts-hero-metric-label">Resolution rules</p>
+          <p class="alerts-hero-metric-value"><%= site.resolutionRules.length %></p>
+        </article>
+      </div>
+    </article>
+
+    <article class="alerts-hero-card is-secondary">
+      <p class="alerts-hero-label">Closure Discipline</p>
+      <h3 class="alerts-hero-title">The page now supports a clearer rhythm from breach to resolution.</h3>
+      <p class="alerts-hero-copy">Active state, ownership history, and resolution rules are visually separated so teams can tell what is live, what closed cleanly, and what still needs a validated note.</p>
+      <div class="alerts-hero-metrics">
+        <article class="alerts-hero-metric">
+          <p class="alerts-hero-metric-label">Current focus</p>
+          <p class="alerts-hero-metric-value"><%= site.alerts[0].title %></p>
+        </article>
+        <article class="alerts-hero-metric">
+          <p class="alerts-hero-metric-label">Owner desk</p>
+          <p class="alerts-hero-metric-value">Retail / Logistics</p>
+        </article>
+        <article class="alerts-hero-metric">
+          <p class="alerts-hero-metric-label">Monitoring window</p>
+          <p class="alerts-hero-metric-value">24 hours</p>
+        </article>
+      </div>
+    </article>
+  </div>
+
   <div class="alerts-top-grid">
     <% site.alerts.forEach((alert) => { %>
       <article class="alert-card alert-<%= alert.type %>">

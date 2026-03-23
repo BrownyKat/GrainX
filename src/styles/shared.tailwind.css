@@ -4,7 +4,7 @@
 
 @layer base {
   body {
-    @apply min-h-screen bg-ink bg-grain font-sans text-text antialiased;
+    @apply min-h-screen bg-ink font-sans text-text antialiased;
   }
 
   h1, h2, h3, h4 {
@@ -16,49 +16,101 @@
   }
 }
 
+body {
+  background-image:
+    radial-gradient(circle at top left, rgba(104, 164, 255, 0.16), transparent 22%),
+    radial-gradient(circle at 88% 4%, rgba(35, 194, 141, 0.14), transparent 20%),
+    radial-gradient(circle at 50% 120%, rgba(211, 154, 47, 0.12), transparent 24%),
+    linear-gradient(180deg, #08101a 0%, #0c1522 48%, #08101a 100%);
+}
+
 @layer components {
   .app-body-shell {
     @apply min-h-screen;
   }
 
   .grain-background {
-    @apply pointer-events-none fixed inset-0 opacity-100;
+    @apply pointer-events-none fixed inset-0 overflow-hidden opacity-100;
+  }
+
+  .grain-background-orb {
+    @apply absolute rounded-full blur-3xl;
+  }
+
+  .grain-background-orb-a {
+    @apply left-[-8rem] top-[-5rem] h-[22rem] w-[22rem] bg-info/15;
+    animation: grain-float-a 18s ease-in-out infinite;
+  }
+
+  .grain-background-orb-b {
+    @apply bottom-[-8rem] right-[-6rem] h-[24rem] w-[24rem] bg-neon/10;
+    animation: grain-float-b 22s ease-in-out infinite;
+  }
+
+  .grain-background-grid {
+    @apply absolute inset-0 opacity-30;
+    background-image:
+      linear-gradient(rgba(145, 160, 184, 0.07) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(145, 160, 184, 0.07) 1px, transparent 1px);
+    background-size: 72px 72px;
+    mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.8), transparent 85%);
   }
 
   .app-shell {
-    @apply relative mx-auto flex min-h-screen max-w-[1400px] flex-col;
+    @apply relative mx-auto flex min-h-screen max-w-[1440px] flex-col;
   }
 
   .topbar {
-    @apply flex flex-col gap-4 border-b border-line/80 bg-shell/90 px-5 py-4 backdrop-blur lg:flex-row lg:items-start lg:justify-between lg:px-8;
+    @apply relative mt-5 flex flex-col gap-5 overflow-hidden rounded-[1.75rem] border border-line/70 bg-shell/85 px-5 py-5 shadow-chrome backdrop-blur lg:mt-8 lg:grid lg:grid-cols-[minmax(0,1.35fr)_minmax(0,0.9fr)] lg:px-8;
   }
 
   .brand-cluster {
     @apply flex items-start gap-4;
   }
 
+  .brand-copy {
+    @apply flex flex-col;
+  }
+
   .brand-mark {
-    @apply flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl border border-info/20 bg-info/10 font-mono text-sm font-semibold tracking-[0.32em] text-info no-underline;
+    @apply flex h-12 w-12 shrink-0 items-center justify-center rounded-[1.2rem] border border-info/25 bg-gradient-to-br from-info/20 via-info/10 to-transparent font-mono text-sm font-semibold tracking-[0.32em] text-info no-underline shadow-[0_14px_35px_rgba(104,164,255,0.2)];
   }
 
   .brand-eyebrow {
     @apply font-mono text-[11px] uppercase tracking-[0.35em] text-info;
   }
 
+  .brand-meta-row {
+    @apply mt-3 flex flex-wrap items-center gap-2;
+  }
+
+  .release-pill,
+  .brand-focus-pill {
+    @apply inline-flex items-center rounded-full border px-3 py-1 font-mono text-[11px] uppercase tracking-[0.28em];
+  }
+
+  .release-pill {
+    @apply border-neon/25 bg-neon/10 text-neon;
+  }
+
+  .brand-focus-pill {
+    @apply border-amber/20 bg-amber/10 text-amber;
+  }
+
   .brand-title {
-    @apply mt-1 text-[1.35rem] font-bold text-text;
+    @apply mt-4 max-w-[18ch] text-[1.55rem] font-bold leading-tight text-text lg:text-[1.8rem];
   }
 
   .brand-summary {
-    @apply mt-2 max-w-[46rem] text-[0.93rem] leading-6 text-muted;
+    @apply mt-3 max-w-[46rem] text-[0.95rem] leading-7 text-muted;
   }
 
   .topbar-actions {
-    @apply flex w-full flex-col gap-3 lg:max-w-[26rem] lg:items-stretch;
+    @apply flex w-full flex-col gap-3 lg:max-w-none lg:justify-between;
   }
 
   .live-ribbon {
-    @apply flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between;
+    @apply flex flex-col gap-3 rounded-[1.2rem] border border-line/70 bg-shell2/80 p-4 sm:flex-row sm:items-center sm:justify-between;
   }
 
   .live-ribbon-label {
@@ -66,15 +118,31 @@
   }
 
   .live-pill {
-    @apply inline-flex flex-wrap items-center gap-3 rounded-full border border-line bg-shell2 px-4 py-2 font-mono text-xs text-muted;
+    @apply inline-flex flex-wrap items-center gap-3 rounded-full border border-line/80 bg-ink/40 px-4 py-2 font-mono text-xs text-muted;
   }
 
   .live-dot {
     @apply inline-flex h-2 w-2 animate-pulse rounded-full bg-neon;
   }
 
+  .topbar-signal-row {
+    @apply grid gap-3 sm:grid-cols-2;
+  }
+
+  .topbar-signal-card {
+    @apply rounded-[1.2rem] border border-line/70 bg-gradient-to-br from-shell2 to-panel/80 p-4;
+  }
+
+  .topbar-signal-label {
+    @apply font-mono text-[11px] uppercase tracking-[0.28em] text-muted;
+  }
+
+  .topbar-signal-value {
+    @apply mt-3 text-lg font-semibold text-text;
+  }
+
   .wallet-cluster {
-    @apply flex flex-col gap-3 rounded-[1.35rem] border border-line bg-shell2/90 p-4 shadow-chrome;
+    @apply flex flex-col gap-3 rounded-[1.35rem] border border-line/70 bg-gradient-to-br from-shell2/95 via-panel/90 to-shell2/95 p-4 shadow-chrome;
   }
 
   .wallet-summary {
@@ -94,7 +162,7 @@
   }
 
   .section-nav {
-    @apply border-b border-line/80 bg-shell/90 px-5 py-2.5 backdrop-blur lg:px-8;
+    @apply rounded-[1.35rem] border border-line/70 bg-shell/85 px-5 py-3 backdrop-blur lg:px-8;
   }
 
   .section-nav-track {
@@ -110,7 +178,7 @@
   }
 
   .ticker-strip {
-    @apply border-b border-line/80 bg-shell/80 px-5 py-2.5 lg:px-8;
+    @apply rounded-[1.35rem] border border-line/70 bg-shell/80 px-5 py-3 backdrop-blur lg:px-8;
   }
 
   .ticker-track {
@@ -118,7 +186,7 @@
   }
 
   .ticker-card {
-    @apply inline-flex min-w-[13.5rem] items-center justify-between gap-4 rounded-2xl border border-line bg-shell2 px-4 py-2.5;
+    @apply inline-flex min-w-[14.5rem] items-center justify-between gap-4 rounded-[1.2rem] border border-line/80 bg-gradient-to-br from-shell2/95 to-panel/90 px-4 py-3 shadow-[0_14px_30px_rgba(2,8,18,0.15)];
   }
 
   .ticker-card-head {
@@ -162,15 +230,24 @@
   }
 
   .shell-grid {
-    @apply flex-1 px-5 py-5 lg:px-8;
+    @apply flex-1 px-5 py-5 lg:px-8 lg:py-6;
   }
 
   .page-shell {
-    @apply flex flex-col gap-5;
+    @apply flex flex-col gap-6;
   }
 
   .page-intro {
-    @apply flex flex-col gap-4 rounded-[1.35rem] border border-line bg-shell/95 p-5 shadow-chrome lg:flex-row lg:items-end lg:justify-between;
+    @apply relative flex flex-col gap-6 overflow-hidden rounded-[1.6rem] border border-line/70 bg-gradient-to-br from-shell/95 via-shell2/95 to-panel/95 p-5 shadow-chrome lg:flex-row lg:items-end lg:justify-between lg:p-6;
+  }
+
+  .page-intro::after {
+    content: "";
+    @apply absolute right-[-5rem] top-[-5rem] h-40 w-40 rounded-full bg-info/10 blur-3xl;
+  }
+
+  .page-intro-copy {
+    @apply relative z-10;
   }
 
   .page-eyebrow {
@@ -178,27 +255,43 @@
   }
 
   .page-title {
-    @apply mt-1 text-[2.05rem] font-bold text-text;
+    @apply mt-2 max-w-[16ch] text-[2.1rem] font-bold leading-[1.02] text-text lg:text-[2.6rem];
   }
 
   .page-description {
-    @apply mt-2 max-w-3xl text-[0.97rem] leading-7 text-muted;
+    @apply mt-3 max-w-3xl text-[1rem] leading-7 text-muted;
+  }
+
+  .page-stat-row {
+    @apply mt-5 grid gap-3 sm:grid-cols-3;
+  }
+
+  .page-stat-card {
+    @apply rounded-[1.1rem] border border-line/70 bg-ink/20 p-4 backdrop-blur;
+  }
+
+  .page-stat-label {
+    @apply font-mono text-[11px] uppercase tracking-[0.28em] text-muted;
+  }
+
+  .page-stat-value {
+    @apply mt-3 text-base font-semibold leading-6 text-text;
   }
 
   .page-action-row {
-    @apply flex flex-wrap items-center gap-2;
+    @apply relative z-10 flex flex-wrap items-center gap-2;
   }
 
   .btn-primary {
-    @apply inline-flex items-center justify-center gap-2 rounded-full border border-info bg-info px-4 py-2 text-sm font-medium text-white transition hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-50;
+    @apply inline-flex items-center justify-center gap-2 rounded-full border border-info/80 bg-info px-4 py-2 text-sm font-medium text-white shadow-[0_12px_24px_rgba(104,164,255,0.26)] transition hover:-translate-y-0.5 hover:opacity-95 disabled:cursor-not-allowed disabled:opacity-50;
   }
 
   .btn-secondary {
-    @apply inline-flex items-center justify-center gap-2 rounded-full border border-line bg-shell2 px-4 py-2 text-sm font-medium text-text transition hover:border-info hover:text-info disabled:cursor-not-allowed disabled:opacity-50;
+    @apply inline-flex items-center justify-center gap-2 rounded-full border border-line/80 bg-shell2/95 px-4 py-2 text-sm font-medium text-text transition hover:-translate-y-0.5 hover:border-info hover:text-info disabled:cursor-not-allowed disabled:opacity-50;
   }
 
   .btn-ghost {
-    @apply inline-flex items-center justify-center gap-2 rounded-full border border-line bg-transparent px-4 py-2 text-sm font-medium text-muted transition hover:border-info/30 hover:text-text disabled:cursor-not-allowed disabled:opacity-50;
+    @apply inline-flex items-center justify-center gap-2 rounded-full border border-line/80 bg-transparent px-4 py-2 text-sm font-medium text-muted transition hover:-translate-y-0.5 hover:border-info/30 hover:text-text disabled:cursor-not-allowed disabled:opacity-50;
   }
 
   .btn-danger {
@@ -294,7 +387,11 @@
   }
 
   .footer-bar {
-    @apply mt-6 flex flex-col gap-3 border-t border-line/80 bg-shell/90 px-5 py-4 text-xs text-muted backdrop-blur lg:flex-row lg:items-center lg:justify-between lg:px-8;
+    @apply mt-6 flex flex-col gap-3 rounded-t-[1.35rem] border border-line/70 bg-shell/85 px-5 py-4 text-xs text-muted backdrop-blur lg:flex-row lg:items-center lg:justify-between lg:px-8;
+  }
+
+  .footer-copy {
+    @apply max-w-3xl text-xs leading-6 text-muted;
   }
 
   .footer-row {
@@ -331,5 +428,25 @@
 
   .label-with-icon {
     @apply inline-flex items-center gap-2;
+  }
+}
+
+@keyframes grain-float-a {
+  0%, 100% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+
+  50% {
+    transform: translate3d(1.5rem, 2rem, 0) scale(1.08);
+  }
+}
+
+@keyframes grain-float-b {
+  0%, 100% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+
+  50% {
+    transform: translate3d(-1.25rem, -2rem, 0) scale(1.06);
   }
 }

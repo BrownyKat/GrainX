@@ -5,6 +5,50 @@
     @apply flex flex-col gap-6;
   }
 
+  .alerts-hero-grid {
+    @apply grid gap-4 xl:grid-cols-[minmax(0,1.15fr)_minmax(0,0.85fr)];
+  }
+
+  .alerts-hero-card {
+    @apply rounded-[1.55rem] border border-line/80 bg-gradient-to-br from-danger/10 via-shell/95 to-shell2/95 p-5 shadow-chrome;
+  }
+
+  .alerts-hero-card.is-secondary {
+    @apply from-amber/10 via-shell/95 to-panel/95;
+  }
+
+  .alerts-hero-label {
+    @apply font-mono text-[11px] uppercase tracking-[0.3em] text-danger;
+  }
+
+  .alerts-hero-card.is-secondary .alerts-hero-label {
+    @apply text-amber;
+  }
+
+  .alerts-hero-title {
+    @apply mt-4 max-w-[14ch] text-[2rem] font-semibold leading-tight text-text;
+  }
+
+  .alerts-hero-copy {
+    @apply mt-3 max-w-2xl text-sm leading-7 text-muted;
+  }
+
+  .alerts-hero-metrics {
+    @apply mt-5 grid gap-3 sm:grid-cols-3;
+  }
+
+  .alerts-hero-metric {
+    @apply rounded-[1.05rem] border border-line/70 bg-ink/20 p-4;
+  }
+
+  .alerts-hero-metric-label {
+    @apply font-mono text-[11px] uppercase tracking-[0.28em] text-muted;
+  }
+
+  .alerts-hero-metric-value {
+    @apply mt-3 text-base font-semibold text-text;
+  }
+
   .alerts-top-grid {
     @apply grid gap-4 xl:grid-cols-3;
   }
@@ -50,7 +94,7 @@
   }
 
   .alerts-panel {
-    @apply rounded-[1.35rem] border border-line/80 bg-shell/95 shadow-chrome;
+    @apply rounded-[1.35rem] border border-line/80 bg-gradient-to-br from-shell/95 to-panel/95 shadow-chrome;
   }
 
   .alert-state-pill {
@@ -70,7 +114,7 @@
   }
 
   .guide-card {
-    @apply rounded-[1.15rem] border border-line bg-panel/80 p-4;
+    @apply rounded-[1.15rem] border border-line/80 bg-panel/80 p-4;
   }
 
   .guide-title {

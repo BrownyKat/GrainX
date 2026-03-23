@@ -52,7 +52,6 @@ function renderChartForCommodity(key) {
 
 function renderDraftPreview() {
   const ticket = oracleApp.buildBaseTicket(getDraftFromForm());
-  const preview = document.getElementById("oracleReceiptPreview");
   const priceEl = document.getElementById("oracleTicketPrice");
   const notionalEl = document.getElementById("oracleTicketNotional");
   const expiryEl = document.getElementById("oracleTicketExpiry");
@@ -62,9 +61,6 @@ function renderDraftPreview() {
   if (expiryEl) {
     expiryEl.textContent = new Date(ticket.value.expiryTimestamp * 1000).toLocaleTimeString("en-PH", { hour12: false });
   }
-
-  const previewPayload = activeSignedTicket && activeSignedTicket.digest === ticket.digest ? activeSignedTicket : ticket;
-  if (preview) preview.textContent = JSON.stringify(previewPayload, null, 2);
 
   if (publishButton) {
     publishButton.disabled = !oracleData.baseDesk.contractAddress;

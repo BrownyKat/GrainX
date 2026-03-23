@@ -2,7 +2,11 @@
 <html lang="en">
   <%- include("partials/head", { page, pageCss }) %>
   <body class="app-body-shell">
-    <div class="grain-background"></div>
+    <div class="grain-background">
+      <div class="grain-background-orb grain-background-orb-a"></div>
+      <div class="grain-background-orb grain-background-orb-b"></div>
+      <div class="grain-background-grid"></div>
+    </div>
     <div class="app-shell">
       <%- include("partials/header", { site, page }) %>
       <%- include("partials/mobile_nav", { pages, currentPage }) %>
@@ -10,7 +14,7 @@
 
       <div class="shell-grid">
         <main class="page-shell">
-          <%- include("partials/page_intro", { page }) %>
+          <%- include("partials/page_intro", { page, site, currentPage }) %>
           <%- include("pages/" + currentPage, { site }) %>
         </main>
       </div>
