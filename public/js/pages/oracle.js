@@ -73,8 +73,40 @@ function renderDraftPreview() {
     expiryEl.textContent = new Date(ticket.value.expiryTimestamp * 1000).toLocaleTimeString("en-PH", { hour12: false });
   }
 
-  const previewPayload = activeSignedTicket && activeSignedTicket.digest === ticket.digest ? activeSignedTicket : ticket;
-  if (preview) preview.textContent = JSON.stringify(previewPayload, null, 2);
+  if (preview) {
+    const isSigned = activeSignedTicket && activeSignedTicket.digest === ticket.digest;
+    const digestDisplay = ticket.digest.slice(0, 10) + "..." + ticket.digest.slice(-8);
+    const statusColor = isSigned ? "text-emerald-400" : "text-amber-400";
+    const statusBg = isSigned ? "bg-emerald-400/10" : "bg-amber-400/10";
+    const statusLabel = isSigned ? "Signed & Ready" : "Draft Pending";
+
+    preview.style.whiteSpace = "normal";
+    preview.innerHTML = `
+      <div class="rounded-lg border border-slate-700/50 bg-slate-800/40 p-5">
+        <div class="flex items-center justify-between border-b border-slate-700/50 pb-3 mb-4">
+          <span class="text-xs font-semibold uppercase tracking-wider text-slate-400">Base Attestation Ticket</span>
+          <span class="inline-flex items-center rounded px-2 py-0.5 text-xs font-medium ${statusBg} ${statusColor}">${statusLabel}</span>
+        </div>
+        <div class="grid grid-cols-2 gap-x-4 gap-y-4 text-sm">
+          <div><p class="text-xs text-slate-500 uppercase">Commodity</p><p class="font-medium text-slate-200 mt-0.5">${ticket.commodity.name}</p></div>
+          <div><p class="text-xs text-slate-500 uppercase">Location</p><p class="font-medium text-slate-200 mt-0.5">${ticket.location.location}</p></div>
+          <div><p class="text-xs text-slate-500 uppercase">Quantity</p><p class="font-medium text-slate-200 mt-0.5">${ticket.draft.quantityKg.toLocaleString()} kg <span class="text-slate-500 text-xs">(${ticket.draft.side})</span></p></div>
+          <div><p class="text-xs text-slate-500 uppercase">Total Value</p><p class="font-medium text-slate-200 mt-0.5">${oracleApp.formatPhp(ticket.notional)}</p></div>
+        </div>
+        <div class="mt-4 pt-3 border-t border-slate-700/50">
+           <div class="flex justify-between items-center">
+             <div>
+                <p class="text-xs text-slate-500 uppercase">Digest</p>
+                <p class="font-mono text-xs text-slate-400 mt-0.5">${digestDisplay}</p>
+             </div>
+              <div>
+                <p class="text-xs text-slate-500 uppercase text-right">Network</p>
+                <p class="text-xs text-slate-300 mt-0.5 text-right">${oracleData.baseDesk.preferredChain}</p>
+             </div>
+           </div>
+        </div>
+      </div>`;
+  }
 
   if (publishButton) {
     publishButton.disabled = !oracleData.baseDesk.contractAddress;
