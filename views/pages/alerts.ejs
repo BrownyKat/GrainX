@@ -65,33 +65,38 @@
           <h3 class="panel-title">Alert History and Closure Notes</h3>
         </div>
       </div>
-      <div class="table-wrap">
-        <table class="table-base">
-          <thead>
-            <tr>
-              <th>Date</th>
-              <th>Commodity</th>
-              <th>Trigger</th>
-              <th>Value</th>
-              <th>Owner</th>
-              <th>State</th>
-              <th>Resolution</th>
-            </tr>
-          </thead>
-          <tbody>
-            <% site.alertHistory.forEach((item) => { %>
-              <tr>
-                <td class="mono muted"><%= item.date %></td>
-                <td class="strong"><%= item.commodity %></td>
-                <td class="muted"><%= item.trigger %></td>
-                <td class="mono"><%= item.value %></td>
-                <td class="muted"><%= item.owner %></td>
-                <td><span class="alert-state-pill <%= item.state === 'Active' ? 'is-active' : 'is-resolved' %>"><%= item.state %></span></td>
-                <td class="muted"><%= item.resolution %></td>
-              </tr>
-            <% }) %>
-          </tbody>
-        </table>
+      <div class="alerts-history-list">
+        <% site.alertHistory.forEach((item) => { %>
+          <article class="alerts-history-card">
+            <div class="alerts-history-card-head">
+              <div>
+                <p class="alerts-history-date"><%= item.date %></p>
+                <h4 class="alerts-history-title"><%= item.commodity %></h4>
+              </div>
+              <span class="alert-state-pill <%= item.state === 'Active' ? 'is-active' : 'is-resolved' %>"><%= item.state %></span>
+            </div>
+
+            <div class="alerts-history-meta-grid">
+              <article class="alerts-history-meta-card">
+                <p class="alerts-history-meta-label">Trigger</p>
+                <p class="alerts-history-meta-value"><%= item.trigger %></p>
+              </article>
+              <article class="alerts-history-meta-card">
+                <p class="alerts-history-meta-label">Value</p>
+                <p class="alerts-history-meta-value mono"><%= item.value %></p>
+              </article>
+              <article class="alerts-history-meta-card">
+                <p class="alerts-history-meta-label">Owner</p>
+                <p class="alerts-history-meta-value"><%= item.owner %></p>
+              </article>
+            </div>
+
+            <div class="alerts-history-resolution">
+              <p class="alerts-history-meta-label">Resolution</p>
+              <p class="alerts-history-resolution-copy"><%= item.resolution %></p>
+            </div>
+          </article>
+        <% }) %>
       </div>
     </section>
 

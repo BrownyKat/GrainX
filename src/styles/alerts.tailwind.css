@@ -97,6 +97,50 @@
     @apply rounded-[1.35rem] border border-line/80 bg-gradient-to-br from-shell/95 to-panel/95 shadow-chrome;
   }
 
+  .alerts-history-list {
+    @apply flex flex-col gap-4 p-5;
+  }
+
+  .alerts-history-card {
+    @apply rounded-[1.2rem] border border-line/80 bg-panel/80 p-4;
+  }
+
+  .alerts-history-card-head {
+    @apply flex flex-col gap-3 border-b border-line/70 pb-4 sm:flex-row sm:items-start sm:justify-between;
+  }
+
+  .alerts-history-date {
+    @apply font-mono text-[11px] uppercase tracking-[0.28em] text-muted;
+  }
+
+  .alerts-history-title {
+    @apply mt-2 text-lg font-semibold text-text;
+  }
+
+  .alerts-history-meta-grid {
+    @apply mt-4 grid gap-3 md:grid-cols-3;
+  }
+
+  .alerts-history-meta-card {
+    @apply rounded-[1rem] border border-line/70 bg-ink/15 p-4;
+  }
+
+  .alerts-history-meta-label {
+    @apply font-mono text-[11px] uppercase tracking-[0.28em] text-muted;
+  }
+
+  .alerts-history-meta-value {
+    @apply mt-3 text-sm leading-6 text-text;
+  }
+
+  .alerts-history-resolution {
+    @apply mt-4 rounded-[1rem] border border-line/70 bg-ink/15 p-4;
+  }
+
+  .alerts-history-resolution-copy {
+    @apply mt-3 text-sm leading-7 text-muted;
+  }
+
   .alert-state-pill {
     @apply rounded-full border px-3 py-1 font-mono text-xs;
   }
