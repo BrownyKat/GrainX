@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1284 2778" role="img" aria-labelledby="title desc">
+  <title id="title">GrainWatch PH oracle preview</title>
+  <desc id="desc">A portrait preview showing the GrainWatch PH Base oracle and ticket desk.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#112236" />
+      <stop offset="55%" stop-color="#071019" />
+      <stop offset="100%" stop-color="#040a11" />
+    </linearGradient>
+  </defs>
+  <rect width="1284" height="2778" fill="url(#bg)" />
+  <rect x="72" y="72" width="1140" height="2634" rx="72" fill="#0d1826" stroke="rgba(255,255,255,0.08)" />
+  <text x="132" y="198" fill="#9aa8bd" font-family="IBM Plex Mono, monospace" font-size="26" letter-spacing="8">GRAINWATCH PH / BASE DESK</text>
+  <text x="132" y="298" fill="#eef3fb" font-family="Manrope, sans-serif" font-size="86" font-weight="700">Base Attestation Desk</text>
+  <text x="132" y="372" fill="#9aa8bd" font-family="Public Sans, sans-serif" font-size="34">Wallet-ready ticket signing with cleaner controls and professional presentation.</text>
+  <rect x="132" y="468" width="1020" height="970" rx="42" fill="#132133" stroke="rgba(255,255,255,0.08)" />
+  <rect x="132" y="1496" width="492" height="432" rx="34" fill="#132133" stroke="rgba(255,255,255,0.08)" />
+  <rect x="660" y="1496" width="492" height="432" rx="34" fill="#132133" stroke="rgba(255,255,255,0.08)" />
+  <rect x="132" y="1986" width="1020" height="642" rx="40" fill="rgba(109,167,255,0.08)" stroke="rgba(109,167,255,0.18)" />
+  <g fill="#9aa8bd" font-family="IBM Plex Mono, monospace" font-size="20" letter-spacing="5">
+    <text x="172" y="536">TICKET BUILDER</text>
+    <text x="172" y="1566">WALLET STATUS</text>
+    <text x="700" y="1566">CONTRACT MODE</text>
+    <text x="172" y="2056">AUDIT PREVIEW</text>
+  </g>
+  <g fill="#243247">
+    <rect x="172" y="622" width="442" height="110" rx="24" />
+    <rect x="670" y="622" width="442" height="110" rx="24" />
+    <rect x="172" y="782" width="442" height="110" rx="24" />
+    <rect x="670" y="782" width="442" height="110" rx="24" />
+    <rect x="172" y="974" width="940" height="140" rx="28" />
+    <rect x="172" y="1166" width="290" height="80" rx="24" fill="#6da7ff" />
+    <rect x="494" y="1166" width="290" height="80" rx="24" fill="#101a28" stroke="rgba(255,255,255,0.08)" />
+    <rect x="816" y="1166" width="296" height="80" rx="24" fill="#101a28" stroke="rgba(255,255,255,0.08)" />
+  </g>
+  <g fill="#eef3fb" font-family="Public Sans, sans-serif" font-size="32">
+    <text x="204" y="688">Commodity</text>
+    <text x="702" y="688">Location</text>
+    <text x="204" y="848">Action</text>
+    <text x="702" y="848">Quantity</text>
+    <text x="204" y="1060">Reference price, notional, expiry, and chain status</text>
+  </g>
+  <g fill="#eef3fb" font-family="Manrope, sans-serif" font-weight="700">
+    <text x="172" y="1650" font-size="48">Base-compatible wallet</text>
+    <text x="700" y="1650" font-size="48">Contract-ready mode</text>
+    <text x="172" y="2140" font-size="54">Signed ticket preview, export flow, and explorer links</text>
+  </g>
+  <g fill="#9aa8bd" font-family="Public Sans, sans-serif" font-size="30">
+    <text x="172" y="1714">Coinbase Wallet / Base App / MetaMask</text>
+    <text x="700" y="1714">Cleaner transaction workflow and preview surfaces</text>
+  </g>
+</svg>

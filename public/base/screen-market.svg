@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1284 2778" role="img" aria-labelledby="title desc">
+  <title id="title">GrainWatch PH markets preview</title>
+  <desc id="desc">A portrait preview showing the GrainWatch PH markets dashboard.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#101f32" />
+      <stop offset="55%" stop-color="#071019" />
+      <stop offset="100%" stop-color="#040a11" />
+    </linearGradient>
+  </defs>
+  <rect width="1284" height="2778" fill="url(#bg)" />
+  <rect x="72" y="72" width="1140" height="2634" rx="72" fill="#0d1826" stroke="rgba(255,255,255,0.08)" />
+  <text x="132" y="198" fill="#9aa8bd" font-family="IBM Plex Mono, monospace" font-size="26" letter-spacing="8">GRAINWATCH PH / MARKETS</text>
+  <text x="132" y="298" fill="#eef3fb" font-family="Manrope, sans-serif" font-size="86" font-weight="700">Philippine Grains Prices</text>
+  <text x="132" y="372" fill="#9aa8bd" font-family="Public Sans, sans-serif" font-size="34">Professional desk layout, city spreads, and Base-linked workflow.</text>
+  <rect x="132" y="468" width="1020" height="196" rx="34" fill="#132133" stroke="rgba(255,255,255,0.08)" />
+  <rect x="132" y="726" width="492" height="210" rx="34" fill="#132133" stroke="rgba(255,255,255,0.08)" />
+  <rect x="660" y="726" width="492" height="210" rx="34" fill="#132133" stroke="rgba(255,255,255,0.08)" />
+  <rect x="132" y="1002" width="1020" height="810" rx="40" fill="#132133" stroke="rgba(255,255,255,0.08)" />
+  <rect x="132" y="1868" width="1020" height="760" rx="40" fill="rgba(109,167,255,0.08)" stroke="rgba(109,167,255,0.18)" />
+  <g fill="#9aa8bd" font-family="IBM Plex Mono, monospace" font-size="20" letter-spacing="5">
+    <text x="172" y="536">LIVE BOARD</text>
+    <text x="172" y="794">CITY SPREAD</text>
+    <text x="700" y="794">BASE DESK</text>
+    <text x="172" y="1072">QUOTED GRAIN CONTRACTS</text>
+    <text x="172" y="1938">PROFESSIONAL SURFACES</text>
+  </g>
+  <g fill="#eef3fb" font-family="Manrope, sans-serif" font-weight="700">
+    <text x="172" y="602" font-size="58">Rice, corn, and city-level pricing</text>
+    <text x="172" y="866" font-size="44">Regional spread monitor</text>
+    <text x="700" y="866" font-size="44">Base ticket entry</text>
+  </g>
+  <g fill="#243247">
+    <rect x="172" y="1148" width="940" height="2" />
+    <rect x="172" y="1326" width="940" height="2" />
+    <rect x="172" y="1504" width="940" height="2" />
+    <rect x="172" y="1682" width="940" height="2" />
+  </g>
+  <g fill="#6da7ff">
+    <rect x="172" y="1192" width="34" height="34" rx="10" />
+    <rect x="172" y="1370" width="34" height="34" rx="10" />
+    <rect x="172" y="1548" width="34" height="34" rx="10" />
+    <rect x="172" y="1726" width="34" height="34" rx="10" />
+  </g>
+  <g fill="#eef3fb" font-family="Public Sans, sans-serif" font-size="34">
+    <text x="242" y="1222">Regular-Milled Rice / NCR composite</text>
+    <text x="242" y="1400">Well-Milled Rice / urban benchmark</text>
+    <text x="242" y="1578">Yellow Corn / feed markets</text>
+    <text x="242" y="1756">White Corn / Visayas desk</text>
+  </g>
+  <g fill="#30c48d" font-family="IBM Plex Mono, monospace" font-size="28" text-anchor="end">
+    <text x="1080" y="1222">+1.4%</text>
+    <text x="1080" y="1400">+1.1%</text>
+    <text x="1080" y="1578">+0.9%</text>
+    <text x="1080" y="1756">-0.4%</text>
+  </g>
+  <text x="172" y="2020" fill="#eef3fb" font-family="Manrope, sans-serif" font-size="54" font-weight="700">Refined top bar, cleaner metrics, and stronger hierarchy</text>
+</svg>

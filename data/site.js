@@ -1,26 +1,15 @@
-const baseNetworks = {
-  mainnet: {
-    key: "mainnet",
-    chainName: "Base Mainnet",
-    chainId: 8453,
-    chainHex: "0x2105",
-    rpcUrl: "https://mainnet.base.org",
-    explorerUrl: "https://base.blockscout.com"
-  },
-  sepolia: {
-    key: "sepolia",
-    chainName: "Base Sepolia",
-    chainId: 84532,
-    chainHex: "0x14a34",
-    rpcUrl: "https://sepolia.base.org",
-    explorerUrl: "https://sepolia-explorer.base.org"
-  }
+const { buildPhilippineLocationTaxonomy, normalizePhilippineMarketLocation } = require("./ph-location-taxonomy");
+
+const baseNetwork = {
+  key: "sepolia",
+  chainName: "Base Sepolia",
+  chainId: 84532,
+  chainHex: "0x14a34",
+  rpcUrl: "https://sepolia.base.org",
+  explorerUrl: "https://sepolia-explorer.base.org"
 };
 
-const baseNetworkKey = String(process.env.BASE_NETWORK || "sepolia").toLowerCase() === "mainnet" ? "mainnet" : "sepolia";
-const baseNetwork = baseNetworks[baseNetworkKey];
-
-module.exports = {
+const siteData = {
   meta: {
     brand: "GrainWatch PH",
     tagline: "Philippine grains market terminal for rice and corn price intelligence.",
@@ -39,6 +28,32 @@ module.exports = {
     secondaryGrowthStep: 0.08
   },
   commodities: [
+    {
+      key: "specialRice",
+      symbol: "SR",
+      name: "Special Rice",
+      benchmark: "Supermarket premium",
+      value: 63.5,
+      weeklyChange: 0.5,
+      monthlyChange: 1.2,
+      threshold: 65.0,
+      signal: "Premium stable",
+      confidence: 92,
+      sparkline: [62.8, 62.9, 63.0, 63.1, 63.2, 63.3, 63.4, 63.4, 63.5, 63.5]
+    },
+    {
+      key: "premiumRice",
+      symbol: "PR",
+      name: "Premium Rice",
+      benchmark: "Urban retail average",
+      value: 58.2,
+      weeklyChange: 0.9,
+      monthlyChange: 2.1,
+      threshold: 60.0,
+      signal: "Rising demand",
+      confidence: 90,
+      sparkline: [57.1, 57.3, 57.5, 57.6, 57.8, 57.9, 58.0, 58.1, 58.2, 58.2]
+    },
     {
       key: "regularRice",
       symbol: "RR",
@@ -125,12 +140,22 @@ module.exports = {
     "3/21"
   ],
   history: {
+    specialRice: [62.5, 62.6, 62.6, 62.7, 62.8, 62.9, 62.9, 63.0, 63.1, 63.1, 63.2, 63.2, 63.3, 63.3, 63.4, 63.4, 63.4, 63.4, 63.5, 63.5, 63.5, 63.5, 63.5, 63.5, 63.5, 63.5, 63.5, 63.5, 63.5, 63.5],
+    premiumRice: [57.0, 57.1, 57.2, 57.2, 57.3, 57.4, 57.5, 57.5, 57.6, 57.6, 57.7, 57.8, 57.8, 57.9, 57.9, 58.0, 58.0, 58.0, 58.1, 58.1, 58.1, 58.2, 58.2, 58.2, 58.2, 58.2, 58.2, 58.2, 58.2, 58.2],
     regularRice: [45.9, 46.0, 46.0, 46.1, 46.2, 46.3, 46.3, 46.4, 46.5, 46.5, 46.6, 46.7, 46.8, 46.9, 47.0, 47.1, 47.1, 47.2, 47.3, 47.3, 47.4, 47.4, 47.5, 47.6, 47.7, 47.7, 47.8, 47.8, 47.9, 47.9],
     wellMilledRice: [50.2, 50.4, 50.5, 50.6, 50.7, 50.8, 50.9, 51.0, 51.2, 51.2, 51.3, 51.4, 51.5, 51.6, 51.7, 51.8, 51.9, 52.0, 52.0, 52.1, 52.2, 52.3, 52.3, 52.4, 52.5, 52.5, 52.5, 52.6, 52.6, 52.6],
     yellowCorn: [22.1, 22.2, 22.3, 22.3, 22.4, 22.4, 22.5, 22.6, 22.7, 22.7, 22.8, 22.8, 22.9, 23.0, 23.0, 23.1, 23.2, 23.2, 23.3, 23.3, 23.4, 23.5, 23.5, 23.6, 23.7, 23.7, 23.8, 23.8, 23.8, 23.8],
     whiteCorn: [16.3, 16.2, 16.2, 16.1, 16.1, 16.0, 16.0, 15.9, 15.9, 15.9, 15.8, 15.8, 15.8, 15.7, 15.7, 15.7, 15.6, 15.6, 15.6, 15.6, 15.6, 15.6, 15.7, 15.7, 15.7, 15.7, 15.7, 15.7, 15.7, 15.7]
   },
   predictions: [
+    {
+      commodity: "Special Rice",
+      current: 63.5,
+      forecast: 63.8,
+      delta: "+0.3",
+      confidence: "92%",
+      signal: "Stable premium"
+    },
     {
       commodity: "Regular-Milled Rice",
       current: 47.9,
@@ -221,6 +246,34 @@ module.exports = {
     }
   ],
   marketRows: [
+    {
+      key: "specialRice",
+      symbol: "SR",
+      commodity: "Special Rice",
+      exchange: "Supermarket / Premium",
+      spot: 63.5,
+      dailyChange: "+0.05",
+      weekly: "+0.5%",
+      low: 62.5,
+      high: 64.0,
+      settlement: "Premium retail check",
+      region: "Metro Manila / Cebu",
+      leadLocation: "Makati City"
+    },
+    {
+      key: "premiumRice",
+      symbol: "PR",
+      commodity: "Premium Rice",
+      exchange: "Urban retail board",
+      spot: 58.2,
+      dailyChange: "+0.12",
+      weekly: "+0.9%",
+      low: 57.0,
+      high: 59.5,
+      settlement: "Trader release check",
+      region: "NCR / Central Luzon",
+      leadLocation: "Quezon City"
+    },
     {
       key: "regularRice",
       symbol: "RR",
@@ -340,10 +393,29 @@ module.exports = {
       updatedAt: "2026-03-20T14:25:00+08:00",
       logistics: "A1 corridor / central wholesale pull",
       grains: [
+        { key: "specialRice", name: "Special Rice", price: 62.5, unit: "PHP/kg", variance: -1.0 },
+        { key: "premiumRice", name: "Premium Rice", price: 57.0, unit: "PHP/kg", variance: -1.2 },
         { key: "regularRice", name: "Regular-Milled Rice", price: 47.1, unit: "PHP/kg", variance: -0.8 },
         { key: "wellMilledRice", name: "Well-Milled Rice", price: 51.8, unit: "PHP/kg", variance: -0.8 },
         { key: "yellowCorn", name: "Yellow Corn", price: 24.2, unit: "PHP/kg", variance: 0.4 },
         { key: "whiteCorn", name: "White Corn", price: 15.5, unit: "PHP/kg", variance: -0.2 }
+      ]
+    },
+    {
+      slug: "laoag-city",
+      location: "Laoag City",
+      region: "Ilocos Region",
+      officialGeolocation: "Ilocos Norte",
+      source: "Northern trade post",
+      updatedAt: "2026-03-20T14:25:00+08:00",
+      logistics: "Road transport / North hub",
+      grains: [
+        { key: "specialRice", name: "Special Rice", price: 63.2, unit: "PHP/kg", variance: -0.3 },
+        { key: "premiumRice", name: "Premium Rice", price: 58.0, unit: "PHP/kg", variance: -0.2 },
+        { key: "regularRice", name: "Regular-Milled Rice", price: 47.5, unit: "PHP/kg", variance: -0.4 },
+        { key: "wellMilledRice", name: "Well-Milled Rice", price: 52.2, unit: "PHP/kg", variance: -0.4 },
+        { key: "yellowCorn", name: "Yellow Corn", price: 24.5, unit: "PHP/kg", variance: 0.7 },
+        { key: "whiteCorn", name: "White Corn", price: 16.0, unit: "PHP/kg", variance: 0.3 }
       ]
     },
     {
@@ -355,10 +427,29 @@ module.exports = {
       updatedAt: "2026-03-20T14:25:00+08:00",
       logistics: "Metro demand center",
       grains: [
+        { key: "specialRice", name: "Special Rice", price: 64.2, unit: "PHP/kg", variance: 0.7 },
+        { key: "premiumRice", name: "Premium Rice", price: 59.1, unit: "PHP/kg", variance: 0.9 },
         { key: "regularRice", name: "Regular-Milled Rice", price: 48.4, unit: "PHP/kg", variance: 0.5 },
         { key: "wellMilledRice", name: "Well-Milled Rice", price: 53.2, unit: "PHP/kg", variance: 0.6 },
         { key: "yellowCorn", name: "Yellow Corn", price: 24.3, unit: "PHP/kg", variance: 0.5 },
         { key: "whiteCorn", name: "White Corn", price: 15.9, unit: "PHP/kg", variance: 0.2 }
+      ]
+    },
+    {
+      slug: "manila-city",
+      location: "Manila City",
+      region: "National Capital Region",
+      officialGeolocation: "National Capital Region",
+      source: "Port area wholesale",
+      updatedAt: "2026-03-20T14:25:00+08:00",
+      logistics: "International port hub",
+      grains: [
+        { key: "specialRice", name: "Special Rice", price: 64.0, unit: "PHP/kg", variance: 0.5 },
+        { key: "premiumRice", name: "Premium Rice", price: 58.9, unit: "PHP/kg", variance: 0.7 },
+        { key: "regularRice", name: "Regular-Milled Rice", price: 48.1, unit: "PHP/kg", variance: 0.2 },
+        { key: "wellMilledRice", name: "Well-Milled Rice", price: 53.0, unit: "PHP/kg", variance: 0.4 },
+        { key: "yellowCorn", name: "Yellow Corn", price: 24.6, unit: "PHP/kg", variance: 0.8 },
+        { key: "whiteCorn", name: "White Corn", price: 16.5, unit: "PHP/kg", variance: 0.8 }
       ]
     },
     {
@@ -370,10 +461,46 @@ module.exports = {
       updatedAt: "2026-03-20T14:25:00+08:00",
       logistics: "Inter-island rice lane",
       grains: [
+        { key: "specialRice", name: "Special Rice", price: 63.0, unit: "PHP/kg", variance: -0.5 },
+        { key: "premiumRice", name: "Premium Rice", price: 58.0, unit: "PHP/kg", variance: -0.2 },
         { key: "regularRice", name: "Regular-Milled Rice", price: 47.6, unit: "PHP/kg", variance: -0.3 },
         { key: "wellMilledRice", name: "Well-Milled Rice", price: 52.1, unit: "PHP/kg", variance: -0.5 },
         { key: "yellowCorn", name: "Yellow Corn", price: 24.0, unit: "PHP/kg", variance: 0.2 },
         { key: "whiteCorn", name: "White Corn", price: 15.7, unit: "PHP/kg", variance: 0.0 }
+      ]
+    },
+    {
+      slug: "bacolod-city",
+      location: "Bacolod City",
+      region: "Western Visayas",
+      officialGeolocation: "Negros Occidental",
+      source: "Sugar/Rice trade composite",
+      updatedAt: "2026-03-20T14:25:00+08:00",
+      logistics: "Port access",
+      grains: [
+        { key: "specialRice", name: "Special Rice", price: 62.9, unit: "PHP/kg", variance: -0.6 },
+        { key: "premiumRice", name: "Premium Rice", price: 57.9, unit: "PHP/kg", variance: -0.3 },
+        { key: "regularRice", name: "Regular-Milled Rice", price: 47.7, unit: "PHP/kg", variance: -0.2 },
+        { key: "wellMilledRice", name: "Well-Milled Rice", price: 52.3, unit: "PHP/kg", variance: -0.3 },
+        { key: "yellowCorn", name: "Yellow Corn", price: 24.1, unit: "PHP/kg", variance: 0.3 },
+        { key: "whiteCorn", name: "White Corn", price: 15.8, unit: "PHP/kg", variance: 0.1 }
+      ]
+    },
+    {
+      slug: "puerto-princesa",
+      location: "Puerto Princesa",
+      region: "MIMAROPA",
+      officialGeolocation: "Palawan",
+      source: "Island market watch",
+      updatedAt: "2026-03-20T14:25:00+08:00",
+      logistics: "Sea freight dependent",
+      grains: [
+        { key: "specialRice", name: "Special Rice", price: 65.5, unit: "PHP/kg", variance: 2.0 },
+        { key: "premiumRice", name: "Premium Rice", price: 60.0, unit: "PHP/kg", variance: 1.8 },
+        { key: "regularRice", name: "Regular-Milled Rice", price: 49.5, unit: "PHP/kg", variance: 1.6 },
+        { key: "wellMilledRice", name: "Well-Milled Rice", price: 54.5, unit: "PHP/kg", variance: 1.9 },
+        { key: "yellowCorn", name: "Yellow Corn", price: 25.8, unit: "PHP/kg", variance: 2.0 },
+        { key: "whiteCorn", name: "White Corn", price: 17.0, unit: "PHP/kg", variance: 1.3 }
       ]
     },
     {
@@ -385,10 +512,267 @@ module.exports = {
       updatedAt: "2026-03-20T14:25:00+08:00",
       logistics: "Port-led distribution",
       grains: [
+        { key: "specialRice", name: "Special Rice", price: 63.8, unit: "PHP/kg", variance: 0.3 },
+        { key: "premiumRice", name: "Premium Rice", price: 58.5, unit: "PHP/kg", variance: 0.3 },
         { key: "regularRice", name: "Regular-Milled Rice", price: 48.0, unit: "PHP/kg", variance: 0.1 },
         { key: "wellMilledRice", name: "Well-Milled Rice", price: 52.9, unit: "PHP/kg", variance: 0.3 },
         { key: "yellowCorn", name: "Yellow Corn", price: 24.1, unit: "PHP/kg", variance: 0.3 },
         { key: "whiteCorn", name: "White Corn", price: 15.8, unit: "PHP/kg", variance: 0.1 }
+      ]
+    },
+    {
+      slug: "baguio-city",
+      location: "Baguio City",
+      region: "Cordillera Administrative Region",
+      officialGeolocation: "Benguet",
+      source: "Highland trade post",
+      updatedAt: "2026-03-20T14:25:00+08:00",
+      logistics: "Mountain trail access",
+      grains: [
+        { key: "specialRice", name: "Special Rice", price: 64.5, unit: "PHP/kg", variance: 1.0 },
+        { key: "premiumRice", name: "Premium Rice", price: 59.2, unit: "PHP/kg", variance: 1.0 },
+        { key: "regularRice", name: "Regular-Milled Rice", price: 49.0, unit: "PHP/kg", variance: 1.1 },
+        { key: "wellMilledRice", name: "Well-Milled Rice", price: 54.0, unit: "PHP/kg", variance: 1.4 },
+        { key: "yellowCorn", name: "Yellow Corn", price: 25.5, unit: "PHP/kg", variance: 1.7 },
+        { key: "whiteCorn", name: "White Corn", price: 16.8, unit: "PHP/kg", variance: 1.1 }
+      ]
+    },
+    {
+      slug: "tuguegarao-city",
+      location: "Tuguegarao City",
+      region: "Cagayan Valley",
+      officialGeolocation: "Cagayan",
+      source: "Valley trade center",
+      updatedAt: "2026-03-20T14:25:00+08:00",
+      logistics: "River/Road junction",
+      grains: [
+        { key: "specialRice", name: "Special Rice", price: 62.0, unit: "PHP/kg", variance: -1.5 },
+        { key: "premiumRice", name: "Premium Rice", price: 56.5, unit: "PHP/kg", variance: -1.7 },
+        { key: "regularRice", name: "Regular-Milled Rice", price: 46.5, unit: "PHP/kg", variance: -1.4 },
+        { key: "wellMilledRice", name: "Well-Milled Rice", price: 51.0, unit: "PHP/kg", variance: -1.6 },
+        { key: "yellowCorn", name: "Yellow Corn", price: 22.5, unit: "PHP/kg", variance: -1.3 },
+        { key: "whiteCorn", name: "White Corn", price: 14.8, unit: "PHP/kg", variance: -0.9 }
+      ]
+    },
+    {
+      slug: "cabanatuan-city",
+      location: "Cabanatuan City",
+      region: "Central Luzon",
+      officialGeolocation: "Nueva Ecija",
+      source: "Rice granary capital",
+      updatedAt: "2026-03-20T14:25:00+08:00",
+      logistics: "Major milling hub",
+      grains: [
+        { key: "specialRice", name: "Special Rice", price: 61.5, unit: "PHP/kg", variance: -2.0 },
+        { key: "premiumRice", name: "Premium Rice", price: 56.0, unit: "PHP/kg", variance: -2.2 },
+        { key: "regularRice", name: "Regular-Milled Rice", price: 46.0, unit: "PHP/kg", variance: -1.9 },
+        { key: "wellMilledRice", name: "Well-Milled Rice", price: 50.5, unit: "PHP/kg", variance: -2.1 },
+        { key: "yellowCorn", name: "Yellow Corn", price: 23.5, unit: "PHP/kg", variance: -0.3 },
+        { key: "whiteCorn", name: "White Corn", price: 15.2, unit: "PHP/kg", variance: -0.5 }
+      ]
+    },
+    {
+      slug: "davao-city",
+      location: "Davao City",
+      region: "Davao Region",
+      officialGeolocation: "Davao del Sur",
+      source: "Mindanao trade hub",
+      updatedAt: "2026-03-20T14:25:00+08:00",
+      logistics: "Southern port corridor",
+      grains: [
+        { key: "specialRice", name: "Special Rice", price: 62.8, unit: "PHP/kg", variance: -0.7 },
+        { key: "premiumRice", name: "Premium Rice", price: 57.5, unit: "PHP/kg", variance: -0.7 },
+        { key: "regularRice", name: "Regular-Milled Rice", price: 47.0, unit: "PHP/kg", variance: -0.9 },
+        { key: "wellMilledRice", name: "Well-Milled Rice", price: 51.5, unit: "PHP/kg", variance: -1.1 },
+        { key: "yellowCorn", name: "Yellow Corn", price: 23.2, unit: "PHP/kg", variance: -0.6 },
+        { key: "whiteCorn", name: "White Corn", price: 15.2, unit: "PHP/kg", variance: -0.5 }
+      ]
+    },
+    {
+      slug: "tagum-city",
+      location: "Tagum City",
+      region: "Davao Region",
+      officialGeolocation: "Davao del Norte",
+      source: "Agri-trade center",
+      updatedAt: "2026-03-20T14:25:00+08:00",
+      logistics: "Pan-Philippine Highway",
+      grains: [
+        { key: "specialRice", name: "Special Rice", price: 62.6, unit: "PHP/kg", variance: -0.9 },
+        { key: "premiumRice", name: "Premium Rice", price: 57.3, unit: "PHP/kg", variance: -0.9 },
+        { key: "regularRice", name: "Regular-Milled Rice", price: 46.8, unit: "PHP/kg", variance: -1.1 },
+        { key: "wellMilledRice", name: "Well-Milled Rice", price: 51.3, unit: "PHP/kg", variance: -1.3 },
+        { key: "yellowCorn", name: "Yellow Corn", price: 23.0, unit: "PHP/kg", variance: -0.8 },
+        { key: "whiteCorn", name: "White Corn", price: 15.0, unit: "PHP/kg", variance: -0.7 }
+      ]
+    },
+    {
+      slug: "zamboanga-city",
+      location: "Zamboanga City",
+      region: "Zamboanga Peninsula",
+      officialGeolocation: "Zamboanga del Sur",
+      source: "Western Mindanao market",
+      updatedAt: "2026-03-20T14:25:00+08:00",
+      logistics: "Peninsula port access",
+      grains: [
+        { key: "specialRice", name: "Special Rice", price: 63.2, unit: "PHP/kg", variance: -0.3 },
+        { key: "premiumRice", name: "Premium Rice", price: 57.8, unit: "PHP/kg", variance: -0.4 },
+        { key: "regularRice", name: "Regular-Milled Rice", price: 47.5, unit: "PHP/kg", variance: -0.4 },
+        { key: "wellMilledRice", name: "Well-Milled Rice", price: 52.0, unit: "PHP/kg", variance: -0.6 },
+        { key: "yellowCorn", name: "Yellow Corn", price: 23.8, unit: "PHP/kg", variance: 0.0 },
+        { key: "whiteCorn", name: "White Corn", price: 15.6, unit: "PHP/kg", variance: -0.1 }
+      ]
+    },
+    {
+      slug: "legazpi-city",
+      location: "Legazpi City",
+      region: "Bicol Region",
+      officialGeolocation: "Albay",
+      source: "South Luzon composite",
+      updatedAt: "2026-03-20T14:25:00+08:00",
+      logistics: "Nautical highway link",
+      grains: [
+        { key: "specialRice", name: "Special Rice", price: 63.0, unit: "PHP/kg", variance: -0.5 },
+        { key: "premiumRice", name: "Premium Rice", price: 57.8, unit: "PHP/kg", variance: -0.4 },
+        { key: "regularRice", name: "Regular-Milled Rice", price: 47.2, unit: "PHP/kg", variance: -0.7 },
+        { key: "wellMilledRice", name: "Well-Milled Rice", price: 51.9, unit: "PHP/kg", variance: -0.7 },
+        { key: "yellowCorn", name: "Yellow Corn", price: 24.0, unit: "PHP/kg", variance: 0.2 },
+        { key: "whiteCorn", name: "White Corn", price: 15.9, unit: "PHP/kg", variance: 0.2 }
+      ]
+    },
+    {
+      slug: "naga-city",
+      location: "Naga City",
+      region: "Bicol Region",
+      officialGeolocation: "Camarines Sur",
+      source: "Bicol river basin hub",
+      updatedAt: "2026-03-20T14:25:00+08:00",
+      logistics: "Central Bicol access",
+      grains: [
+        { key: "specialRice", name: "Special Rice", price: 62.8, unit: "PHP/kg", variance: -0.7 },
+        { key: "premiumRice", name: "Premium Rice", price: 57.5, unit: "PHP/kg", variance: -0.7 },
+        { key: "regularRice", name: "Regular-Milled Rice", price: 47.0, unit: "PHP/kg", variance: -0.9 },
+        { key: "wellMilledRice", name: "Well-Milled Rice", price: 51.7, unit: "PHP/kg", variance: -0.9 },
+        { key: "yellowCorn", name: "Yellow Corn", price: 23.9, unit: "PHP/kg", variance: 0.1 },
+        { key: "whiteCorn", name: "White Corn", price: 15.8, unit: "PHP/kg", variance: 0.1 }
+      ]
+    },
+    {
+      slug: "tacloban-city",
+      location: "Tacloban City",
+      region: "Eastern Visayas",
+      officialGeolocation: "Leyte",
+      source: "Eastern Visayas hub",
+      updatedAt: "2026-03-20T14:25:00+08:00",
+      logistics: "Inter-island bridge link",
+      grains: [
+        { key: "specialRice", name: "Special Rice", price: 63.4, unit: "PHP/kg", variance: -0.1 },
+        { key: "premiumRice", name: "Premium Rice", price: 58.0, unit: "PHP/kg", variance: -0.2 },
+        { key: "regularRice", name: "Regular-Milled Rice", price: 47.8, unit: "PHP/kg", variance: -0.1 },
+        { key: "wellMilledRice", name: "Well-Milled Rice", price: 52.5, unit: "PHP/kg", variance: -0.1 },
+        { key: "yellowCorn", name: "Yellow Corn", price: 24.2, unit: "PHP/kg", variance: 0.4 },
+        { key: "whiteCorn", name: "White Corn", price: 16.0, unit: "PHP/kg", variance: 0.3 }
+      ]
+    },
+    {
+      slug: "general-santos-city",
+      location: "General Santos City",
+      region: "SOCCSKSARGEN",
+      officialGeolocation: "South Cotabato",
+      source: "Southern port composite",
+      updatedAt: "2026-03-20T14:25:00+08:00",
+      logistics: "Agri-industrial port",
+      grains: [
+        { key: "specialRice", name: "Special Rice", price: 62.7, unit: "PHP/kg", variance: -0.8 },
+        { key: "premiumRice", name: "Premium Rice", price: 57.3, unit: "PHP/kg", variance: -0.9 },
+        { key: "regularRice", name: "Regular-Milled Rice", price: 46.9, unit: "PHP/kg", variance: -1.0 },
+        { key: "wellMilledRice", name: "Well-Milled Rice", price: 51.4, unit: "PHP/kg", variance: -1.2 },
+        { key: "yellowCorn", name: "Yellow Corn", price: 23.0, unit: "PHP/kg", variance: -0.8 },
+        { key: "whiteCorn", name: "White Corn", price: 15.0, unit: "PHP/kg", variance: -0.7 }
+      ]
+    },
+    {
+      slug: "batangas-city",
+      location: "Batangas City",
+      region: "CALABARZON",
+      officialGeolocation: "Batangas",
+      source: "Southern Tagalog hub",
+      updatedAt: "2026-03-20T14:25:00+08:00",
+      logistics: "International port access",
+      grains: [
+        { key: "specialRice", name: "Special Rice", price: 64.0, unit: "PHP/kg", variance: 0.5 },
+        { key: "premiumRice", name: "Premium Rice", price: 58.8, unit: "PHP/kg", variance: 0.6 },
+        { key: "regularRice", name: "Regular-Milled Rice", price: 48.2, unit: "PHP/kg", variance: 0.3 },
+        { key: "wellMilledRice", name: "Well-Milled Rice", price: 53.0, unit: "PHP/kg", variance: 0.4 },
+        { key: "yellowCorn", name: "Yellow Corn", price: 24.5, unit: "PHP/kg", variance: 0.7 },
+        { key: "whiteCorn", name: "White Corn", price: 16.2, unit: "PHP/kg", variance: 0.5 }
+      ]
+    },
+    {
+      slug: "lucena-city",
+      location: "Lucena City",
+      region: "CALABARZON",
+      officialGeolocation: "Quezon",
+      source: "Coconut/Rice trade mix",
+      updatedAt: "2026-03-20T14:25:00+08:00",
+      logistics: "Rail/Port junction",
+      grains: [
+        { key: "specialRice", name: "Special Rice", price: 63.6, unit: "PHP/kg", variance: 0.1 },
+        { key: "premiumRice", name: "Premium Rice", price: 58.2, unit: "PHP/kg", variance: 0.0 },
+        { key: "regularRice", name: "Regular-Milled Rice", price: 47.9, unit: "PHP/kg", variance: 0.0 },
+        { key: "wellMilledRice", name: "Well-Milled Rice", price: 52.6, unit: "PHP/kg", variance: 0.0 },
+        { key: "yellowCorn", name: "Yellow Corn", price: 24.2, unit: "PHP/kg", variance: 0.4 },
+        { key: "whiteCorn", name: "White Corn", price: 16.0, unit: "PHP/kg", variance: 0.3 }
+      ]
+    },
+    {
+      slug: "cotabato-city",
+      location: "Cotabato City",
+      region: "BARMM",
+      officialGeolocation: "Maguindanao",
+      source: "Regional center",
+      updatedAt: "2026-03-20T14:25:00+08:00",
+      logistics: "River port",
+      grains: [
+        { key: "specialRice", name: "Special Rice", price: 63.5, unit: "PHP/kg", variance: 0.0 },
+        { key: "premiumRice", name: "Premium Rice", price: 58.0, unit: "PHP/kg", variance: -0.2 },
+        { key: "regularRice", name: "Regular-Milled Rice", price: 47.8, unit: "PHP/kg", variance: -0.1 },
+        { key: "wellMilledRice", name: "Well-Milled Rice", price: 52.4, unit: "PHP/kg", variance: -0.2 },
+        { key: "yellowCorn", name: "Yellow Corn", price: 23.6, unit: "PHP/kg", variance: -0.2 },
+        { key: "whiteCorn", name: "White Corn", price: 15.5, unit: "PHP/kg", variance: -0.2 }
+      ]
+    },
+    {
+      slug: "malaybalay-city",
+      location: "Malaybalay City",
+      region: "Northern Mindanao",
+      officialGeolocation: "Bukidnon",
+      source: "Corn/Rice upland hub",
+      updatedAt: "2026-03-20T14:25:00+08:00",
+      logistics: "Mindanao central highway",
+      grains: [
+        { key: "specialRice", name: "Special Rice", price: 62.5, unit: "PHP/kg", variance: -1.0 },
+        { key: "premiumRice", name: "Premium Rice", price: 57.0, unit: "PHP/kg", variance: -1.2 },
+        { key: "regularRice", name: "Regular-Milled Rice", price: 46.8, unit: "PHP/kg", variance: -1.1 },
+        { key: "wellMilledRice", name: "Well-Milled Rice", price: 51.5, unit: "PHP/kg", variance: -1.1 },
+        { key: "yellowCorn", name: "Yellow Corn", price: 22.8, unit: "PHP/kg", variance: -1.0 },
+        { key: "whiteCorn", name: "White Corn", price: 14.9, unit: "PHP/kg", variance: -0.8 }
+      ]
+    },
+    {
+      slug: "butuan-city",
+      location: "Butuan City",
+      region: "Caraga",
+      officialGeolocation: "Agusan del Norte",
+      source: "Caraga regional hub",
+      updatedAt: "2026-03-20T14:25:00+08:00",
+      logistics: "River/Road access",
+      grains: [
+        { key: "specialRice", name: "Special Rice", price: 63.3, unit: "PHP/kg", variance: -0.2 },
+        { key: "premiumRice", name: "Premium Rice", price: 57.9, unit: "PHP/kg", variance: -0.3 },
+        { key: "regularRice", name: "Regular-Milled Rice", price: 47.4, unit: "PHP/kg", variance: -0.5 },
+        { key: "wellMilledRice", name: "Well-Milled Rice", price: 52.0, unit: "PHP/kg", variance: -0.6 },
+        { key: "yellowCorn", name: "Yellow Corn", price: 23.9, unit: "PHP/kg", variance: 0.1 },
+        { key: "whiteCorn", name: "White Corn", price: 15.6, unit: "PHP/kg", variance: -0.1 }
       ]
     },
     {
@@ -400,6 +784,8 @@ module.exports = {
       updatedAt: "2026-03-20T14:25:00+08:00",
       logistics: "Mill and port access",
       grains: [
+        { key: "specialRice", name: "Special Rice", price: 63.1, unit: "PHP/kg", variance: -0.4 },
+        { key: "premiumRice", name: "Premium Rice", price: 57.9, unit: "PHP/kg", variance: -0.3 },
         { key: "regularRice", name: "Regular-Milled Rice", price: 47.3, unit: "PHP/kg", variance: -0.6 },
         { key: "wellMilledRice", name: "Well-Milled Rice", price: 51.9, unit: "PHP/kg", variance: -0.7 },
         { key: "yellowCorn", name: "Yellow Corn", price: 23.4, unit: "PHP/kg", variance: -0.4 },
@@ -435,7 +821,7 @@ module.exports = {
     {
       label: "Base Mode",
       value: process.env.BASE_ATTESTATION_CONTRACT ? "Contract-ready" : "Signature-ready",
-      detail: `The attestation desk can switch to ${baseNetwork.chainName} and sign grain tickets with a compatible wallet.`
+      detail: `The attestation desk uses Coinbase Wallet on ${baseNetwork.chainName} for grain ticket signing.`
     }
   ],
   alerts: [
@@ -580,7 +966,7 @@ module.exports = {
       { type: "oracle", hash: "0x37b2c911", description: "Consensus reached across 7 PH grain watcher nodes", block: 21934559, age: "1m ago" },
       { type: "update", hash: "0x7ceab4d9", description: "Source freshness check completed for official grain tables", block: 21934552, age: "2m ago" }
     ],
-    supportedChains: ["Ethereum Sepolia", baseNetwork.chainName, "Polygon Amoy", "Arbitrum Sepolia"],
+    supportedChains: [baseNetwork.chainName],
     timeline: [
       { time: "14:30 PHT", title: "Regular rice receipt queued", description: "The latest regular-milled rice case bundle is ready for wallet signature." },
       { time: "14:18 PHT", title: "Official source sync checked", description: "PSA-backed feed assumptions were refreshed for the latest integration window." },
@@ -589,7 +975,7 @@ module.exports = {
   },
   baseDesk: {
     title: "Base Grain Ticket",
-    description: "Create a Base-ready market attestation from a selected grain, city, action, and quantity, then sign it with Coinbase Wallet, the Base App, or another compatible wallet as an auditable operator ticket.",
+    description: "Create a Base Sepolia market attestation from a selected grain, city, action, and quantity, then sign it with Coinbase Wallet as an auditable operator ticket.",
     uniqueValue: "This is the feature the reference market page does not have: a typed-data grain ticket tied to Base and a live wallet workflow.",
     preferredChain: baseNetwork.chainName,
     networkKey: baseNetwork.key,
@@ -605,6 +991,8 @@ module.exports = {
   },
   settings: {
     thresholds: {
+      specialRice: 65.0,
+      premiumRice: 60.0,
       regularRice: 48.5,
       wellMilledRice: 53.5,
       yellowCorn: 24.5,
@@ -663,6 +1051,12 @@ module.exports = {
         path: "/api/v1/base/config",
         purpose: "Return Base chain, explorer, and attestation mode config for the wallet desk.",
         source: "App Base configuration"
+      },
+      {
+        method: "GET",
+        path: "/api/v1/wallet-exchange?base=ETH&quote=PHP",
+        purpose: "Return the current Coinbase wallet exchange snapshot used by the paper trading desk.",
+        source: "Coinbase Price API"
       }
     ],
     engine: {
@@ -674,3 +1068,8 @@ module.exports = {
     }
   }
 };
+
+siteData.locationMarkets = siteData.locationMarkets.map(normalizePhilippineMarketLocation);
+siteData.phLocationTaxonomy = buildPhilippineLocationTaxonomy(siteData.locationMarkets);
+
+module.exports = siteData;

@@ -53,10 +53,6 @@
     @apply grid gap-6 xl:grid-cols-[minmax(0,1.35fr)_minmax(0,0.85fr)];
   }
 
-  .markets-side-stack {
-    @apply flex flex-col gap-6;
-  }
-
   .markets-chart-grid {
     @apply grid gap-6 xl:grid-cols-2;
   }
@@ -78,20 +74,20 @@
   }
 
   .location-shell {
-    @apply flex flex-col gap-4 p-5;
+    @apply flex flex-col gap-5 p-5;
   }
 
   .location-toolbar {
-    @apply grid gap-4 md:grid-cols-2;
+    @apply grid gap-4 md:grid-cols-2 xl:grid-cols-3;
   }
 
   .location-field {
-    @apply flex flex-col gap-3;
+    @apply flex min-w-0 flex-col gap-3;
   }
 
   .location-select,
   .settings-input {
-    @apply rounded-2xl border border-line bg-panel/80 px-4 py-3 text-sm text-text outline-none transition focus:border-info;
+    @apply min-h-[3.25rem] rounded-2xl border border-line bg-panel/80 px-4 py-3 text-sm text-text outline-none transition focus:border-info;
   }
 
   .location-status-card {
@@ -103,15 +99,31 @@
   }
 
   .location-summary-title {
-    @apply text-lg font-semibold text-text;
+    @apply text-[1.85rem] font-semibold leading-tight text-text md:text-[2rem];
   }
 
   .location-summary-copy {
-    @apply mt-2 text-sm leading-6 text-muted;
+    @apply mt-3 text-sm leading-7 text-muted;
+  }
+
+  .location-summary-stats {
+    @apply grid gap-3 sm:grid-cols-3;
+  }
+
+  .location-stat-card {
+    @apply rounded-2xl border border-line bg-panel/70 px-4 py-3;
+  }
+
+  .location-stat-label {
+    @apply font-mono text-[10px] uppercase tracking-[0.26em] text-muted;
+  }
+
+  .location-stat-value {
+    @apply mt-2 text-sm font-semibold leading-6 text-text;
   }
 
   .location-card-grid {
-    @apply grid gap-3 md:grid-cols-2;
+    @apply grid auto-rows-fr gap-4 md:grid-cols-2;
   }
 
   .location-card {
@@ -119,19 +131,35 @@
   }
 
   .location-card-title {
-    @apply font-mono text-[11px] uppercase tracking-[0.28em] text-muted;
+    @apply min-w-0 font-mono text-[11px] uppercase tracking-[0.26em] text-muted;
   }
 
   .location-card-price {
-    @apply mt-3 text-2xl font-semibold text-text;
+    @apply flex flex-wrap items-end gap-2 text-[1.9rem] font-semibold leading-none text-text;
   }
 
-  .location-card-meta {
-    @apply mt-2 flex items-center justify-between gap-3 text-xs text-muted;
+  .location-card-unit {
+    @apply text-base font-medium text-muted;
+  }
+
+  .location-card-stat-row {
+    @apply grid gap-3 sm:grid-cols-2;
+  }
+
+  .location-card-stat {
+    @apply min-w-0 rounded-2xl border border-line bg-panel/60 px-3 py-2.5;
+  }
+
+  .location-card-stat-label {
+    @apply block font-mono text-[10px] uppercase tracking-[0.22em] text-muted;
+  }
+
+  .location-card-stat-value {
+    @apply mt-2 block text-sm font-semibold leading-6 text-text;
   }
 
   .location-chip {
-    @apply rounded-full border px-3 py-1 font-mono text-xs;
+    @apply inline-flex w-fit items-center rounded-full border px-3 py-1 font-mono text-xs;
   }
 
   .location-chip.is-watch {
@@ -142,16 +170,56 @@
     @apply border-neon/20 bg-neon/10 text-neon;
   }
 
+  .location-chart-frame {
+    @apply flex h-auto min-h-[20rem] flex-col;
+  }
+
+  .location-chart-canvas {
+    @apply relative min-h-[17rem] flex-1;
+  }
+
+  .location-chart-canvas-tall {
+    @apply min-h-[19rem];
+  }
+
   .planner-shell {
-    @apply flex flex-col gap-4 p-5;
+    @apply flex flex-col gap-5 p-5;
+  }
+
+  .planner-context {
+    @apply rounded-[1.15rem] border border-line bg-panel/70 px-4 py-3;
+  }
+
+  .planner-context-label {
+    @apply font-mono text-[10px] uppercase tracking-[0.24em] text-muted;
+  }
+
+  .planner-context-value {
+    @apply mt-2 text-lg font-semibold text-text;
+  }
+
+  .planner-context-copy {
+    @apply mt-1 text-sm leading-6 text-muted;
   }
 
   .planner-form-grid {
-    @apply grid gap-4;
+    @apply grid gap-4 md:grid-cols-2 xl:grid-cols-3;
+  }
+
+  .planner-form-grid-compact {
+    @apply xl:grid-cols-2;
+  }
+
+  .planner-field {
+    @apply flex min-w-0 flex-col gap-3;
   }
 
   .planner-result {
     @apply rounded-[1.15rem] border border-line/80 bg-panel/80 p-4;
+  }
+
+  .planner-divider {
+    @apply h-px bg-line/80;
   }
 
   .planner-result-grid {
@@ -159,7 +227,7 @@
   }
 
   .planner-result-card {
-    @apply rounded-[1.15rem] border border-line/80 bg-shell2/95 p-4;
+    @apply rounded-[1.15rem] border border-line bg-shell2/95 p-4;
   }
 
   .planner-result-label {
@@ -172,6 +240,62 @@
 
   .planner-result-copy {
     @apply mt-2 text-sm leading-6 text-muted;
+  }
+
+  .exchange-shell {
+    @apply flex flex-col gap-4;
+  }
+
+  .exchange-head {
+    @apply flex flex-col gap-3 md:flex-row md:items-start md:justify-between;
+  }
+
+  .exchange-card-grid {
+    @apply grid gap-3 md:grid-cols-2;
+  }
+
+  .exchange-card {
+    @apply rounded-[1.15rem] border border-line bg-shell2/95 p-4;
+  }
+
+  .exchange-card-value {
+    @apply mt-3 text-xl font-semibold text-text;
+  }
+
+  .exchange-card-copy {
+    @apply mt-2 text-sm leading-6 text-muted;
+  }
+
+  .exchange-action-row {
+    @apply flex flex-wrap gap-2 pt-1;
+  }
+
+  .exchange-status {
+    @apply rounded-[1.15rem] border border-line bg-panel/80 px-4 py-3 text-sm leading-6 text-muted;
+  }
+
+  .trade-log {
+    @apply grid gap-3;
+  }
+
+  .trade-log-item {
+    @apply rounded-[1.15rem] border border-line bg-shell2/95 p-4;
+  }
+
+  .trade-log-head {
+    @apply flex flex-wrap items-center justify-between gap-3;
+  }
+
+  .trade-log-side {
+    @apply rounded-full border px-3 py-1 font-mono text-xs;
+  }
+
+  .trade-log-side.is-buy {
+    @apply border-neon/20 bg-neon/10 text-neon;
+  }
+
+  .trade-log-side.is-sell {
+    @apply border-amber/20 bg-amber/10 text-amber;
   }
 
   .heatmap-pill {
@@ -192,5 +316,58 @@
 
   .heatmap-pill.is-cold {
     @apply border-info/20 bg-info/10 text-info;
+  }
+
+  .location-summary-card::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(circle at top right, rgba(109, 167, 255, 0.18), transparent 34%),
+      linear-gradient(135deg, rgba(255, 255, 255, 0.05), transparent 42%);
+    pointer-events: none;
+  }
+
+  .location-card::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(circle at top right, rgba(109, 167, 255, 0.08), transparent 32%),
+      linear-gradient(160deg, rgba(255, 255, 255, 0.04), transparent 38%);
+    pointer-events: none;
+  }
+
+  .location-card.is-watch::before {
+    background:
+      radial-gradient(circle at top right, rgba(240, 113, 120, 0.18), transparent 34%),
+      linear-gradient(160deg, rgba(255, 255, 255, 0.04), transparent 38%);
+  }
+
+  .location-card.is-stable::before {
+    background:
+      radial-gradient(circle at top right, rgba(48, 196, 141, 0.16), transparent 34%),
+      linear-gradient(160deg, rgba(255, 255, 255, 0.04), transparent 38%);
+  }
+
+  .location-summary-card > *,
+  .location-card > * {
+    position: relative;
+    z-index: 1;
+  }
+
+  .location-summary-title,
+  .location-summary-copy,
+  .location-stat-value,
+  .location-card-title,
+  .location-card-stat-value,
+  .planner-context-value,
+  .planner-context-copy {
+    overflow-wrap: anywhere;
+  }
+
+  .location-chart-canvas canvas {
+    height: 100% !important;
+    width: 100% !important;
   }
 }

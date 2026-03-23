@@ -111,6 +111,12 @@
     @apply grid gap-3 p-5;
   }
 
+  @screen md {
+    .oracle-summary-stack {
+      @apply grid-cols-2;
+    }
+  }
+
   .oracle-summary-copy {
     @apply mt-2 break-all text-sm leading-6 text-muted;
   }

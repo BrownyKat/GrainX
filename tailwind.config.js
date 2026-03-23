@@ -4,18 +4,18 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        ink: "#08101a",
-        shell: "#0f1724",
-        shell2: "#131d2b",
-        panel: "#1a2637",
-        line: "#26364d",
-        text: "#edf2fb",
-        muted: "#91a0b8",
-        neon: "#23c28d",
-        amber: "#d39a2f",
-        danger: "#f06565",
-        info: "#68a4ff",
-        violet: "#8f7cf7"
+        ink: "#071019",
+        shell: "#0c1520",
+        shell2: "#101a28",
+        panel: "#162232",
+        line: "#243247",
+        text: "#eef3fb",
+        muted: "#9aa8bd",
+        neon: "#30c48d",
+        amber: "#d8a94a",
+        danger: "#f07178",
+        info: "#6da7ff",
+        violet: "#93a2ff"
       },
       fontFamily: {
         sans: ["Public Sans", "sans-serif"],
@@ -23,11 +23,11 @@ module.exports = {
         mono: ["IBM Plex Mono", "monospace"]
       },
       boxShadow: {
-        chrome: "0 18px 40px rgba(2, 8, 18, 0.34)"
+        chrome: "0 24px 60px rgba(1, 7, 18, 0.46)"
       },
       backgroundImage: {
         grain:
-          "radial-gradient(circle at top left, rgba(104, 164, 255, 0.10), transparent 30%), radial-gradient(circle at top right, rgba(35, 194, 141, 0.12), transparent 26%), linear-gradient(180deg, #0a121d, #08101a)"
+          "radial-gradient(circle at top left, rgba(109, 167, 255, 0.16), transparent 28%), radial-gradient(circle at top right, rgba(48, 196, 141, 0.10), transparent 24%), linear-gradient(180deg, #09121c 0%, #071019 46%, #040a11 100%)"
       }
     }
   },

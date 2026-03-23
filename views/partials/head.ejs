@@ -1,7 +1,24 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title><%= page.heading %> | GrainWatch</title>
+  <title><%= pageMeta.title %></title>
+  <meta name="description" content="<%= pageMeta.description %>" />
+  <meta name="theme-color" content="<%= pageMeta.themeColor %>" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="<%= site.meta.brand %>" />
+  <meta property="og:title" content="<%= pageMeta.title %>" />
+  <meta property="og:description" content="<%= pageMeta.description %>" />
+  <meta property="og:url" content="<%= pageMeta.canonicalUrl %>" />
+  <meta property="og:image" content="<%= pageMeta.imageUrl %>" />
+  <meta property="og:image:alt" content="<%= site.meta.brand %> preview card" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="<%= pageMeta.title %>" />
+  <meta name="twitter:description" content="<%= pageMeta.description %>" />
+  <meta name="twitter:image" content="<%= pageMeta.imageUrl %>" />
+  <meta name="fc:miniapp" content='<%- pageMeta.miniAppJson %>' />
+  <meta property="fc:frame" content='<%- pageMeta.frameJson %>' />
+  <link rel="canonical" href="<%= pageMeta.canonicalUrl %>" />
+  <link rel="icon" href="/base/icon.svg" type="image/svg+xml" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link

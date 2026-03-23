@@ -8,60 +8,32 @@ const walletState = {
   balance: "0.0000",
   provider: null,
   signer: null,
-  walletName: "Wallet",
-  isMetaMask: false,
-  isCoinbaseWallet: false,
+  walletName: "Coinbase Wallet",
   busy: false
 };
 
-const baseChains = {
-  "0x2105": {
-    chainId: "0x2105",
-    chainName: "Base Mainnet",
-    nativeCurrency: {
-      name: "Ether",
-      symbol: "ETH",
-      decimals: 18
-    },
-    rpcUrls: ["https://mainnet.base.org"],
-    blockExplorerUrls: ["https://base.blockscout.com"]
+const baseChain = {
+  chainId: "0x14a34",
+  chainName: "Base Sepolia",
+  nativeCurrency: {
+    name: "Ether",
+    symbol: "ETH",
+    decimals: 18
   },
-  "0x14a34": {
-    chainId: "0x14a34",
-    chainName: "Base Sepolia",
-    nativeCurrency: {
-      name: "Ether",
-      symbol: "ETH",
-      decimals: 18
-    },
-    rpcUrls: ["https://sepolia.base.org"],
-    blockExplorerUrls: ["https://sepolia-explorer.base.org"]
-  }
+  rpcUrls: ["https://sepolia.base.org"],
+  blockExplorerUrls: ["https://sepolia-explorer.base.org"]
 };
 
-const supportedChains = {
-  ...Object.fromEntries(Object.entries(baseChains).map(([chainId, chain]) => [chainId, chain.chainName])),
-  "0xaa36a7": "Ethereum Sepolia",
-  "0x13882": "Polygon Amoy",
-  "0x66eee": "Arbitrum Sepolia"
-};
-
-const preferredBaseChainId = grainWatchData.baseDesk.chainHex || `0x${Number(grainWatchData.baseDesk.chainId || 84532).toString(16)}`;
+const preferredBaseChainId = "0x14a34";
 const baseDraftStorageKey = "grainwatch-base-draft";
 const baseTicketStorageKey = "grainwatch-base-ticket";
 const baseAttestationAbi = [
   "function publishIntent(bytes32 digest,string commodity,string location,uint256 quantityKg,string side,uint256 unitPriceX100,uint256 referenceTimestamp)"
 ];
 
-if (baseChains[preferredBaseChainId]) {
-  baseChains[preferredBaseChainId] = {
-    ...baseChains[preferredBaseChainId],
-    chainName: grainWatchData.baseDesk.preferredChain || baseChains[preferredBaseChainId].chainName,
-    rpcUrls: [grainWatchData.baseDesk.rpcUrl || baseChains[preferredBaseChainId].rpcUrls[0]],
-    blockExplorerUrls: [grainWatchData.baseDesk.explorerUrl || baseChains[preferredBaseChainId].blockExplorerUrls[0]]
-  };
-  supportedChains[preferredBaseChainId] = baseChains[preferredBaseChainId].chainName;
-}
+baseChain.chainName = grainWatchData.baseDesk.preferredChain || baseChain.chainName;
+baseChain.rpcUrls = [grainWatchData.baseDesk.rpcUrl || baseChain.rpcUrls[0]];
+baseChain.blockExplorerUrls = [grainWatchData.baseDesk.explorerUrl || baseChain.blockExplorerUrls[0]];
 
 function chartOptions(minY = 0, callback) {
   return {
@@ -103,37 +75,30 @@ function chartOptions(minY = 0, callback) {
   };
 }
 
-function getInjectedProviders() {
+function getCoinbaseProvider() {
   if (Array.isArray(window.ethereum?.providers) && window.ethereum.providers.length) {
-    return window.ethereum.providers;
+    return window.ethereum.providers.find((provider) => provider?.isCoinbaseWallet) || null;
   }
 
-  return window.ethereum ? [window.ethereum] : [];
+  return window.ethereum?.isCoinbaseWallet ? window.ethereum : null;
 }
 
-function getInjectedProvider() {
-  const providers = getInjectedProviders();
-  return (
-    providers.find((provider) => provider?.isCoinbaseWallet) ||
-    providers.find((provider) => provider?.isMetaMask) ||
-    providers[0] ||
-    null
-  );
-}
-
-function getWalletName(provider = getInjectedProvider()) {
-  if (!provider) return "Wallet";
-  if (provider.isCoinbaseWallet) return "Coinbase Wallet";
-  if (provider.isMetaMask) return "MetaMask";
-  return "Injected Wallet";
+function getWalletName(_provider = getCoinbaseProvider()) {
+  return "Coinbase Wallet";
 }
 
 function hasInjectedWallet() {
-  return Boolean(getInjectedProvider() && window.ethers);
+  return Boolean(getCoinbaseProvider() && window.ethers);
 }
 
 function openWalletInstallPage() {
   window.open(grainWatchData.baseDesk.walletInstallUrl || "https://www.coinbase.com/wallet", "_blank", "noopener");
+}
+
+function setControlLabel(control, label) {
+  if (!control) return;
+  const textTarget = control.querySelector("span:last-child") || control;
+  textTarget.textContent = label;
 }
 
 function shortAddress(value) {
@@ -214,21 +179,18 @@ function buildReceiptPayload() {
 }
 
 function resetWalletState() {
-  const injectedProvider = getInjectedProvider();
+  const coinbaseProvider = getCoinbaseProvider();
   walletState.account = "";
-  walletState.network = injectedProvider ? `${getWalletName(injectedProvider)} ready` : "Wallet not detected";
+  walletState.network = coinbaseProvider ? "Coinbase Wallet ready" : "Coinbase Wallet not detected";
   walletState.chainId = "";
   walletState.balance = "0.0000";
   walletState.provider = null;
   walletState.signer = null;
-  walletState.walletName = getWalletName(injectedProvider);
-  walletState.isMetaMask = Boolean(injectedProvider?.isMetaMask);
-  walletState.isCoinbaseWallet = Boolean(injectedProvider?.isCoinbaseWallet);
+  walletState.walletName = "Coinbase Wallet";
 }
 
 function renderWalletUI() {
   const connectBtn = document.getElementById("walletConnectBtn");
-  const switchBtn = document.getElementById("walletSwitchBtn");
   const networkLabel = document.getElementById("walletNetworkLabel");
   const accountLabel = document.getElementById("walletAccountLabel");
   const oracleWalletNetwork = document.getElementById("oracleWalletNetwork");
@@ -238,26 +200,26 @@ function renderWalletUI() {
   const onPreferredBase = walletState.chainId === preferredBaseChainId;
 
   if (connectBtn) {
-    connectBtn.textContent = walletState.busy
-      ? "Connecting..."
-      : hasAccount
-        ? `${walletState.walletName} Connected`
-        : hasInjectedWallet()
-          ? `Connect ${walletState.walletName}`
-          : "Install Wallet";
-    connectBtn.disabled = walletState.busy;
-  }
-
-  if (switchBtn) {
-    switchBtn.textContent = walletState.busy ? "Switching..." : onPreferredBase ? "Base Ready" : "Switch Base";
-    switchBtn.disabled = !hasInjectedWallet() || walletState.busy || (hasAccount && onPreferredBase);
+    const label = walletState.busy
+      ? hasAccount && !onPreferredBase
+        ? "Switching To Base Sepolia..."
+        : "Connecting..."
+      : !hasInjectedWallet()
+        ? "Install Coinbase Wallet"
+        : !hasAccount
+          ? "Connect Coinbase Wallet"
+          : onPreferredBase
+            ? "Base Sepolia Ready"
+            : "Switch To Base Sepolia";
+    setControlLabel(connectBtn, label);
+    connectBtn.disabled = walletState.busy || (hasAccount && onPreferredBase);
   }
 
   if (networkLabel) {
     networkLabel.textContent = hasAccount
       ? onPreferredBase
-        ? `${walletState.network} | ticket ready`
-        : `${walletState.network} | switch before signing`
+        ? `${walletState.network} | ready`
+        : `${walletState.network} | needs Base Sepolia`
       : walletState.network;
   }
 
@@ -265,8 +227,8 @@ function renderWalletUI() {
     accountLabel.textContent = hasAccount
       ? `${shortAddress(walletState.account)} | ${walletState.balance} ETH`
       : hasInjectedWallet()
-        ? `Ready to connect with ${walletState.walletName}`
-        : "Install Coinbase Wallet, MetaMask, or open in Base App";
+        ? "Coinbase Wallet detected"
+        : "Install Coinbase Wallet to use Base Sepolia";
   }
 
   if (oracleWalletNetwork) {
@@ -294,7 +256,7 @@ function renderWalletUI() {
 }
 
 async function syncWalletState({ requestAccounts = false } = {}) {
-  const injectedProvider = getInjectedProvider();
+  const injectedProvider = getCoinbaseProvider();
 
   if (!hasInjectedWallet() || !injectedProvider) {
     resetWalletState();
@@ -303,14 +265,12 @@ async function syncWalletState({ requestAccounts = false } = {}) {
   }
 
   walletState.provider = new window.ethers.BrowserProvider(injectedProvider);
-  walletState.walletName = getWalletName(injectedProvider);
-  walletState.isMetaMask = Boolean(injectedProvider?.isMetaMask);
-  walletState.isCoinbaseWallet = Boolean(injectedProvider?.isCoinbaseWallet);
+  walletState.walletName = "Coinbase Wallet";
 
   const network = await walletState.provider.getNetwork();
   const chainHex = `0x${network.chainId.toString(16)}`;
   walletState.chainId = chainHex;
-  walletState.network = supportedChains[chainHex] || `Chain ${network.chainId}`;
+  walletState.network = chainHex === preferredBaseChainId ? baseChain.chainName : `Unsupported chain ${network.chainId}`;
 
   const accounts = await walletState.provider.send(requestAccounts ? "eth_requestAccounts" : "eth_accounts", []);
 
@@ -335,7 +295,7 @@ async function syncWalletState({ requestAccounts = false } = {}) {
 async function connectWallet() {
   if (!hasInjectedWallet()) {
     openWalletInstallPage();
-    updateFooterStatus("Last update: no injected wallet was detected in this browser");
+    updateFooterStatus("Last update: Coinbase Wallet was not detected in this browser");
     resetWalletState();
     renderWalletUI();
     return null;
@@ -367,11 +327,11 @@ async function connectWallet() {
 }
 
 async function switchToBase(chainId = preferredBaseChainId) {
-  const injectedProvider = getInjectedProvider();
+  const injectedProvider = getCoinbaseProvider();
 
   if (!hasInjectedWallet() || !injectedProvider) {
     openWalletInstallPage();
-    updateFooterStatus("Last update: no injected wallet was detected in this browser");
+    updateFooterStatus("Last update: Coinbase Wallet was not detected in this browser");
     resetWalletState();
     renderWalletUI();
     return null;
@@ -389,13 +349,13 @@ async function switchToBase(chainId = preferredBaseChainId) {
     if (error?.code === 4902) {
       await injectedProvider.request({
         method: "wallet_addEthereumChain",
-        params: [baseChains[chainId]]
+        params: [baseChain]
       });
     } else {
       updateFooterStatus(
         error?.code === 4001
-          ? "Last update: Base network switch was rejected"
-          : "Last update: Base network switch failed"
+          ? "Last update: Base Sepolia switch was rejected"
+          : "Last update: Base Sepolia switch failed"
       );
       return null;
     }
@@ -405,7 +365,7 @@ async function switchToBase(chainId = preferredBaseChainId) {
   }
 
   const connected = await syncWalletState();
-  updateFooterStatus(`Last update: wallet switched to ${walletState.network}`);
+  updateFooterStatus(`Last update: wallet switched to ${baseChain.chainName}`);
   return connected || walletState;
 }
 
@@ -561,10 +521,9 @@ async function publishBaseTicket(ticketInput) {
   };
 }
 
-document.getElementById("walletConnectBtn")?.addEventListener("click", connectWallet);
-document.getElementById("walletSwitchBtn")?.addEventListener("click", () => switchToBase());
+document.getElementById("walletConnectBtn")?.addEventListener("click", ensureBaseWallet);
 
-const injectedProvider = getInjectedProvider();
+const injectedProvider = getCoinbaseProvider();
 
 if (injectedProvider?.on) {
   injectedProvider.on("accountsChanged", () => {
@@ -606,9 +565,9 @@ window.GrainWatchApp = {
   switchToBase,
   ensureBaseWallet,
   preferredBaseChainId,
-  supportedChains,
   formatPhp,
   exportJsonFile,
+  setControlLabel,
   saveBaseDraft,
   loadBaseDraft,
   clearBaseDraft,

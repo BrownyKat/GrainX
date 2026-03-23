@@ -11,7 +11,10 @@
         <span class="brand-focus-pill"><%= site.meta.focus %> desk</span>
       </div>
       <h1 class="brand-title"><%= site.meta.tagline %></h1>
-      <p class="brand-summary"><%= site.meta.summary %></p>
+      <div class="brand-chip-row">
+        <span class="brand-chip"><%= site.meta.refreshLabel %></span>
+        <span class="brand-chip">Base <%= site.baseDesk.mode %></span>
+      </div>
     </div>
   </div>
 
@@ -47,17 +50,13 @@
         </p>
         <div class="wallet-summary-copy">
           <span id="walletNetworkLabel">Not connected</span>
-          <span id="walletAccountLabel">Open in Base App or connect a compatible wallet</span>
+          <span id="walletAccountLabel">Install Coinbase Wallet to use Base Sepolia</span>
         </div>
       </div>
       <div class="wallet-button-row">
-        <button id="walletSwitchBtn" class="btn-ghost" type="button">
-          <%- include("icon", { name: "chain", className: "icon-sm" }) %>
-          <span>Switch Base</span>
-        </button>
         <button id="walletConnectBtn" class="btn-primary" type="button">
           <%- include("icon", { name: "wallet", className: "icon-sm" }) %>
-          <span>Connect Wallet</span>
+          <span>Connect To Base</span>
         </button>
       </div>
     </div>

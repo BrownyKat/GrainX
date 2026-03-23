@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 1200" role="img" aria-labelledby="title desc">
+  <title id="title">GrainWatch PH splash</title>
+  <desc id="desc">A polished splash screen for GrainWatch PH with a market dashboard motif.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#112236" />
+      <stop offset="55%" stop-color="#071019" />
+      <stop offset="100%" stop-color="#03080f" />
+    </linearGradient>
+    <linearGradient id="glow" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#6da7ff" />
+      <stop offset="100%" stop-color="#30c48d" />
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="1200" fill="url(#bg)" />
+  <circle cx="928" cy="208" r="210" fill="#6da7ff" opacity=".12" />
+  <circle cx="208" cy="996" r="260" fill="#30c48d" opacity=".08" />
+  <g opacity=".22">
+    <path d="M0 270h1200M0 510h1200M0 750h1200M0 990h1200" stroke="#9aa8bd" />
+    <path d="M210 0v1200M450 0v1200M690 0v1200M930 0v1200" stroke="#9aa8bd" />
+  </g>
+  <rect x="184" y="210" width="832" height="780" rx="44" fill="#0e1926" stroke="rgba(255,255,255,0.09)" />
+  <rect x="240" y="266" width="146" height="146" rx="34" fill="url(#glow)" />
+  <text x="282" y="352" fill="#071019" font-family="IBM Plex Mono, monospace" font-size="60" letter-spacing="14">GW</text>
+  <text x="430" y="330" fill="#eef3fb" font-family="Manrope, sans-serif" font-size="72" font-weight="700">GrainWatch PH</text>
+  <text x="430" y="390" fill="#9aa8bd" font-family="Public Sans, sans-serif" font-size="34">Philippine grain intelligence with a Base-ready execution desk</text>
+  <rect x="240" y="474" width="720" height="1" fill="rgba(255,255,255,0.08)" />
+  <rect x="240" y="546" width="180" height="220" rx="28" fill="#132133" stroke="rgba(255,255,255,0.08)" />
+  <rect x="450" y="546" width="234" height="220" rx="28" fill="#132133" stroke="rgba(255,255,255,0.08)" />
+  <rect x="714" y="546" width="246" height="220" rx="28" fill="#132133" stroke="rgba(255,255,255,0.08)" />
+  <text x="276" y="606" fill="#9aa8bd" font-family="IBM Plex Mono, monospace" font-size="18" letter-spacing="6">DATA</text>
+  <text x="276" y="678" fill="#eef3fb" font-family="Manrope, sans-serif" font-size="44" font-weight="700">PH grains</text>
+  <text x="276" y="736" fill="#9aa8bd" font-family="Public Sans, sans-serif" font-size="26">Official-source quotes and city comparison</text>
+  <text x="486" y="606" fill="#9aa8bd" font-family="IBM Plex Mono, monospace" font-size="18" letter-spacing="6">BASE</text>
+  <text x="486" y="678" fill="#eef3fb" font-family="Manrope, sans-serif" font-size="44" font-weight="700">Ticket flow</text>
+  <text x="486" y="736" fill="#9aa8bd" font-family="Public Sans, sans-serif" font-size="26">Wallet-ready market attestations</text>
+  <text x="750" y="606" fill="#9aa8bd" font-family="IBM Plex Mono, monospace" font-size="18" letter-spacing="6">OPS</text>
+  <text x="750" y="678" fill="#eef3fb" font-family="Manrope, sans-serif" font-size="44" font-weight="700">Desk control</text>
+  <text x="750" y="736" fill="#9aa8bd" font-family="Public Sans, sans-serif" font-size="26">Alerts, reports, and market workflow</text>
+  <rect x="240" y="842" width="720" height="88" rx="30" fill="rgba(109,167,255,0.08)" stroke="rgba(109,167,255,0.18)" />
+  <text x="282" y="895" fill="#6da7ff" font-family="IBM Plex Mono, monospace" font-size="20" letter-spacing="6">BASE-READY WEB APP</text>
+</svg>

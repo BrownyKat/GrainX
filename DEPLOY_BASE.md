@@ -4,7 +4,7 @@ Base does not host Node.js servers directly. This app should be deployed as a no
 
 ## 1. Deploy the app
 
-Use any Node-capable host that gives you HTTPS and a public URL.
+Use any Node-capable host that gives you HTTPS and a public URL. For your current setup, Vercel is a good fit because this repo now exports the Express app cleanly for Vercel while still supporting local `app.listen(...)`.
 
 Required runtime commands:
 
@@ -14,7 +14,7 @@ npx tailwindcss -i ./src/input.css -o ./public/css/main.css --minify
 npm start
 ```
 
-The app serves the Express server from `server.js` and listens on `PORT`.
+The app serves the Express server from `server.js`. On Vercel, the `build` step compiles the Tailwind CSS and the Express app is bundled as a single Vercel Function.
 
 ## 2. Set environment variables
 
@@ -35,11 +35,39 @@ Optional Base overrides:
 BASE_RPC_URL=
 BASE_EXPLORER_URL=
 BASE_WALLET_INSTALL_URL=https://www.coinbase.com/wallet
+PUBLIC_APP_URL=
 ```
 
 Use `BASE_NETWORK=mainnet` when you are ready to point the wallet flow at Base Mainnet instead of Base Sepolia.
 
-## 3. Register the deployed URL with Base
+## 3. If you need the pre-April 9, 2026 Mini App flow
+
+This repo now serves the Base/Farcaster manifest at:
+
+```text
+/.well-known/farcaster.json
+```
+
+To sign it:
+
+1. Deploy the app to production first.
+2. Open Base.dev.
+3. Go to Preview -> Account Association.
+4. Enter your production app URL.
+5. Copy the generated `accountAssociation` object.
+6. Set these env vars in Vercel and redeploy:
+
+```env
+BASE_FARCASTER_HEADER=
+BASE_FARCASTER_PAYLOAD=
+BASE_FARCASTER_SIGNATURE=
+BASE_BUILDER_OWNER_ADDRESS=
+BASE_MINIAPP_CATEGORY=finance
+BASE_MINIAPP_TAGS=grainwatch,agriculture,markets,base
+BASE_WEBHOOK_URL=
+```
+
+## 4. Register the deployed URL with Base
 
 After the site is live:
 
@@ -48,7 +76,7 @@ After the site is live:
 3. Set the primary URL to your deployed HTTPS domain.
 4. Fill in the app metadata, icon, screenshots, description, and category.
 
-## 4. Verify the live app
+## 5. Verify the live app
 
 Check these routes after deployment:
 
