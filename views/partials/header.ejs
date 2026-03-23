@@ -1,11 +1,15 @@
 <header class="topbar">
   <div class="brand-cluster">
     <a href="/markets" class="brand-mark">GW</a>
-    <div>
+    <div class="brand-copy">
       <p class="brand-eyebrow">
         <%- include("icon", { name: "market", className: "icon-sm" }) %>
         <span><%= site.meta.brand %></span>
       </p>
+      <div class="brand-meta-row">
+        <span class="release-pill"><%= site.meta.release %></span>
+        <span class="brand-focus-pill"><%= site.meta.focus %> desk</span>
+      </div>
       <h1 class="brand-title"><%= site.meta.tagline %></h1>
       <div class="brand-chip-row">
         <span class="brand-chip"><%= site.meta.refreshLabel %></span>
@@ -27,6 +31,16 @@
         <span>PHT</span>
         <span id="headerBlock">Audit #<%= site.oracle.latestBlock %></span>
       </span>
+    </div>
+    <div class="topbar-signal-row">
+      <article class="topbar-signal-card">
+        <p class="topbar-signal-label">Watch Threshold</p>
+        <p class="topbar-signal-value"><%= site.settings.thresholds.regularRice.toFixed(1) %> PHP/kg</p>
+      </article>
+      <article class="topbar-signal-card">
+        <p class="topbar-signal-label">Open Incidents</p>
+        <p class="topbar-signal-value"><%= site.alerts.length %> active</p>
+      </article>
     </div>
     <div class="wallet-cluster">
       <div class="wallet-summary">

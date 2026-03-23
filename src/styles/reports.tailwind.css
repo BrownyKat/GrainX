@@ -5,12 +5,56 @@
     @apply flex flex-col gap-6;
   }
 
+  .reports-hero-grid {
+    @apply grid gap-4 xl:grid-cols-[minmax(0,1.15fr)_minmax(0,0.85fr)];
+  }
+
+  .reports-hero-card {
+    @apply rounded-[1.55rem] border border-line/80 bg-gradient-to-br from-violet/10 via-shell/95 to-shell2/95 p-5 shadow-chrome;
+  }
+
+  .reports-hero-card.is-secondary {
+    @apply from-info/10 via-shell/95 to-panel/95;
+  }
+
+  .reports-hero-label {
+    @apply font-mono text-[11px] uppercase tracking-[0.3em] text-violet;
+  }
+
+  .reports-hero-card.is-secondary .reports-hero-label {
+    @apply text-info;
+  }
+
+  .reports-hero-title {
+    @apply mt-4 max-w-[14ch] text-[2rem] font-semibold leading-tight text-text;
+  }
+
+  .reports-hero-copy {
+    @apply mt-3 max-w-2xl text-sm leading-7 text-muted;
+  }
+
+  .reports-hero-metrics {
+    @apply mt-5 grid gap-3 sm:grid-cols-3;
+  }
+
+  .reports-hero-metric {
+    @apply rounded-[1.05rem] border border-line/70 bg-ink/20 p-4;
+  }
+
+  .reports-hero-metric-label {
+    @apply font-mono text-[11px] uppercase tracking-[0.28em] text-muted;
+  }
+
+  .reports-hero-metric-value {
+    @apply mt-3 text-base font-semibold text-text;
+  }
+
   .reports-highlight-grid {
     @apply grid gap-4 md:grid-cols-2 xl:grid-cols-4;
   }
 
   .report-highlight-card {
-    @apply rounded-[1.35rem] border border-line/80 bg-shell/95 p-5 shadow-chrome;
+    @apply rounded-[1.35rem] border border-line/80 bg-gradient-to-br from-shell/95 to-panel/95 p-5 shadow-chrome;
   }
 
   .report-highlight-label {
@@ -34,11 +78,168 @@
   }
 
   .report-panel {
-    @apply rounded-[1.35rem] border border-line/80 bg-shell/95 shadow-chrome;
+    @apply rounded-[1.35rem] border border-line/80 bg-gradient-to-br from-shell/95 to-panel/95 shadow-chrome;
+  }
+
+  .report-projection-panel {
+    @apply overflow-hidden;
+  }
+
+  .report-projection-panel.is-primary {
+    @apply bg-gradient-to-br from-neon/10 via-shell/95 to-panel/95;
+  }
+
+  .report-projection-panel.is-secondary {
+    @apply bg-gradient-to-br from-amber/10 via-shell/95 to-panel/95;
+  }
+
+  .report-projection-head {
+    @apply flex flex-col gap-4 border-b border-line/80 px-5 py-5 lg:flex-row lg:items-start lg:justify-between;
+  }
+
+  .report-projection-copy {
+    @apply max-w-3xl;
+  }
+
+  .report-projection-title {
+    @apply mt-3 text-[1.95rem] font-semibold leading-tight text-text;
+  }
+
+  .report-projection-description {
+    @apply mt-3 max-w-2xl text-sm leading-7 text-muted;
+  }
+
+  .report-projection-metrics {
+    @apply grid gap-3 border-b border-line/80 px-5 py-4 sm:grid-cols-3;
+  }
+
+  .report-projection-metric {
+    @apply rounded-[1.05rem] border border-line/70 bg-ink/20 p-4;
+  }
+
+  .report-projection-metric-label {
+    @apply font-mono text-[11px] uppercase tracking-[0.28em] text-muted;
+  }
+
+  .report-projection-metric-value {
+    @apply mt-3 text-lg font-semibold text-text;
+  }
+
+  .report-projection-chart-frame {
+    @apply p-5;
+  }
+
+  .report-volatility-panel {
+    @apply overflow-hidden;
+  }
+
+  .report-volatility-head {
+    @apply flex flex-col gap-4 border-b border-line/80 px-5 py-5 lg:flex-row lg:items-start lg:justify-between;
+  }
+
+  .report-volatility-copy {
+    @apply max-w-3xl;
+  }
+
+  .report-volatility-title {
+    @apply mt-3 text-[2rem] font-semibold leading-tight text-text;
+  }
+
+  .report-volatility-description {
+    @apply mt-3 max-w-2xl text-sm leading-7 text-muted;
+  }
+
+  .report-volatility-grid {
+    @apply grid gap-5 p-5;
+  }
+
+  .report-volatility-stage {
+    @apply rounded-[1.35rem] border border-line/80 bg-gradient-to-br from-shell2/95 to-panel/95 p-4;
+  }
+
+  .report-volatility-legend {
+    @apply mb-4 flex flex-wrap items-center gap-2;
+  }
+
+  .report-volatility-legend-pill {
+    @apply inline-flex items-center rounded-full border px-3 py-1 font-mono text-[11px] uppercase tracking-[0.24em];
+  }
+
+  .report-volatility-legend-pill.is-high {
+    @apply border-danger/20 bg-danger/10 text-danger;
+  }
+
+  .report-volatility-legend-pill.is-medium {
+    @apply border-amber/20 bg-amber/10 text-amber;
+  }
+
+  .report-volatility-legend-pill.is-low {
+    @apply border-neon/20 bg-neon/10 text-neon;
+  }
+
+  .report-volatility-chart-frame {
+    @apply rounded-[1.2rem] border border-line/70 bg-ink/20 p-4;
+  }
+
+  .report-volatility-rail {
+    @apply grid gap-3 md:grid-cols-2 xl:grid-cols-4;
+  }
+
+  .report-volatility-card {
+    @apply h-full rounded-[1.2rem] border border-line/80 bg-panel/80 p-4;
+  }
+
+  .report-volatility-card.is-high {
+    @apply bg-gradient-to-br from-danger/10 to-panel/90;
+  }
+
+  .report-volatility-card.is-medium {
+    @apply bg-gradient-to-br from-amber/10 to-panel/90;
+  }
+
+  .report-volatility-card.is-low {
+    @apply bg-gradient-to-br from-neon/10 to-panel/90;
+  }
+
+  .report-volatility-card-head {
+    @apply flex items-center justify-between gap-3;
+  }
+
+  .report-volatility-card-label {
+    @apply font-mono text-[11px] uppercase tracking-[0.28em] text-muted;
+  }
+
+  .report-volatility-card-pill {
+    @apply inline-flex rounded-full border px-3 py-1 font-mono text-xs;
+  }
+
+  .report-volatility-card-pill.is-high {
+    @apply border-danger/20 bg-danger/10 text-danger;
+  }
+
+  .report-volatility-card-pill.is-medium {
+    @apply border-amber/20 bg-amber/10 text-amber;
+  }
+
+  .report-volatility-card-pill.is-low {
+    @apply border-neon/20 bg-neon/10 text-neon;
+  }
+
+  .report-volatility-card-title {
+    @apply mt-4 text-lg font-semibold text-text;
+  }
+
+  .report-volatility-card-copy {
+    @apply mt-2 text-sm leading-6 text-muted;
   }
 
   .report-chip {
     @apply rounded-full border border-info/30 bg-info/10 px-3 py-1 font-mono text-xs text-info;
+    display: inline-flex;
+    width: fit-content;
+    align-items: center;
+    justify-content: center;
+    white-space: nowrap;
   }
 
   .report-list {
@@ -46,7 +247,7 @@
   }
 
   .report-list-card {
-    @apply flex items-center justify-between gap-4 rounded-[1.15rem] border border-line bg-panel/80 p-4;
+    @apply flex items-center justify-between gap-4 rounded-[1.15rem] border border-line/80 bg-panel/80 p-4;
   }
 
   .report-list-title {
