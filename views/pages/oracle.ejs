@@ -1,4 +1,46 @@
 <section class="oracle-grid">
+  <div class="oracle-hero-grid">
+    <article class="oracle-hero-card">
+      <p class="oracle-hero-label">Base Desk</p>
+      <h3 class="oracle-hero-title">The signing workflow should feel like a premium execution surface.</h3>
+      <p class="oracle-hero-copy">This page now emphasizes ticket construction, wallet readiness, and audit activity as a single flow from market signal to signed Base-ready intent.</p>
+      <div class="oracle-hero-metrics">
+        <article class="oracle-hero-metric">
+          <p class="oracle-hero-metric-label">Preferred chain</p>
+          <p class="oracle-hero-metric-value"><%= site.baseDesk.preferredChain %></p>
+        </article>
+        <article class="oracle-hero-metric">
+          <p class="oracle-hero-metric-label">Supported actions</p>
+          <p class="oracle-hero-metric-value"><%= site.baseDesk.supportedActions.length %> modes</p>
+        </article>
+        <article class="oracle-hero-metric">
+          <p class="oracle-hero-metric-label">Receipts</p>
+          <p class="oracle-hero-metric-value"><%= site.oracle.metrics[3].value %></p>
+        </article>
+      </div>
+    </article>
+
+    <article class="oracle-hero-card is-secondary">
+      <p class="oracle-hero-label">Audit Readiness</p>
+      <h3 class="oracle-hero-title">Wallet state, contract mode, and chain activity are now easier to scan together.</h3>
+      <p class="oracle-hero-copy">The layout keeps signing, publishing, and verification close to the feed and chain evidence you need when a grain desk wants a traceable operating record.</p>
+      <div class="oracle-hero-metrics">
+        <article class="oracle-hero-metric">
+          <p class="oracle-hero-metric-label">Contract mode</p>
+          <p class="oracle-hero-metric-value"><%= site.baseDesk.mode %></p>
+        </article>
+        <article class="oracle-hero-metric">
+          <p class="oracle-hero-metric-label">Watcher nodes</p>
+          <p class="oracle-hero-metric-value"><%= site.oracle.metrics[1].value %></p>
+        </article>
+        <article class="oracle-hero-metric">
+          <p class="oracle-hero-metric-label">Open incidents</p>
+          <p class="oracle-hero-metric-value"><%= site.oracle.metrics[2].value %></p>
+        </article>
+      </div>
+    </article>
+  </div>
+
   <div class="oracle-top-grid">
     <section class="oracle-panel">
       <div class="panel-head">
@@ -89,9 +131,9 @@
         <div>
           <p class="panel-eyebrow">
             <%- include("../partials/icon", { name: "wallet", className: "icon-sm" }) %>
-            <span>Wallet and Preview</span>
+            <span>Wallet and Contract</span>
           </p>
-          <h3 class="panel-title">Wallet Ticket Preview</h3>
+          <h3 class="panel-title">Wallet Status</h3>
         </div>
         <button id="oracleExportBtn" class="btn-secondary" type="button">
           <%- include("../partials/icon", { name: "report", className: "icon-sm" }) %>
@@ -111,9 +153,6 @@
           <p id="oracleContractAddress" class="oracle-summary-copy"><%= site.baseDesk.contractAddress || 'No contract address configured yet.' %></p>
           <a href="<%= site.baseDesk.explorerUrl %>" target="_blank" rel="noreferrer" class="panel-link">Base Explorer</a>
         </article>
-      </div>
-      <div class="oracle-preview-shell">
-        <pre id="oracleReceiptPreview" class="oracle-preview"></pre>
       </div>
       <p id="oracleSignatureStatus" class="oracle-signature-status">
         Build a ticket from the selected grain and city, then sign it with a Base-compatible wallet on <%= site.baseDesk.preferredChain %>.

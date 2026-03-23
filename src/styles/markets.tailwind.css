@@ -5,6 +5,50 @@
     @apply flex flex-col gap-6;
   }
 
+  .markets-hero-grid {
+    @apply grid gap-4 xl:grid-cols-[minmax(0,1.2fr)_minmax(0,0.8fr)];
+  }
+
+  .markets-hero-card {
+    @apply rounded-[1.55rem] border border-line/80 bg-gradient-to-br from-amber/10 via-shell/95 to-shell2/95 p-5 shadow-chrome;
+  }
+
+  .markets-hero-card.is-secondary {
+    @apply from-info/10 via-shell/95 to-panel/95;
+  }
+
+  .markets-hero-label {
+    @apply font-mono text-[11px] uppercase tracking-[0.3em] text-amber;
+  }
+
+  .markets-hero-card.is-secondary .markets-hero-label {
+    @apply text-info;
+  }
+
+  .markets-hero-title {
+    @apply mt-4 max-w-[15ch] text-[1.95rem] font-semibold leading-tight text-text;
+  }
+
+  .markets-hero-copy {
+    @apply mt-3 max-w-2xl text-sm leading-7 text-muted;
+  }
+
+  .markets-hero-metrics {
+    @apply mt-5 grid gap-3 sm:grid-cols-3;
+  }
+
+  .markets-hero-metric {
+    @apply rounded-[1.05rem] border border-line/70 bg-ink/20 p-4;
+  }
+
+  .markets-hero-metric-label {
+    @apply font-mono text-[11px] uppercase tracking-[0.28em] text-muted;
+  }
+
+  .markets-hero-metric-value {
+    @apply mt-3 text-base font-semibold text-text;
+  }
+
   .markets-lead-grid {
     @apply grid gap-6 xl:grid-cols-[minmax(0,1.35fr)_minmax(0,0.85fr)];
   }
@@ -18,7 +62,7 @@
   }
 
   .market-panel {
-    @apply rounded-[1.35rem] border border-line bg-shell/95 shadow-chrome;
+    @apply rounded-[1.35rem] border border-line/80 bg-gradient-to-br from-shell/95 to-panel/95 shadow-chrome;
   }
 
   .market-feature-shell {
@@ -30,7 +74,7 @@
   }
 
   .market-feature-note {
-    @apply rounded-[1.15rem] border border-line bg-panel/80 p-4 text-sm leading-6 text-muted;
+    @apply rounded-[1.15rem] border border-line/80 bg-panel/80 p-4 text-sm leading-6 text-muted;
   }
 
   .location-shell {
@@ -51,11 +95,11 @@
   }
 
   .location-status-card {
-    @apply rounded-2xl border border-line bg-panel/80 px-4 py-3 text-sm text-muted;
+    @apply rounded-2xl border border-line/80 bg-panel/80 px-4 py-3 text-sm text-muted;
   }
 
   .location-summary-card {
-    @apply flex flex-col gap-3 rounded-[1.15rem] border border-line bg-panel/80 p-4 md:flex-row md:items-start md:justify-between;
+    @apply flex flex-col gap-3 rounded-[1.15rem] border border-line/80 bg-gradient-to-r from-panel/95 to-shell2/90 p-4 md:flex-row md:items-start md:justify-between;
   }
 
   .location-summary-title {
@@ -71,7 +115,7 @@
   }
 
   .location-card {
-    @apply rounded-[1.15rem] border border-line bg-shell2/94 p-4;
+    @apply rounded-[1.15rem] border border-line/80 bg-shell2/95 p-4;
   }
 
   .location-card-title {
@@ -107,7 +151,7 @@
   }
 
   .planner-result {
-    @apply rounded-[1.15rem] border border-line bg-panel/80 p-4;
+    @apply rounded-[1.15rem] border border-line/80 bg-panel/80 p-4;
   }
 
   .planner-result-grid {
@@ -115,7 +159,7 @@
   }
 
   .planner-result-card {
-    @apply rounded-[1.15rem] border border-line bg-shell2/94 p-4;
+    @apply rounded-[1.15rem] border border-line/80 bg-shell2/95 p-4;
   }
 
   .planner-result-label {

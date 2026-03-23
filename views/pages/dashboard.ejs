@@ -1,4 +1,46 @@
 <section class="dashboard-grid">
+  <div class="dashboard-hero-grid">
+    <article class="dashboard-hero-card">
+      <p class="dashboard-hero-label">Desk Snapshot</p>
+      <h3 class="dashboard-hero-title">National rice pressure is still setting the tone for the Philippine board.</h3>
+      <p class="dashboard-hero-copy">Use the overview terminal to move from price discovery into concrete desk action: validate pressure, compare city spreads, and open a Base-ready attestation when a move needs an audit trail.</p>
+      <div class="dashboard-hero-meta">
+        <article class="dashboard-hero-stat">
+          <p class="dashboard-hero-stat-label">Lead board</p>
+          <p class="dashboard-hero-stat-value"><%= site.marketRows[0].leadLocation %></p>
+        </article>
+        <article class="dashboard-hero-stat">
+          <p class="dashboard-hero-stat-label">Threshold</p>
+          <p class="dashboard-hero-stat-value"><%= site.commodities[0].threshold.toFixed(1) %> PHP/kg</p>
+        </article>
+        <article class="dashboard-hero-stat">
+          <p class="dashboard-hero-stat-label">Current signal</p>
+          <p class="dashboard-hero-stat-value"><%= site.commodities[0].signal %></p>
+        </article>
+      </div>
+    </article>
+
+    <article class="dashboard-hero-card is-secondary">
+      <p class="dashboard-hero-label">Operational Focus</p>
+      <h3 class="dashboard-hero-title">Best buying zone stays outside the Manila premium band.</h3>
+      <p class="dashboard-hero-copy">The desk commentary and city comparison blocks below are arranged to make the spread story obvious at a glance, especially for Urdaneta, Iloilo, and NCR validation.</p>
+      <div class="dashboard-hero-meta">
+        <article class="dashboard-hero-stat">
+          <p class="dashboard-hero-stat-label">Best buy zone</p>
+          <p class="dashboard-hero-stat-value"><%= site.marketSignals[1].value %></p>
+        </article>
+        <article class="dashboard-hero-stat">
+          <p class="dashboard-hero-stat-label">Commentary cards</p>
+          <p class="dashboard-hero-stat-value"><%= site.deskCommentary.length %></p>
+        </article>
+        <article class="dashboard-hero-stat">
+          <p class="dashboard-hero-stat-label">Open alerts</p>
+          <p class="dashboard-hero-stat-value"><%= site.alerts.length %></p>
+        </article>
+      </div>
+    </article>
+  </div>
+
   <div class="dashboard-signal-grid">
     <% const signalIcons = ["trend", "location", "chain"]; %>
     <% site.marketSignals.forEach((signal, index) => { %>

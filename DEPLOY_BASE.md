@@ -10,6 +10,7 @@ Required runtime commands:
 
 ```bash
 npm install
+npx tailwindcss -i ./src/input.css -o ./public/css/main.css --minify
 npm start
 ```
 
